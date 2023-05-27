@@ -1,0 +1,64 @@
+
+.root {
+
+    -fx-background-color: #eaeaea;
+    -fx-text-fill: #333333;
+     /*Autres styles */
+}
+
+
+.menu-bar {
+    -fx-background-color: #333;
+}
+
+.menu .label{
+    -fx-text-fill: white;
+}
+
+.labelled {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+
+.menu-item .label{
+    -fx-text-fill: #333;
+    /*-fx-background-color: #333;*/
+}
+
+Button{
+    -fx-background-color: #222;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+
+}
+
+.popupWindow {
+    -fx-background-color: #555;
+    -fx-border-color: #333;
+    -fx-border-width: 7px;
+}
+
+.popupWindow Label, .popupWindow RadioButton{
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+
+.popupWindow .border{
+
+    -fx-border-color: #222;
+    -fx-border-width: 1px;
+}
+
+.popupWindow Button{
+    -fx-background-color: #222;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+
+}
+
+ToggleButton{
+    -fx-background-color: #222;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+
+}
