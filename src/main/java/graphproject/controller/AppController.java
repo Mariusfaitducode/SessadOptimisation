@@ -1,15 +1,17 @@
 package graphproject.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import graphproject.model.App;
 import graphproject.model.Graph;
+import graphproject.model.Node;
+import graphproject.model.sessad.SessadGestion;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //Regroupe la gestion de toutes les interactions de l'utilisateur
 
@@ -86,6 +88,32 @@ public class AppController implements Initializable {
 
     public void closeGraph() {
         graphController.closeGraph();
+    }
+
+    public void testSessad(){
+
+        SessadGestion sessadGestion = new SessadGestion();
+        List<Node> listNode = new ArrayList<>();
+
+        sessadGestion.generatePosition(listNode);
+
+
+        Graph graph = new Graph("Graph Sessad");
+
+
+
+        int i = 0;
+
+        for (Node node : listNode){
+            graph.addNode(node);
+        }
+
+        graphController.openGraph(graph);
+
+        /*for (Centre centre : sessadGestion.getListCentre()){
+            centre.getCircle().setFill(Color.ORANGE);
+        }*/
+
     }
 
 }

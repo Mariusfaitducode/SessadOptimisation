@@ -1,6 +1,7 @@
 package graphproject.model;
 
 import graphproject.controller.graphics.Graphics;
+import graphproject.model.sessad.Place;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -11,6 +12,9 @@ import java.util.List;
 
 public class Node {
 
+    List<Place> listPlace;
+
+    boolean centre;
 
     int id;
     String name;
@@ -22,10 +26,16 @@ public class Node {
 
     //Liste des nodes ayant un lien avec cette node, permet de retrouver les liens entrant
     List<Node> linkedNodeList;
+
+
     Circle circle;
 
     public Node(int id, String name, int x, int y)
     {
+        this.listPlace = new ArrayList<>(0);
+
+        this.centre = false;
+
         this.id = id;
         this.name = name;
         this.x = x;
@@ -37,11 +47,26 @@ public class Node {
         this.selected = false;
     }
 
+    public List<Place> getListPlace() {
+        return listPlace;
+    }
+
+    public boolean isCentre() {
+        return centre;
+    }
+    public void setCentre(boolean centre) {
+        this.centre = centre;
+    }
+
+
     public int getId(){return id;}
 
     public void setId(int id){this.id = id;}
     public int getX(){return x;}
     public int getY(){return y;}
+
+    public void setPosX(int x){this.x = x;}
+    public void setPosY(int y){this.y = y;}
 
     public void updateLinks(){
         for (Link link : links){

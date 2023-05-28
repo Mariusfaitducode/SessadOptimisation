@@ -1,6 +1,7 @@
 module com.example.graphjavafx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires commons.math3;
 
 
     opens graphproject to javafx.fxml;

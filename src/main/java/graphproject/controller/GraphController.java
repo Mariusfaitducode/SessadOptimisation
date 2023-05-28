@@ -5,14 +5,12 @@ import graphproject.model.Graph;
 import graphproject.model.Link;
 import graphproject.model.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 
 
 //Permet de modifier un graphe
@@ -292,6 +290,10 @@ public class GraphController {
 
             // Crée un cercle avec un rayon de 10 pixels
             Circle circle = Graphics.DesignCircle(node.getX(), node.getY(), 10);
+
+            if (node.isCentre()){
+                circle.setFill(Color.ORANGE);
+            }
 
             // Add event listener to the node
             nodeController.listenerNode(circle, node);

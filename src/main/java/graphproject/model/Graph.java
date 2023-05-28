@@ -6,7 +6,6 @@ import javafx.scene.layout.Pane;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +41,10 @@ public class Graph {
         Node node = new Node(id, name, x, y);
         nodes.add(node);
         return node;
+    }
+
+    public void addNode(Node node){
+        nodes.add(node);
     }
 
     public void addLink(Node node, Node linkedNode) {

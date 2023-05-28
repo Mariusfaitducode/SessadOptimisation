@@ -26,6 +26,7 @@
             <Pane id="#id-graph-pane" fx:id="parentCenterPane" prefHeight="6000.0" prefWidth="8000.0" style="-fx-background-color: #666;" BorderPane.alignment="CENTER">
                <children>
                   <Pane fx:id="centerPane" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #111;" />
+                  <Button layoutX="734.0" layoutY="14.0" mnemonicParsing="false" onAction="#testSessad" text="Button" />
                </children></Pane>
          </center>
          <bottom>
