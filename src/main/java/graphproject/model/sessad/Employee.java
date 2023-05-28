@@ -31,6 +31,8 @@ public class Employee {
         //skill = Skill.LSF;
     }
 
+    public int getId(){return id;}
+
     public void display(){
         System.out.println("Employee id : "+id);
         System.out.println("Employee centre : "+centre.getId());

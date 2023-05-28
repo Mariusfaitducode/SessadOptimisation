@@ -20,6 +20,10 @@ public class Centre extends Place {
 
     }
 
+    public List<Employee> getListEmployee() {
+        return listEmployee;
+    }
+
     public void display(){
         System.out.println("Centre id : "+id);
         System.out.println("Centre name : "+name);

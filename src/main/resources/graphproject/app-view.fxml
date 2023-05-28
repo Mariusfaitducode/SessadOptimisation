@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -102,10 +103,18 @@
                         <Label id="mission-period" layoutX="8.0" layoutY="213.0" styleClass="labelled" text="Horaires :" />
                         <Label id="mission-skill" layoutX="7.0" layoutY="248.0" styleClass="labelled" text="Compétence :" />
                         <Label id="mission-specialty" layoutX="8.0" layoutY="285.0" styleClass="labelled" text="Spécialité :" />
-                        <Label layoutX="48.0" layoutY="366.0" styleClass="labelled" text="Affectation" />
+                        <Label layoutX="48.0" layoutY="366.0" styleClass="labelled" text="Affectation">
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Label>
                      </children>
                   </Pane>
-                  <Pane fx:id="centreRightPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;" visible="false">
+                  <Pane fx:id="centreRightPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;">
                      <children>
                         <Label layoutX="62.0" layoutY="28.0" styleClass="labelled" text="Centre" />
                         <Label id="centre-id" layoutX="7.0" layoutY="77.0" styleClass="labelled" text="Id : " />
@@ -115,10 +124,10 @@
                         <Label id="mission-specialty" layoutX="5.0" layoutY="220.0" styleClass="labelled" text="Employés :" />
                         <Label layoutX="47.0" layoutY="320.0" styleClass="labelled" text="Affectation" />
                         <Label id="centre-name" layoutX="7.0" layoutY="110.0" styleClass="labelled" text="Name : " />
-                        <ChoiceBox layoutX="24.0" layoutY="257.0" prefWidth="150.0" />
+                        <ChoiceBox id="centre-employee" layoutX="24.0" layoutY="257.0" prefWidth="150.0" />
                      </children>
                   </Pane>
-                  <Pane fx:id="itineraryRightPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;">
+                  <Pane fx:id="itineraryRightPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;" visible="false">
                      <children>
                         <Label layoutX="62.0" layoutY="28.0" styleClass="labelled" text="Itinéraire" />
                         <Label id="itinerary-employee" layoutX="7.0" layoutY="77.0" styleClass="labelled" text="Employé : " />
