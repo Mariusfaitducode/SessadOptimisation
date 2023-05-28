@@ -16,9 +16,9 @@ public class Mission extends Place {
 
 
 
-    public Mission(int id, int day, int startingPeriod, int endingPeriod, Skill skill, Specialty specialty)
+    public Mission(int id, String name, int day, int startingPeriod, int endingPeriod, Skill skill, Specialty specialty)
     {
-        super(id);
+        super(id, name);
 
         this.day = day;
         this.startingPeriod = startingPeriod;

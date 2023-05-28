@@ -296,7 +296,7 @@ public class GraphController {
             }
 
             // Add event listener to the node
-            nodeController.listenerNode(circle, node);
+            nodeController.listenerNode(circle, node, centerPane);
 
             // Add the circle to the pane
             node.setCircle(circle);

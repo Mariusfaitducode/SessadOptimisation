@@ -98,7 +98,7 @@ public class Instance {
                     Skill skill = Skill.valueOf(values[4]);
                     Specialty specialty = Specialty.valueOf(values[5]);
 
-                    Mission mission = new Mission(missionId, day, startingPeriod, endingPeriod, skill, specialty);
+                    Mission mission = new Mission(missionId,"Mission"+missionId ,day, startingPeriod, endingPeriod, skill, specialty);
 
                     listMission.add(mission);
                 }

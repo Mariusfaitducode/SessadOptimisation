@@ -15,7 +15,7 @@ public class Centre extends Place {
 
     public Centre(int id, String name) {
 
-        super(id);
+        super(id, name);
         this.name = name;
 
     }
