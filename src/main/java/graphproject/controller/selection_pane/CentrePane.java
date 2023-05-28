@@ -52,6 +52,8 @@ public class CentrePane {
         this.textPosX.setText("X : " + (int)selectedCentre.getX());
         this.textPosY.setText("Y : " + (int)selectedCentre.getY());
 
+        this.choiceBoxEmployee.getItems().clear();
+
         choiceBoxEmployee.getSelectionModel().selectedIndexProperty().removeListener(choiceBoxEmployeeListener);
 
         for (Employee employee : selectedCentre.getListEmployee()){

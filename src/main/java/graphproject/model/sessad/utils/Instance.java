@@ -75,6 +75,8 @@ public class Instance {
                 Employee employee = new Employee(employeeId, centre, skill, specialty);
 
                 listEmployee.add(employee);
+
+                centre.getListEmployee().add(employee);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

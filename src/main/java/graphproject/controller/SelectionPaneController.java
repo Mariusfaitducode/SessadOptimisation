@@ -6,6 +6,7 @@ import graphproject.controller.selection_pane.MissionPane;
 import graphproject.controller.selection_pane.SearchPane;
 import graphproject.model.Link;
 import graphproject.model.Node;
+import graphproject.model.sessad.Centre;
 import graphproject.model.sessad.Mission;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -49,18 +50,22 @@ public class SelectionPaneController {
     }
 
     //Node Pane
-    public void setMissionPane(Node selectedNode){
+    public void setMissionPane(Mission selectedMission){
         missionRightPane.setVisible(true);
         itineraryRightPane.setVisible(false);
         centreRightPane.setVisible(false);
 
-        missionPane.setSelectedNode(selectedNode);
-
-
-
-        missionPane.setSelectedMission((Mission)selectedNode.getPlace(0));
+        missionPane.setSelectedMission(selectedMission);
     }
     public MissionPane getMissionPane(){return this.missionPane;}
+
+    public void setCentrePane(Centre centre){
+        missionRightPane.setVisible(false);
+        itineraryRightPane.setVisible(false);
+        centreRightPane.setVisible(true);
+
+        centrePane.setSelectedCentre(centre);
+    }
 
     //public Pane getSearchPathRightPane(){return this.searchPathRightPane;}
 

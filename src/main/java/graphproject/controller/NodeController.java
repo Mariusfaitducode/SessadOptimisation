@@ -4,12 +4,10 @@ import graphproject.controller.graphics.Graphics;
 import graphproject.model.Graph;
 import graphproject.model.Link;
 import graphproject.model.Node;
+import graphproject.model.sessad.Centre;
+import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.Place;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.event.Event;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -22,6 +20,8 @@ public class NodeController {
     private Graph graph;
 
     private ContextMenu contextMenu;
+
+    private Node selectedNode;
 
 
 
@@ -95,13 +95,13 @@ public class NodeController {
         //fonctions qui sélectionne une node si on clique dessus
         circle.setOnMouseClicked(event -> {
 
-            if(toolsController.isSelected_deleteButton()){
+            /*if(toolsController.isSelected_deleteButton()){
                 deleteNode(node);
             }
             else{
                 // Display the information of the node
                 selectionPaneController.setMissionPane(node);
-            }
+            }*/
 
             //display the context menu with the list of missions and centers
             updateContextMenu(node, event.getScreenX(), event.getScreenY());
@@ -202,7 +202,20 @@ public class NodeController {
         // Create Menu Items related to this node
         for (Place place: node.getListPlace()) {
             MenuItem menuItemPlace = new MenuItem(place.getName());
-            menuItemPlace.setOnAction(actionEvent -> System.out.println(place.getName()));
+            menuItemPlace.setOnAction(actionEvent -> {
+                System.out.println(place.getName());
+
+                setSelectedNode(node);
+
+                if (place.getType() == Place.Type.MISSION) {
+                    selectionPaneController.setMissionPane((Mission)place);
+                }
+                else if (place.getType() == Place.Type.CENTRE) {
+                    selectionPaneController.setCentrePane((Centre)place);
+                }
+
+            });
+
             contextMenu.getItems().addAll(menuItemPlace);
         }
 
@@ -213,5 +226,27 @@ public class NodeController {
     private void hideContextMenu() {
         contextMenu.getItems().clear();
         contextMenu.hide();
+    }
+
+
+    public void setSelectedNode(Node selectedNode){
+
+        if (this.selectedNode != null){
+            this.selectedNode.getCircle().setScaleX(1);
+            this.selectedNode.getCircle().setScaleY(1);
+            this.selectedNode.getCircle().setStroke(Color.BLACK);
+            this.selectedNode.getCircle().setStrokeWidth(1);
+            this.selectedNode.setSelection(false);
+        }
+
+        //nodePane.lastSelectedNode = selectedNode;
+        selectedNode.getCircle().setScaleX(1.1);
+        selectedNode.getCircle().setScaleY(1.1);
+        selectedNode.getCircle().setStroke(Color.RED);
+        selectedNode.getCircle().setStrokeWidth(2);
+
+        selectedNode.setSelection(true);
+
+        this.selectedNode = selectedNode;
     }
 }

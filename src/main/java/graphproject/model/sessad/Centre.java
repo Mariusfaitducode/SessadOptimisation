@@ -1,5 +1,6 @@
 package graphproject.model.sessad;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Centre extends Place {
@@ -17,6 +18,9 @@ public class Centre extends Place {
 
         super(id, name);
         this.name = name;
+        this.type = Type.CENTRE;
+
+        this.listEmployee = new ArrayList<>(0);
 
     }
 

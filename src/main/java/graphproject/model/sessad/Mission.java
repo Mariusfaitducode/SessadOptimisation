@@ -25,6 +25,7 @@ public class Mission extends Place {
         this.endingPeriod = endingPeriod;
         this.skill = skill;
         this.specialty = specialty;
+        this.type = Type.MISSION;
     }
 
     public void display(){

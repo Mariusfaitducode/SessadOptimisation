@@ -2,10 +2,13 @@ package graphproject.model.sessad;
 
 public class Place {
 
+    public enum Type{CENTRE, MISSION}
+
     protected int id;
     protected double x;
     protected double y;
     protected String name;
+    protected Type type;
 
     public Place(int id, String name)
     {
@@ -24,6 +27,8 @@ public class Place {
     public void setY(double y){this.y = y;}
 
     public String getName(){return name;}
-
     public void setName(String name){this.name = name;}
+
+    public Type getType(){return type;}
+    public void setType(Type type){this.type = type;}
 }

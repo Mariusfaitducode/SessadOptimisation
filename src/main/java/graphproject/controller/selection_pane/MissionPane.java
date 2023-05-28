@@ -47,26 +47,7 @@ public class MissionPane {
         this.textSpecialty = (Label) nodeRightPane.lookup("#mission-specialty");
     }
 
-    public void setSelectedNode(Node selectedNode){
 
-        if (this.selectedNode != null){
-            this.selectedNode.getCircle().setScaleX(1);
-            this.selectedNode.getCircle().setScaleY(1);
-            this.selectedNode.getCircle().setStroke(Color.BLACK);
-            this.selectedNode.getCircle().setStrokeWidth(1);
-            this.selectedNode.setSelection(false);
-        }
-
-        //nodePane.lastSelectedNode = selectedNode;
-        selectedNode.getCircle().setScaleX(1.1);
-        selectedNode.getCircle().setScaleY(1.1);
-        selectedNode.getCircle().setStroke(Color.RED);
-        selectedNode.getCircle().setStrokeWidth(2);
-
-        selectedNode.setSelection(true);
-
-        this.selectedNode = selectedNode;
-    }
 
     public void setSelectedMission(Mission mission){
         if (this.selectedMission != null){
