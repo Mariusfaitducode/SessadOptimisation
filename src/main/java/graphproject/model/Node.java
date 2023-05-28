@@ -51,6 +51,10 @@ public class Node {
         return listPlace;
     }
 
+    public Place getPlace(int ref){
+        return listPlace.get(ref);
+    }
+
     public boolean isCentre() {
         return centre;
     }

@@ -51,7 +51,7 @@ public class GraphController {
     GraphController(){};
 
     // Contruct the controller for the opened graph
-    GraphController(Pane pane, Pane nodeRightPane, Pane linkRightPane, Label graphTitle, Pane searchPathRightPane, HBox toolsBar, Pane parentCenterPane, Label zoomText, MenuItem buttonSaveGraph) {
+    GraphController(Pane pane, Pane nodeRightPane, Pane linkRightPane, Label graphTitle, Pane centreRightPane, HBox toolsBar, Pane parentCenterPane, Label zoomText, MenuItem buttonSaveGraph) {
 
         this.graph = null;
 
@@ -69,7 +69,7 @@ public class GraphController {
 
         // tools
 
-        this.selectionPaneController = new SelectionPaneController(nodeRightPane, linkRightPane, searchPathRightPane, toolsBar, centerPane);
+        this.selectionPaneController = new SelectionPaneController(nodeRightPane, linkRightPane, centreRightPane, toolsBar, centerPane);
         //selectionPaneController.searchResetButtonListener(graph);
 
         this.toolsController = new ToolsController(toolsBar, selectionPaneController);

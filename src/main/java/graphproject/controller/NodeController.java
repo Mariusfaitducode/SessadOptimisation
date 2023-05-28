@@ -25,7 +25,7 @@ public class NodeController {
         this.toolsController = toolsController;
         this.selectionPaneController = selectionPaneController;
 
-        selectionPaneController.getNodePane().deleteNodeButtonListener(this);
+        //selectionPaneController.getNodePane().deleteNodeButtonListener(this);
     }
 
     public void setGraph(Graph graph){
@@ -49,7 +49,7 @@ public class NodeController {
 
                 // Display the information of the new node
                 //Node node = graph.getNodeFromPos(x,y);
-                selectionPaneController.setNodePane(node);
+                //selectionPaneController.setNodePane(node);
             }
             event.consume();
         });
@@ -77,16 +77,13 @@ public class NodeController {
         //fonctions qui sélectionne une node si on clique dessus
         circle.setOnMouseClicked(event -> {
 
-            if (selectionPaneController.getSearchPathRightPane().isVisible()){
 
-                selectionPaneController.setSearchNode(node);
-            }
-            else if(toolsController.isSelected_deleteButton()){
+            if(toolsController.isSelected_deleteButton()){
                 deleteNode(node);
             }
             else{
                 // Display the information of the node
-                selectionPaneController.setNodePane(node);
+                selectionPaneController.setMissionPane(node);
             }
         });
 

@@ -224,16 +224,16 @@ public class Instance {
 
             if ( i < listCentre.size() ){
 
-                listCentre.get(i).setPosX(x);
-                listCentre.get(i).setPosY(y);
+                listCentre.get(i).setX(x);
+                listCentre.get(i).setY(y);
 
                 node.getListPlace().add(listCentre.get(i));
 
                 node.setCentre(true);
             }
             else{
-                listMission.get(i - listCentre.size()).setPosX(x);
-                listMission.get(i - listCentre.size()).setPosY(y);
+                listMission.get(i - listCentre.size()).setX(x);
+                listMission.get(i - listCentre.size()).setY(y);
 
                 node.getListPlace().add(listMission.get(i - listCentre.size()));
             }

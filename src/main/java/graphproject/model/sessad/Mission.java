@@ -36,5 +36,20 @@ public class Mission extends Place {
         System.out.println("Mission specialty : "+specialty);
     }
 
+    public int getDay(){return day;}
+    public void setDay(int day){this.day = day;}
+
+    public int getStartingPeriod(){return startingPeriod;}
+    public void setStartingPeriod(int startingPeriod){this.startingPeriod = startingPeriod;}
+
+    public int getEndingPeriod(){return endingPeriod;}
+    public void setEndingPeriod(int endingPeriod){this.endingPeriod = endingPeriod;}
+
+    public Skill getSkill(){return skill;}
+    public void setSkill(Skill skill){this.skill = skill;}
+
+    public Specialty getSpecialty(){return specialty;}
+    public void setSpecialty(Specialty specialty){this.specialty = specialty;}
+
 
 }

@@ -16,7 +16,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphproject.controller.AppController">
@@ -92,59 +91,43 @@
          <right>
             <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #444;" BorderPane.alignment="CENTER">
                <children>
-                  <Pane fx:id="nodeRightPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;" visible="false">
+                  <Pane fx:id="missionRightPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;" visible="false">
                      <children>
-                        <Label layoutX="79.0" layoutY="28.0" styleClass="labelled" text="Node" />
-                        <Label layoutX="7.0" layoutY="77.0" styleClass="labelled" text="Id : " />
-                        <Label layoutX="5.0" layoutY="139.0" styleClass="labelled" text="Name : " />
-                        <Label layoutX="10.0" layoutY="327.0" styleClass="labelled" text="Link --&gt; :" />
-                        <Label layoutX="9.0" layoutY="201.0" styleClass="labelled" text="Pos :" />
-                        <Label layoutX="36.0" layoutY="228.0" styleClass="labelled" text="X :" />
-                        <Label layoutX="36.0" layoutY="278.0" styleClass="labelled" text="Y :" />
-                        <Label layoutX="9.0" layoutY="444.0" styleClass="labelled" text="Link &lt;-- :" />
-                        <TextField id="id-node-id" layoutX="46.0" layoutY="71.0" prefHeight="31.0" prefWidth="123.0" style="-fx-background-color: #555;" styleClass="labelled" text="-1" />
-                        <TextField id="id-node-name" layoutX="66.0" layoutY="132.0" prefHeight="40.0" prefWidth="131.0" style="-fx-background-color: #555;" styleClass="labelled" text="default name" />
-                        <TextField id="id-node-posX" layoutX="58.0" layoutY="222.0" prefHeight="40.0" prefWidth="131.0" style="-fx-background-color: #555;" styleClass="labelled" text="-1" />
-                        <TextField id="id-node-posY" layoutX="58.0" layoutY="272.0" prefHeight="40.0" prefWidth="131.0" style="-fx-background-color: #555;" styleClass="labelled" text="-1" />
-                        <Button id="delete-node-button" layoutX="51.0" layoutY="579.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Delete" />
-                        <ChoiceBox id="node-going-links" layoutX="26.0" layoutY="363.0" prefWidth="150.0" />
-                        <ChoiceBox id="node-coming-links" layoutX="26.0" layoutY="481.0" prefWidth="150.0" />
+                        <Label layoutX="62.0" layoutY="28.0" styleClass="labelled" text="Mission" />
+                        <Label id="mission-id" layoutX="7.0" layoutY="77.0" styleClass="labelled" text="Id : " />
+                        <Label layoutX="7.0" layoutY="112.0" styleClass="labelled" text="Position :" />
+                        <Label id="mission-posX" layoutX="26.0" layoutY="139.0" styleClass="labelled" text="X :" />
+                        <Label id="mission-posY" layoutX="100.0" layoutY="139.0" styleClass="labelled" text="Y :" />
+                        <Label id="mission-day" layoutX="8.0" layoutY="177.0" styleClass="labelled" text="Jour :" />
+                        <Label id="mission-period" layoutX="8.0" layoutY="213.0" styleClass="labelled" text="Horaires :" />
+                        <Label id="mission-skill" layoutX="7.0" layoutY="248.0" styleClass="labelled" text="Compétence :" />
+                        <Label id="mission-specialty" layoutX="8.0" layoutY="285.0" styleClass="labelled" text="Spécialité :" />
+                        <Label layoutX="48.0" layoutY="366.0" styleClass="labelled" text="Affectation" />
                      </children>
                   </Pane>
-                  <Pane fx:id="linkRightPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;">
+                  <Pane fx:id="centreRightPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;" visible="false">
                      <children>
-                        <Label layoutX="79.0" layoutY="28.0" styleClass="labelled" text="Link" />
-                        <Label layoutX="5.0" layoutY="118.0" styleClass="labelled" text="Node start : " />
-                        <Label layoutX="25.0" layoutY="145.0" styleClass="labelled" text="Id :" />
-                        <Label layoutX="25.0" layoutY="172.0" styleClass="labelled" text="Name :" />
-                        <Label id="start-node-id" layoutX="58.0" layoutY="145.0" styleClass="labelled" text="-1" />
-                        <Label id="start-node-name" layoutX="85.0" layoutY="172.0" styleClass="labelled" text="default name" />
-                        <Label layoutX="7.0" layoutY="312.0" styleClass="labelled" text="Node end : " />
-                        <Label layoutX="25.0" layoutY="339.0" styleClass="labelled" text="Id :" />
-                        <Label layoutX="25.0" layoutY="366.0" styleClass="labelled" text="Name :" />
-                        <Label id="end-node-id" layoutX="58.0" layoutY="339.0" styleClass="labelled" text="-1" />
-                        <Label id="end-node-name" layoutX="86.0" layoutY="366.0" styleClass="labelled" text="default name" />
-                        <Line endX="9.0" endY="48.0" layoutX="84.0" layoutY="236.0" scaleX="4.0" startX="9.0" startY="-15.20001220703125" stroke="WHITE" />
-                        <Line endX="16.0" endY="30.0" layoutX="67.0" layoutY="257.0" rotate="-40.0" scaleX="4.0" startX="16.0" startY="2.0" stroke="WHITE" />
-                        <Line endX="16.0" endY="30.0" layoutX="86.0" layoutY="256.0" rotate="40.0" scaleX="4.0" startX="16.0" startY="2.0" stroke="WHITE" />
-                        <Button id="delete-link-button" layoutX="51.0" layoutY="579.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Delete" />
+                        <Label layoutX="62.0" layoutY="28.0" styleClass="labelled" text="Centre" />
+                        <Label id="centre-id" layoutX="7.0" layoutY="77.0" styleClass="labelled" text="Id : " />
+                        <Label layoutX="6.0" layoutY="144.0" styleClass="labelled" text="Position :" />
+                        <Label id="centre-posX" layoutX="25.0" layoutY="171.0" styleClass="labelled" text="X :" />
+                        <Label id="centre-posY" layoutX="99.0" layoutY="171.0" styleClass="labelled" text="Y :" />
+                        <Label id="mission-specialty" layoutX="5.0" layoutY="220.0" styleClass="labelled" text="Employés :" />
+                        <Label layoutX="47.0" layoutY="320.0" styleClass="labelled" text="Affectation" />
+                        <Label id="centre-name" layoutX="7.0" layoutY="110.0" styleClass="labelled" text="Name : " />
+                        <ChoiceBox layoutX="24.0" layoutY="257.0" prefWidth="150.0" />
                      </children>
                   </Pane>
-                  <Pane fx:id="searchPathRightPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;" visible="false">
+                  <Pane fx:id="itineraryRightPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;">
                      <children>
-                        <Label layoutX="53.0" layoutY="14.0" styleClass="labelled" text="Search path" />
-                        <Label layoutX="10.0" layoutY="183.0" styleClass="labelled" text="Name :" />
-                        <Label layoutX="8.0" layoutY="147.0" styleClass="labelled" text="Ending node :" />
-                        <Label layoutX="8.0" layoutY="60.0" styleClass="labelled" text="Starting node :" />
-                        <Label layoutX="10.0" layoutY="100.0" styleClass="labelled" text="Name :" />
-                        <Label id="text-path-distance" layoutX="7.0" layoutY="398.0" styleClass="labelled" text="Path distance :" visible="false" />
-                        <Label id="text-path-found" layoutX="17.0" layoutY="363.0" styleClass="labelled" text="Path found :" visible="false" />
-                        <TextField id="name-end-node" layoutX="69.0" layoutY="177.0" prefHeight="31.0" prefWidth="123.0" style="-fx-background-color: #555;" styleClass="labelled" text="dft name 2" />
-                        <TextField id="name-start-node" layoutX="68.0" layoutY="94.0" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #555;" styleClass="labelled" text="dft name 1" />
-                        <Button id="find-path-button" disable="true" layoutX="110.0" layoutY="297.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="74.0" text="Find" />
-                        <Label id="text-norm-distance" layoutX="6.0" layoutY="237.0" styleClass="labelled" text="Norm distance :" />
-                        <Button id="reset-path-button" disable="true" layoutX="16.0" layoutY="297.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="74.0" text="Reset" />
-                        <ChoiceBox id="path-found-choice" layoutX="8.0" layoutY="441.0" prefWidth="150.0" visible="false" />
+                        <Label layoutX="62.0" layoutY="28.0" styleClass="labelled" text="Itinéraire" />
+                        <Label id="itinerary-employee" layoutX="7.0" layoutY="77.0" styleClass="labelled" text="Employé : " />
+                        <Label id="itinerary-day" layoutX="10.0" layoutY="146.0" styleClass="labelled" text="Jour :" />
+                        <Label id="itinerary-period" layoutX="10.0" layoutY="181.0" styleClass="labelled" text="Horaires :" />
+                        <Label layoutX="48.0" layoutY="366.0" styleClass="labelled" text="Affectation" />
+                        <Label id="itinerary-centre" layoutX="8.0" layoutY="110.0" styleClass="labelled" text="Centre :" />
+                        <Label id="itinerary-distance" layoutX="10.0" layoutY="217.0" styleClass="labelled" text="Distance :" />
+                        <Label id="itinerary-cost" layoutX="10.0" layoutY="255.0" styleClass="labelled" text="Coût :" />
                      </children>
                   </Pane>
                </children>

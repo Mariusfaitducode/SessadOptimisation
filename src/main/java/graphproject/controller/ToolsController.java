@@ -2,7 +2,6 @@ package graphproject.controller;
 
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 public class ToolsController {
 
@@ -24,7 +23,7 @@ public class ToolsController {
 
         listenerNodesButton();
         listenerLinksButton();
-        listenerPathButton();
+        //listenerPathButton();
         listenerDeleteButton();
     }
 
@@ -65,7 +64,7 @@ public class ToolsController {
         //searchPathButton.setStyle("-fx-background-color: #222;");
 
         // Add listeners
-        searchPathButton.setOnMouseClicked(event3 -> {
+        /*searchPathButton.setOnMouseClicked(event3 -> {
             setSelectedToggleButtons(searchPathButton, createLinksButton, createNodesButton, deleteButton);
             if (searchPathButton.isSelected()){
                 selectionPaneController.setSearchPane();
@@ -73,7 +72,7 @@ public class ToolsController {
             else{
                 selectionPaneController.closeSearchPane();
             }
-        });
+        });*/
     }
 
     public void listenerDeleteButton(){
@@ -95,6 +94,6 @@ public class ToolsController {
         } else {
             t1.setStyle("-fx-background-color: #222;");
         }
-        selectionPaneController.closeSearchPane();
+        //selectionPaneController.closeSearchPane();
     }
 }

@@ -1,7 +1,6 @@
 package graphproject.controller.selection_pane;
 
 import graphproject.controller.SelectionPaneController;
-import graphproject.model.Graph;
 import graphproject.model.Node;
 import graphproject.model.SearchPath;
 import javafx.beans.value.ChangeListener;
@@ -114,7 +113,7 @@ public class SearchPane{
                         searchPathButton.setSelected(false);
 
                         Node selectedNode = listNodePath.get(new_val.intValue());
-                        selectionPaneController.setNodePane(selectedNode);
+                        //selectionPaneController.setNodePane(selectedNode);
                     }
                 };
                 this.pathFoundChoice.getSelectionModel().selectedIndexProperty().addListener(choicePathFoundListener);

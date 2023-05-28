@@ -21,7 +21,9 @@ public class AppController implements Initializable {
 
     //id des éléments
     @FXML
-    private Pane centerPane, nodeRightPane, linkRightPane, searchPathRightPane, parentCenterPane;
+    private Pane centerPane, searchPathRightPane, parentCenterPane;
+    @FXML
+    private Pane  missionRightPane, centreRightPane, itineraryRightPane;
 
     @FXML
     private HBox toolsBar;
@@ -60,11 +62,11 @@ public class AppController implements Initializable {
     @Override
     public void initialize(java.net.URL arg0, java.util.ResourceBundle arg1) {
         popupPane.setVisible(false);
-        nodeRightPane.setVisible(false);
-        linkRightPane.setVisible(false);
-        searchPathRightPane.setVisible(false);
+        missionRightPane.setVisible(true);
+        itineraryRightPane.setVisible(false);
+        //searchPathRightPane.setVisible(false);
 
-        graphController = new GraphController(centerPane, nodeRightPane, linkRightPane, graphTitle, searchPathRightPane, toolsBar, parentCenterPane, zoomText, buttonSaveGraph);
+        graphController = new GraphController(centerPane, missionRightPane, itineraryRightPane, graphTitle, centreRightPane, toolsBar, parentCenterPane, zoomText, buttonSaveGraph);
         menuController = new MenuController(openGraphsMenu, noRecentGraphMenuItem);
 
         app = new App();

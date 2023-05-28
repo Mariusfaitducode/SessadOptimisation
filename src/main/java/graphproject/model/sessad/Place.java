@@ -16,10 +16,11 @@ public class Place {
     public void setId(int id){this.id = id;}
 
     public double getX(){return x;}
-    public void setPosX(double x){this.x = x;}
+    public void setX(double x){this.x = x;}
 
     public double getY(){return y;}
-    public void setPosY(double y){this.y = y;}
+
+    public void setY(double y){this.y = y;}
 
 
 }
