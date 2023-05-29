@@ -29,7 +29,7 @@
                </children></Pane>
          </center>
          <bottom>
-            <HBox fx:id="toolsBar" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #333; -fx-padding: 10px;" BorderPane.alignment="CENTER">
+            <HBox id="test" fx:id="toolsBar" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #333; -fx-padding: 10px;" BorderPane.alignment="CENTER">
                <children>
                   <Label text="Tools : " textAlignment="CENTER" textFill="WHITE">
                      <font>
@@ -39,7 +39,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#test" prefHeight="31.0" prefWidth="99.0" text="Test">
+                  <Button id="id-toolsBar-test" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Test">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>

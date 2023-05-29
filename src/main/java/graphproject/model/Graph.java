@@ -1,5 +1,6 @@
 package graphproject.model;
 
+import graphproject.model.sessad.SessadGestion;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -15,9 +16,12 @@ public class Graph {
     private String name;
     private final List <Node> nodes;
 
-    public Graph(String name){
+    private SessadGestion sessadGestion;
+
+    public Graph(String name, int idInstance){
         this.name = name;
         this.nodes = new ArrayList<>(0);
+        this.sessadGestion = new SessadGestion(idInstance, nodes);
     }
 
     public List <Node> getNodes(){return nodes;}

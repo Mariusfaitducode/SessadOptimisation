@@ -1,10 +1,12 @@
 package graphproject.controller;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 
 public class ToolsController {
 
+    private final Button test;
     private final ToggleButton geneticToggleButton;
     private final ToggleButton tabouToggleButton;
 
@@ -13,6 +15,7 @@ public class ToolsController {
     private final SelectionPaneController selectionPaneController;
 
     ToolsController(HBox toolsBarPane, SelectionPaneController selectionPaneController) {
+        this.test = (Button) toolsBarPane.lookup("#id-toolsBar-test");
         this.geneticToggleButton = (ToggleButton) toolsBarPane.lookup("#id-toolsBar-genetic");
         this.tabouToggleButton = (ToggleButton) toolsBarPane.lookup("#id-toolBar-tabou");
         this.optToggleButton = (ToggleButton) toolsBarPane.lookup("#id-toolBar-2-opt");

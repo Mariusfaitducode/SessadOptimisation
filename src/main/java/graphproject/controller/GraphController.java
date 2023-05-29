@@ -5,6 +5,8 @@ import graphproject.model.Graph;
 import graphproject.model.Link;
 import graphproject.model.Node;
 import graphproject.model.sessad.Mission;
+import graphproject.model.sessad.SessadGestion;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -25,6 +27,8 @@ public class GraphController {
 
     private Pane nodeRightPane;
     private Pane linkRightPane;
+
+    private ContextMenu contextMenu;
 //    private Pane searchPathRightPane;
 
 //    private MenuItem buttonSaveGraph;
@@ -36,6 +40,8 @@ public class GraphController {
 
     // App attribute
     private Graph graph;
+
+    private SessadGestion sessadGestion;
 
     private Label graphTitle;
 
@@ -53,6 +59,7 @@ public class GraphController {
     GraphController(Pane pane, Pane missionRightPane, Pane itineraryRightPane, Label graphTitle, Pane centreRightPane, HBox toolsBar, Pane parentCenterPane, Label zoomText) {
 
         this.graph = null;
+        this.contextMenu = new ContextMenu();
 
         // Graphic elements of the scene
 
@@ -73,7 +80,7 @@ public class GraphController {
 
         this.toolsController = new ToolsController(toolsBar, selectionPaneController);
 
-        this.nodeController = new NodeController(this.graph, this.centerPane, this.toolsController, this.selectionPaneController);
+        this.nodeController = new NodeController(graph, centerPane, contextMenu, toolsController, selectionPaneController);
 
         // Initializing Graphic Rendering
 
@@ -81,7 +88,7 @@ public class GraphController {
 
         // All initialize listeners
 
-        nodeController.listenerAddNodeToGraph(this);
+        listenerContextMenu();
         listenerZoomGraph();
         listenerMoveOnGraph();
         listenerCoordinateOnMousePressed();
@@ -119,7 +126,16 @@ public class GraphController {
         selectionPaneController.closeSelectionPane();
     }
 
+    // Hide Context Menu when clicking outside a node
+    public void listenerContextMenu() {
+        centerPane.setOnMouseClicked(event -> {
 
+            //hide contextMenu
+            hideContextMenu();
+
+            event.consume();
+        });
+    }
 
     private void listenerZoomGraph() {
         centerPane.setOnScroll(event -> {
@@ -367,6 +383,11 @@ public class GraphController {
         System.out.println(" - Max dimension of graph : 8000 px x 6240 px");
         System.out.println(" - Spawning point : center of graph (coord 4000,3120)");
         System.out.println("\n");
+    }
+
+    private void hideContextMenu() {
+        contextMenu.getItems().clear();
+        contextMenu.hide();
     }
 
 //    private void listenerSaveGraph() {

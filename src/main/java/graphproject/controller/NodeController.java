@@ -24,53 +24,21 @@ public class NodeController {
     private Node selectedNode;
 
 
-
     private final Pane centerPane;
     private final ToolsController toolsController;
 
     private final SelectionPaneController selectionPaneController;
 
-    NodeController(Graph graph, Pane centerPane, ToolsController toolsController, SelectionPaneController selectionPaneController){
+    NodeController(Graph graph, Pane centerPane, ContextMenu contextMenu, ToolsController toolsController, SelectionPaneController selectionPaneController){
         this.graph = graph;
         this.centerPane = centerPane;
+        this.contextMenu = contextMenu;
         this.toolsController = toolsController;
         this.selectionPaneController = selectionPaneController;
-
-
-        //selectionPaneController.getNodePane().deleteNodeButtonListener(this);
-
-        this.contextMenu = new ContextMenu();
-
     }
 
     public void setGraph(Graph graph){
         this.graph = graph;
-    }
-
-    // Add a node when the ToggleButton is true, and we click on the graph
-    public void listenerAddNodeToGraph(GraphController graphController) {
-        centerPane.setOnMouseClicked(event -> {
-
-            //hide contextMenu
-            hideContextMenu();
-
-            if (toolsController.isSelected_geneticToggleButton() && graph != null) {
-
-                int x = (int) event.getX();
-                int y = (int) event.getY();
-                Node node = graph.addNode(x,y);
-
-
-
-                // Updates the display of Nodes
-                updateNode(node);
-
-                // Display the information of the new node
-                //Node node = graph.getNodeFromPos(x,y);
-                //selectionPaneController.setNodePane(node);
-            }
-            event.consume();
-        });
     }
 
     public void updateNode(Node node) {
@@ -182,17 +150,17 @@ public class NodeController {
         });
     }
 
-    public void deleteNode(Node node){
-        //node.deleteAllLinks();
-
-        graph.getNodes().remove(node);
-
-        node.deleteAllLinks(centerPane);
-
-        node.deleteCircle();
-
-        node = null;
-    }
+//    public void deleteNode(Node node){
+//        //node.deleteAllLinks();
+//
+//        graph.getNodes().remove(node);
+//
+//        node.deleteAllLinks(centerPane);
+//
+//        node.deleteCircle();
+//
+//        node = null;
+//    }
 
     private void updateContextMenu(Node node, double x, double y) {
 
@@ -221,11 +189,6 @@ public class NodeController {
 
         // Display the menu with all places
         contextMenu.show(centerPane, x, y);
-    }
-
-    private void hideContextMenu() {
-        contextMenu.getItems().clear();
-        contextMenu.hide();
     }
 
 
