@@ -34,14 +34,12 @@ public class GraphController {
 //    private MenuItem buttonSaveGraph;
 
     //tools
-    private ToolsController toolsController;
+    private SessadGestionController sessadGestionController;
     private SelectionPaneController selectionPaneController;
     private NodeController nodeController;
 
     // App attribute
     private Graph graph;
-
-    private SessadGestion sessadGestion;
 
     private Label graphTitle;
 
@@ -59,7 +57,6 @@ public class GraphController {
     GraphController(Pane pane, Pane missionRightPane, Pane itineraryRightPane, Label graphTitle, Pane centreRightPane, HBox toolsBar, Pane parentCenterPane, Label zoomText) {
 
         this.graph = null;
-        this.sessadGestion = null;
         this.contextMenu = new ContextMenu();
 
         // Graphic elements of the scene
@@ -77,11 +74,10 @@ public class GraphController {
         // tools
 
         this.selectionPaneController = new SelectionPaneController(missionRightPane, itineraryRightPane, centreRightPane, toolsBar, centerPane);
-        //selectionPaneController.searchResetButtonListener(graph);
 
-        this.toolsController = new ToolsController(toolsBar, selectionPaneController);
+        this.nodeController = new NodeController(graph, centerPane, contextMenu, selectionPaneController);
 
-        this.nodeController = new NodeController(graph, centerPane, contextMenu, toolsController, selectionPaneController);
+        this.sessadGestionController = new SessadGestionController(graph.getSessadGestion(), selectionPaneController, toolsBar);
 
         // Initializing Graphic Rendering
 
@@ -309,25 +305,26 @@ public class GraphController {
 
             // Crée un cercle avec un rayon de 10 pixels
             Circle circle = Graphics.DesignCircle(node.getX(), node.getY(), 10);
+            sessadGestionController.setNodeColor(circle, node);
 
-            if (node.isCentre()){
-                circle.setFill(Color.ORANGE);
-            }
-            else{
-                Mission mission = (Mission) node.getListPlace().get(0);
-
-                if (mission.getEmployee() != null){
-
-                    if (mission.getEmployee().getCentre().getId() == 1){
-                        circle.setFill(Color.BLUE);
-                    }
-                    else{
-                        circle.setFill(Color.GREEN);
-                    }
-
-                }
-
-            }
+//            if (node.isCentre()){
+//                circle.setFill(Color.ORANGE);
+//            }
+//            else{
+//                Mission mission = (Mission) node.getListPlace().get(0);
+//
+//                if (mission.getEmployee() != null){
+//
+//                    if (mission.getEmployee().getCentre().getId() == 1){
+//                        circle.setFill(Color.BLUE);
+//                    }
+//                    else{
+//                        circle.setFill(Color.GREEN);
+//                    }
+//
+//                }
+//
+//            }
 
             // Add event listener to the node
             nodeController.listenerNode(circle, node, centerPane);

@@ -55,6 +55,15 @@ public class Node {
         return listPlace.get(ref);
     }
 
+    public int getIdCentre() {
+        for (Place place : listPlace) {
+            if (place.getType() == Place.Type.CENTRE) {
+                return place.getId();
+            }
+        }
+        return 0;
+    }
+
     public boolean isCentre() {
         return centre;
     }

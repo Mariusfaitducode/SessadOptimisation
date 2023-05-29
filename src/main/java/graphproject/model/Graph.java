@@ -24,6 +24,8 @@ public class Graph {
         this.sessadGestion = new SessadGestion(idInstance, nodes);
     }
 
+    public SessadGestion getSessadGestion(){return sessadGestion;}
+
     public List <Node> getNodes(){return nodes;}
 
 //    public Node getNodeFromPos(int x, int y) {

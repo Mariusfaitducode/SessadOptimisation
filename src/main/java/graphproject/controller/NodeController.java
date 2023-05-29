@@ -25,15 +25,15 @@ public class NodeController {
 
 
     private final Pane centerPane;
-    private final ToolsController toolsController;
+//    private final ToolsController toolsController;
 
     private final SelectionPaneController selectionPaneController;
 
-    NodeController(Graph graph, Pane centerPane, ContextMenu contextMenu, ToolsController toolsController, SelectionPaneController selectionPaneController){
+    NodeController(Graph graph, Pane centerPane, ContextMenu contextMenu, SelectionPaneController selectionPaneController){
         this.graph = graph;
         this.centerPane = centerPane;
         this.contextMenu = contextMenu;
-        this.toolsController = toolsController;
+//        this.toolsController = toolsController;
         this.selectionPaneController = selectionPaneController;
     }
 
