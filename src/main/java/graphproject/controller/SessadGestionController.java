@@ -19,7 +19,7 @@ public class SessadGestionController {
 
     public void setNodeColor(Circle circle, Node node) {
         if (node.isCentre()){
-            switch (node.getId()){
+            switch (node.getIdCentre()){
                 case 1:
                     circle.setFill(Color.BLUE);
                     break;
@@ -38,25 +38,16 @@ public class SessadGestionController {
 
                 switch (mission.getEmployee().getCentre().getId()){
                     case 1:
-                        circle.setFill(Color.color(0,128,255));
+                        circle.setFill(Color.rgb(0,128,255));
                         break;
                     case 2:
-                        circle.setFill(Color.color(255,178,102));
+                        circle.setFill(Color.rgb(255,178,102));
                         break;
                     case 3:
-                        circle.setFill(Color.color(128,255,0));
+                        circle.setFill(Color.rgb(128,255,0));
                         break;
                 }
-
-//                if (mission.getEmployee().getCentre().getId() == 1){
-//                    circle.setFill(Color.BLUE);
-//                }
-//                else{
-//                    circle.setFill(Color.GREEN);
-//                }
-
             }
-
         }
     }
 }

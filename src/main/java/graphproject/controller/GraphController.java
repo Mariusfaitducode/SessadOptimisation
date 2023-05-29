@@ -77,8 +77,6 @@ public class GraphController {
 
         this.nodeController = new NodeController(graph, centerPane, contextMenu, selectionPaneController);
 
-        this.sessadGestionController = new SessadGestionController(graph.getSessadGestion(), selectionPaneController, toolsBar);
-
         // Initializing Graphic Rendering
 
         initializeCenterPaneSettings();
@@ -101,6 +99,8 @@ public class GraphController {
     public void setGraph(Graph graph) {
 
         this.graph = graph;
+
+        this.sessadGestionController = new SessadGestionController(graph.getSessadGestion(), selectionPaneController, toolsBar);
     }
 
     public void clearGraph() {
