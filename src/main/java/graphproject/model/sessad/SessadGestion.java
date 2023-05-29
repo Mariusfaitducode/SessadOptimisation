@@ -118,9 +118,9 @@ public class SessadGestion {
 
     public void cutMatrix(double[][] distGlobal, double[][] distCentreCentre, double[][] distCentreMission, double[][] distMissionMission, int sizeCentre, int sizeMission){
 
-        System.out.println("listCentre.size() : "+sizeCentre);
-        System.out.println("listMission.size() : "+sizeMission);
-        System.out.println("distancesMatrix.length : "+distGlobal.length);
+//        System.out.println("listCentre.size() : "+sizeCentre);
+//        System.out.println("listMission.size() : "+sizeMission);
+//        System.out.println("distancesMatrix.length : "+distGlobal.length);
 
         //Matrice centre centre
         for (int l = 0; l < sizeCentre; l++) {

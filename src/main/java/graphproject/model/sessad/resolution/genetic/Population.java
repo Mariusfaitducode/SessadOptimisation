@@ -72,7 +72,7 @@ public class Population {
 
             for (Integer c : listRef){
 
-                System.out.println("c : "+c);
+//                System.out.println("c : "+c);
 
                 double min = 1000000000;
                 Centre centre = null;

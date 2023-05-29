@@ -59,10 +59,12 @@ public class App {
 //    }
 
     private void generateAllGraphsFromInstances() {
+        System.out.println("7 instances loaded from files : ");
         for (int idInstance = 1; idInstance < 7 ; idInstance++) {
 
-            String graphName = mapInstance.get(idInstance);
-            Graph graph = new Graph(graphName, idInstance);
+            String instanceName = mapInstance.get(idInstance);
+            System.out.println(" - " + instanceName);
+            Graph graph = new Graph(instanceName, idInstance);
             graphs.add(graph);
         }
     }

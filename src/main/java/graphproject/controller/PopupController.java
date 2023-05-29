@@ -29,33 +29,33 @@ public class PopupController {
         this.app = app;
     }
 
-    public void setVisible(boolean statut) {
-        popupPane.setVisible(statut);
-    }
+//    public void setVisible(boolean statut) {
+//        popupPane.setVisible(statut);
+//    }
 
-    public Graph generateGraph(Pane centerPane){
-
-        // Create new Graph
-        app.createNewGraph(nameGraph.getText());
-
-        // Update Graph depending on Radio Button:
-        // Empty / Random / import existing one
-        if (rbutton1.isSelected()) {
-
-            // Empty
-
-        } else if (rbutton2.isSelected()) {
-
-            app.getLastGraph().setRandomNodesAndLinks(Integer.parseInt(nodesNumber.getText()), centerPane);
-
-        } else if (rbutton3.isSelected()) {
-
-            // TODO
-        }
-
-        // Hide Creating Graph Pop-up
-        popupPane.setVisible(false);
-
-        return app.getLastGraph();
-    }
+//    public Graph generateGraph(Pane centerPane){
+//
+//        // Create new Graph
+//        app.createNewGraph(nameGraph.getText());
+//
+//        // Update Graph depending on Radio Button:
+//        // Empty / Random / import existing one
+//        if (rbutton1.isSelected()) {
+//
+//            // Empty
+//
+//        } else if (rbutton2.isSelected()) {
+//
+//            app.getLastGraph().setRandomNodesAndLinks(Integer.parseInt(nodesNumber.getText()), centerPane);
+//
+//        } else if (rbutton3.isSelected()) {
+//
+//            // TODO
+//        }
+//
+//        // Hide Creating Graph Pop-up
+//        popupPane.setVisible(false);
+//
+//        return app.getLastGraph();
+//    }
 }

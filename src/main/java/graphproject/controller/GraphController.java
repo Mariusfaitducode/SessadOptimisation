@@ -59,6 +59,7 @@ public class GraphController {
     GraphController(Pane pane, Pane missionRightPane, Pane itineraryRightPane, Label graphTitle, Pane centreRightPane, HBox toolsBar, Pane parentCenterPane, Label zoomText) {
 
         this.graph = null;
+        this.sessadGestion = null;
         this.contextMenu = new ContextMenu();
 
         // Graphic elements of the scene
@@ -255,14 +256,17 @@ public class GraphController {
         Node linkedNode = link.getNode();
 
         link.getLine().setOnMouseClicked(event ->{
-            if (toolsController.isSelected_optToggleButton()){
-                link.deleteLink(node, centerPane);
-            }
-            else{
-                link.setSelection(true);
-                selectionPaneController.setLinkPane(node, link, linkedNode);
-                event.consume();
-            }
+            link.setSelection(true);
+            selectionPaneController.setLinkPane(node, link, linkedNode);
+            event.consume();
+//            if (toolsController.isSelected_optToggleButton()){
+//                link.deleteLink(node, centerPane);
+//            }
+//            else{
+//                link.setSelection(true);
+//                selectionPaneController.setLinkPane(node, link, linkedNode);
+//                event.consume();
+//            }
         });
         link.getLine().setOnMouseEntered(event ->{
             link.getLine().setStroke(Color.RED);

@@ -28,6 +28,8 @@ public class ToolsController {
 //        listenerDeleteButton();
     }
 
+    public Button getTest() {return test;}
+
     public boolean isSelected_geneticToggleButton() {
         return geneticToggleButton.isSelected();
     }

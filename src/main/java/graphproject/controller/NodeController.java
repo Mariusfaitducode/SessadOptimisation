@@ -117,37 +117,37 @@ public class NodeController {
         });
 
         // fonction qui ajoute des links
-        circle.setOnMouseReleased(event -> {
-            if (toolsController.isSelected_tabouToggleButton() && graph != null) {
-                System.out.println("check");
-                //find the red circle
-                boolean isRedCircle = false;
-                Node linkedNode = null;
-                for (Node node2 : graph.getNodes()) {
-                    Circle circle2 = node2.getCircle();
-                    if (circle2.getFill()==Color.RED) {
-                        isRedCircle = true;
-                        linkedNode = node2;
-                        break;
-                    }
-                }
-
-                if (isRedCircle) {
-                    // Create new link
-                    graph.addLink(linkedNode, node);
-                    Link.Arrow arrow = Graphics.DesignLineAndArrow(linkedNode, node, 10);
-                    centerPane.getChildren().addAll(arrow.line, arrow.arrowHead);
-                    Link link = graph.getLinkFromIds(linkedNode, node);
-                    link.setOrientedLine(arrow);
-
-                    //Reset Color to node
-                    node.getCircle().setFill(Color.WHITE);
-                    linkedNode.getCircle().setFill(Color.WHITE);
-                } else {
-                    node.getCircle().setFill(Color.RED);
-                }
-            }
-        });
+//        circle.setOnMouseReleased(event -> {
+//            if (toolsController.isSelected_tabouToggleButton() && graph != null) {
+//                System.out.println("check");
+//                //find the red circle
+//                boolean isRedCircle = false;
+//                Node linkedNode = null;
+//                for (Node node2 : graph.getNodes()) {
+//                    Circle circle2 = node2.getCircle();
+//                    if (circle2.getFill()==Color.RED) {
+//                        isRedCircle = true;
+//                        linkedNode = node2;
+//                        break;
+//                    }
+//                }
+//
+//                if (isRedCircle) {
+//                    // Create new link
+//                    graph.addLink(linkedNode, node);
+//                    Link.Arrow arrow = Graphics.DesignLineAndArrow(linkedNode, node, 10);
+//                    centerPane.getChildren().addAll(arrow.line, arrow.arrowHead);
+//                    Link link = graph.getLinkFromIds(linkedNode, node);
+//                    link.setOrientedLine(arrow);
+//
+//                    //Reset Color to node
+//                    node.getCircle().setFill(Color.WHITE);
+//                    linkedNode.getCircle().setFill(Color.WHITE);
+//                } else {
+//                    node.getCircle().setFill(Color.RED);
+//                }
+//            }
+//        });
     }
 
 //    public void deleteNode(Node node){

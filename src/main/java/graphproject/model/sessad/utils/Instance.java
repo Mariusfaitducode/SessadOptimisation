@@ -36,7 +36,7 @@ public class Instance {
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
 
-                //System.out.println("values[0] : "+values[0]);
+//                System.out.println("values[0] : "+values[0]);
 
                 String stringId = values[0].replaceAll("[^\\d.]", "");
 
@@ -44,7 +44,7 @@ public class Instance {
 
                 String name = values[1];
 
-                //System.out.println("Name : "+name);
+//                System.out.println("Name : "+name);
 
                 Centre centre = new Centre(id, name);
 
@@ -132,18 +132,18 @@ public class Instance {
             e.printStackTrace();
         }
 
-        System.out.println("distancesMatrix : "+distancesMatrix.toString());
-
-        /*for (int l = 0; l < distancesMatrix.length; l++) {
-            for (int c = 0; c < distancesMatrix[l].length; c++) {
-                System.out.print(distancesMatrix[l][c]+" ");
-            }
-            System.out.println();
-        }*/
-
-        System.out.println("listCentre.size() : "+listCentre.size());
-        System.out.println("listMission.size() : "+listMission.size());
-        System.out.println("distancesMatrix.length : "+distancesMatrix.length);
+//        System.out.println("distancesMatrix : "+distancesMatrix.toString());
+//
+//        for (int l = 0; l < distancesMatrix.length; l++) {
+//            for (int c = 0; c < distancesMatrix[l].length; c++) {
+//                System.out.print(distancesMatrix[l][c]+" ");
+//            }
+//            System.out.println();
+//        }
+//
+//        System.out.println("listCentre.size() : "+listCentre.size());
+//        System.out.println("listMission.size() : "+listMission.size());
+//        System.out.println("distancesMatrix.length : "+distancesMatrix.length);
 
 
 
@@ -220,11 +220,11 @@ public class Instance {
                 listMission.get(i - listCentre.size()).setNode(node);
             }
 
-            //listMission.get(i).display();
+//            listMission.get(i).display();
 
-            System.out.println("xCoordinate : "+xCoordinates[i]);
-            System.out.println("yCoordinate : "+yCoordinates[i]);
-            System.out.println("--------------------------------------------------");
+//            System.out.println("xCoordinate : "+xCoordinates[i]);
+//            System.out.println("yCoordinate : "+yCoordinates[i]);
+//            System.out.println("--------------------------------------------------");
         }
     }
 
