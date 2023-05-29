@@ -26,7 +26,6 @@
             <Pane id="#id-graph-pane" fx:id="parentCenterPane" prefHeight="6000.0" prefWidth="8000.0" style="-fx-background-color: #666;" BorderPane.alignment="CENTER">
                <children>
                   <Pane fx:id="centerPane" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #111;" />
-                  <Button layoutX="734.0" layoutY="14.0" mnemonicParsing="false" onAction="#testSessad" text="Button" />
                </children></Pane>
          </center>
          <bottom>
@@ -40,7 +39,12 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Label>
-                  <ToggleButton id="id-toolsBar-createNodes" mnemonicParsing="false" text="Create Nodes" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#test" prefHeight="31.0" prefWidth="99.0" text="Test">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <ToggleButton id="id-toolsBar-genetic" mnemonicParsing="false" text="Step 1 : Genetic" textFill="WHITE">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -51,18 +55,7 @@
                         <Font size="14.0" />
                      </font>
                   </ToggleButton>
-                  <ToggleButton id="id-toolsBar-createLinks" mnemonicParsing="false" text="Create Links" textFill="WHITE">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
-                     </padding>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </ToggleButton>
-                  <ToggleButton id="id-toolBar-delete" mnemonicParsing="false" text="Delete">
+                  <ToggleButton id="id-toolBar-tabou" mnemonicParsing="false" text="Step 2 : Tabou">
                      <padding>
                         <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                      </padding>
@@ -70,7 +63,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </ToggleButton>
-                  <ToggleButton id="id-toolBar-searchPath" mnemonicParsing="false" text="Search Path" textFill="WHITE">
+                  <ToggleButton id="id-toolBar-2-opt" mnemonicParsing="false" text="Step 3 : 2-Opt" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -80,7 +73,7 @@
                   </ToggleButton>
                   <Label fx:id="zoomText" styleClass="labelled" text="ZOOM : 100%">
                      <HBox.margin>
-                        <Insets left="270.0" />
+                        <Insets left="120.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -147,18 +140,17 @@
          <top>
             <Pane prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #333;" BorderPane.alignment="CENTER">
                <children>
-                  <MenuBar prefHeight="26.0" prefWidth="200.0">
+                  <MenuBar prefHeight="26.0" prefWidth="290.0">
                      <menus>
                         <Menu mnemonicParsing="false" text="File">
                            <items>
-                              <MenuItem mnemonicParsing="false" onAction="#createNewGraphPopup" text="New Graph" />
-                              <Menu fx:id="openGraphsMenu" mnemonicParsing="false" onMenuValidation="#openExistingGraphsItems" text="Open Graph">
+                              <Menu fx:id="openGraphsMenu" mnemonicParsing="false" onMenuValidation="#openInstances" text="Open Instance">
                                  <items>
-                                    <MenuItem fx:id="noRecentGraphMenuItem" mnemonicParsing="false" text="No Recent Graph" />
+                                    <MenuItem fx:id="noRecentInstance" mnemonicParsing="false" text="No Recent Instance" />
                                  </items>
                               </Menu>
-                              <MenuItem mnemonicParsing="false" onAction="#closeGraph" text="Close Graph" />
-                              <MenuItem fx:id="buttonSaveGraph" mnemonicParsing="false" text="Save Graph" />
+                              <MenuItem mnemonicParsing="false" onAction="#closeInstance" text="Close Instance" />
+                              <MenuItem mnemonicParsing="false" onAction="#saveInstance" text="Save Instance" />
                            </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
@@ -180,12 +172,12 @@
                         </Menu>
                      </menus>
                   </MenuBar>
-                  <Label fx:id="graphTitle" layoutX="500.0" layoutY="3.0" text="untitled" textFill="WHITE">
+                  <Label fx:id="graphTitle" layoutX="534.0" layoutY="3.0" text="untitled" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="408.0" layoutY="3.0" text="Graph Editor - " textFill="WHITE">
+                  <Label layoutX="408.0" layoutY="3.0" text="SESSAD Optimiser - " textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -222,7 +214,7 @@
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <Button layoutX="253.0" layoutY="246.0" mnemonicParsing="false" onAction="#generateGraph" prefHeight="31.0" prefWidth="99.0" text="Générer" />
+                  <Button layoutX="253.0" layoutY="246.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Générer" />
                </children>
             </Pane>
          </children>

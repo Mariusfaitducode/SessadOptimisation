@@ -9,9 +9,9 @@ public class MenuController {
 
     //private MenuItem menuItem;
 
-    private Menu openGraphsMenu;
+    private final Menu openGraphsMenu;
 
-    private MenuItem noRecentGraphMenuItem;
+    private final MenuItem noRecentGraphMenuItem;
 
     MenuController(Menu openGraphsMenu, MenuItem noRecentGraphMenuItem){
         this.openGraphsMenu = openGraphsMenu;

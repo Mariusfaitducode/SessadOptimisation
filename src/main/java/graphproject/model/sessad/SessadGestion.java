@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static graphproject.model.sessad.utils.Dictionary.mapInstance;
+
 public class SessadGestion {
 
     public static double[][] distGlobal;
@@ -23,28 +25,28 @@ public class SessadGestion {
 
     Instance instance;
 
-    Map<Integer, String> mapInstance;
+//    Map<Integer, String> mapInstance;
 
     Genetic genetic;
 
 
 
-    public SessadGestion(List<Node> listNodes){
+    public SessadGestion(int idInstanceList, List<Node> listNodes){
 
-        mapInstance = new HashMap<>();
-
-        mapInstance.put(1, "30Missions-2centres");
-        mapInstance.put(2, "66Missions-2centres");
-        mapInstance.put(3, "94Missions-2centres");
-        mapInstance.put(4, "94Missions-3centres");
-        mapInstance.put(5, "100Missions-2centres");
-        mapInstance.put(6, "200Missions-2centres");
+//        mapInstance = new HashMap<>();
+//
+//        mapInstance.put(1, "30Missions-2centres");
+//        mapInstance.put(2, "66Missions-2centres");
+//        mapInstance.put(3, "94Missions-2centres");
+//        mapInstance.put(4, "94Missions-3centres");
+//        mapInstance.put(5, "100Missions-2centres");
+//        mapInstance.put(6, "200Missions-2centres");
 
         listCentre = new ArrayList<>();
         listMission = new ArrayList<>();
         listEmployee = new ArrayList<>();
 
-        generateInstance(3);
+        generateInstance(idInstanceList);
 
 
         instance.loadCentres(listCentre);

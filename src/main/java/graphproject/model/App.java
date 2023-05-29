@@ -1,18 +1,25 @@
 package graphproject.model;
 
+import graphproject.model.sessad.SessadGestion;
 import javafx.scene.layout.Pane;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static graphproject.model.sessad.utils.Dictionary.mapInstance;
+
 public class App {
 
     private final List<Graph> graphs;
 
+    private final List<SessadGestion> sessadGestioners;
+
     public App() {
         graphs = new ArrayList<>(0);
-        generateAllGraphsFromSave();
+        sessadGestioners = new ArrayList<>(0);
+        generateAllGraphsFromInstances();
+//        generateAllGraphsFromSave();
     }
 
     public List<Graph> getGraphs() {
@@ -50,6 +57,21 @@ public class App {
                 graph.loadGraph(file);
                 graphs.add(graph);
             }
+        }
+    }
+
+    private void generateAllGraphsFromInstances() {
+        for (int idInstanceList = 1; idInstanceList < 7 ; idInstanceList++) {
+
+            List<Node> listNode = new ArrayList<>();
+            SessadGestion sessadGestion = new SessadGestion(idInstanceList, listNode);
+
+            String graphName = mapInstance.get(idInstanceList);
+            Graph graph = new Graph(graphName);
+            graph.addNodes(listNode);
+
+            sessadGestioners.add(sessadGestion);
+            graphs.add(graph);
         }
     }
 }

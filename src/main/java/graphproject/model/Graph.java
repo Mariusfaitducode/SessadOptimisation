@@ -196,4 +196,8 @@ public class Graph {
                 e.printStackTrace();
             }
     }
+
+    public void addNodes(List<Node> listNodes) {
+        nodes.addAll(listNodes);
+    }
 }

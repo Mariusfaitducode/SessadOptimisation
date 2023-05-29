@@ -54,7 +54,7 @@ public class NodeController {
             //hide contextMenu
             hideContextMenu();
 
-            if (toolsController.isSelected_createNodesButton() && graph != null) {
+            if (toolsController.isSelected_geneticToggleButton() && graph != null) {
 
                 int x = (int) event.getX();
                 int y = (int) event.getY();
@@ -150,7 +150,7 @@ public class NodeController {
 
         // fonction qui ajoute des links
         circle.setOnMouseReleased(event -> {
-            if (toolsController.isSelected_createLinksButton() && graph != null) {
+            if (toolsController.isSelected_tabouToggleButton() && graph != null) {
                 System.out.println("check");
                 //find the red circle
                 boolean isRedCircle = false;
