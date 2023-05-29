@@ -92,7 +92,7 @@
          <right>
             <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #444;" BorderPane.alignment="CENTER">
                <children>
-                  <Pane fx:id="missionRightPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;" visible="false">
+                  <Pane fx:id="missionRightPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;">
                      <children>
                         <Label layoutX="62.0" layoutY="28.0" styleClass="labelled" text="Mission" />
                         <Label id="mission-id" layoutX="7.0" layoutY="77.0" styleClass="labelled" text="Id : " />
@@ -112,9 +112,11 @@
                               </ContextMenu>
                            </contextMenu>
                         </Label>
+                        <Label id="mission-employee" layoutX="8.0" layoutY="423.0" styleClass="labelled" text="Employé : " />
+                        <Label id="mission-centre" layoutX="9.0" layoutY="476.0" styleClass="labelled" text="Centre : " />
                      </children>
                   </Pane>
-                  <Pane fx:id="centreRightPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;">
+                  <Pane fx:id="centreRightPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444;" visible="false">
                      <children>
                         <Label layoutX="62.0" layoutY="28.0" styleClass="labelled" text="Centre" />
                         <Label id="centre-id" layoutX="7.0" layoutY="77.0" styleClass="labelled" text="Id : " />

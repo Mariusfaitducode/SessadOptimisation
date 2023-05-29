@@ -20,6 +20,10 @@ public class MissionPane {
 
     public Label textSpecialty;
 
+    public Label textEmployee;
+
+    public Label textCentre;
+
 
 
 
@@ -44,6 +48,12 @@ public class MissionPane {
 
         //Initialisation du champ de texte specialty
         this.textSpecialty = (Label) nodeRightPane.lookup("#mission-specialty");
+
+        //Initialisation du champ de texte employee
+        this.textEmployee = (Label) nodeRightPane.lookup("#mission-employee");
+
+        //Initialisation du champ de texte centre
+        this.textCentre = (Label) nodeRightPane.lookup("#mission-centre");
     }
 
 
@@ -66,6 +76,19 @@ public class MissionPane {
         textSkill.setText("Compétence : " + selectedMission.getSkill().toString());
 
         textSpecialty.setText("Spécialité : " + selectedMission.getSpecialty().toString());
+
+        if (selectedMission.getEmployee() != null){
+            textEmployee.setText("Employé : " + selectedMission.getEmployee().getId());
+
+            textCentre.setText("Centre : " + selectedMission.getEmployee().getCentre().getName());
+        }
+        else{
+            textEmployee.setText("Employé : Aucun");
+
+            textCentre.setText("Centre : Aucun");
+        }
+
+
 
     }
 

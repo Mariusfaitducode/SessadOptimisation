@@ -44,16 +44,20 @@ public class SessadGestion {
         listMission = new ArrayList<>();
         listEmployee = new ArrayList<>();
 
-        generateInstance(2);
+        generateInstance(3);
 
 
         instance.loadCentres(listCentre);
         instance.loadEmployees(listEmployee, listCentre);
         instance.loadMissions(listMission);
 
+        //gère affichage
         generatePosition(listNodes);
 
+        //Algo de résolution
         genetic = new Genetic(listMission, listCentre, distMissionCentre);
+
+
     }
 
     private void generateInstance(int instanceNumber) {
@@ -96,6 +100,8 @@ public class SessadGestion {
         return listMission;
     }
 
+    public List<Employee> getListEmployee() {return listEmployee;}
+
     public void generatePosition(List<Node> listNodes){
         distGlobal = instance.loadDistances(listCentre, listMission, listNodes);
 
@@ -105,6 +111,8 @@ public class SessadGestion {
 
         cutMatrix(distGlobal, distCentreCentre, distMissionCentre, distMissionMission, listCentre.size(), listMission.size());
     }
+
+
 
     public void cutMatrix(double[][] distGlobal, double[][] distCentreCentre, double[][] distCentreMission, double[][] distMissionMission, int sizeCentre, int sizeMission){
 

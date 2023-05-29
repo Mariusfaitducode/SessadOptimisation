@@ -1,6 +1,7 @@
 package graphproject.model;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
@@ -17,11 +18,23 @@ public class Link {
     //private final Node initialNode;
     private boolean selected;
 
+    private Color color;
+
     Link(Node node){
         this.linkedNode = node;
         //this.initialNode = initialNode;
         selected = false;
     }
+
+    Link(Node node, Color color){
+        this.linkedNode = node;
+        this.color = color;
+        //this.initialNode = initialNode;
+        selected = false;
+    }
+
+    public Color getColor(){return color;}
+    public void setColor(Color color){this.color = color;}
 
     public Line getLine(){return arrow.line;}
     public Polygon getArrowHead(){return arrow.arrowHead;}

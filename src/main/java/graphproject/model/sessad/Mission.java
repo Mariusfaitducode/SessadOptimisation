@@ -1,10 +1,12 @@
 package graphproject.model.sessad;
 
+import graphproject.model.Node;
 import graphproject.model.sessad.skill.Skill;
 import graphproject.model.sessad.skill.Specialty;
 
 public class Mission extends Place {
 
+    Node node;
     Employee employee;
 
     int day;
@@ -54,6 +56,9 @@ public class Mission extends Place {
 
     public Employee getEmployee(){return employee;}
     public void setEmployee(Employee employee){this.employee = employee;}
+
+    public Node getNode(){return node;}
+    public void setNode(Node node){this.node = node;}
 
 
 }

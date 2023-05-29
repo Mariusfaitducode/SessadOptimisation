@@ -2,6 +2,7 @@ package graphproject.model;
 
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,6 +50,12 @@ public class Graph {
 
     public void addLink(Node node, Node linkedNode) {
         node.links.add(new Link(linkedNode));
+        //linkedNode.links.add()
+        linkedNode.linkedNodeList.add(node);
+    }
+
+    public void addLink(Node node, Node linkedNode, Color color) {
+        node.links.add(new Link(linkedNode, color));
         //linkedNode.links.add()
         linkedNode.linkedNodeList.add(node);
     }

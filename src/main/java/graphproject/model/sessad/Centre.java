@@ -1,9 +1,13 @@
 package graphproject.model.sessad;
 
+import graphproject.model.Node;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Centre extends Place {
+
+    Node node;
 
     //private int id;
     private String name;
@@ -23,6 +27,9 @@ public class Centre extends Place {
         this.listEmployee = new ArrayList<>(0);
 
     }
+
+    public void setNode(Node node){this.node = node;}
+    public Node getNode(){return node;}
 
     public List<Employee> getListEmployee() {
         return listEmployee;

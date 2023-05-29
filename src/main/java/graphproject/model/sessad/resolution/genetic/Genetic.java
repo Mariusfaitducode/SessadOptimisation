@@ -18,7 +18,12 @@ public class Genetic {
         this.listCentre = listCentre;
         this.distanceMatrix = distanceMatrix;
 
+        //Création population initiale
         population = new Population(1, listMission, listCentre);
+
+        //Fitness  
+
+        //Creation de nouveux individus
     }
 
     public void Initialisation(){

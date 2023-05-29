@@ -329,6 +329,11 @@ public class GraphController {
 
                 Link.Arrow arrow = Graphics.DesignLineAndArrow(node, linkedNode, 10);
 
+                if (link.getColor() != null){
+                    arrow.line.setStroke(link.getColor());
+                    arrow.arrowHead.setFill(link.getColor());
+                }
+
                 centerPane.getChildren().addAll(arrow.line, arrow.arrowHead);
 
                 link.setOrientedLine(arrow);
