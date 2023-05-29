@@ -4,6 +4,7 @@ import graphproject.controller.graphics.Graphics;
 import graphproject.model.Graph;
 import graphproject.model.Link;
 import graphproject.model.Node;
+import graphproject.model.sessad.Mission;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -293,6 +294,21 @@ public class GraphController {
 
             if (node.isCentre()){
                 circle.setFill(Color.ORANGE);
+            }
+            else{
+                Mission mission = (Mission) node.getListPlace().get(0);
+
+                if (mission.getEmployee() != null){
+
+                    if (mission.getEmployee().getCentre().getId() == 1){
+                        circle.setFill(Color.BLUE);
+                    }
+                    else{
+                        circle.setFill(Color.GREEN);
+                    }
+
+                }
+
             }
 
             // Add event listener to the node

@@ -1,6 +1,7 @@
 package graphproject.model.sessad;
 
 import graphproject.model.Node;
+import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.utils.Instance;
 
 import java.io.File;
@@ -11,6 +12,11 @@ import java.util.Map;
 
 public class SessadGestion {
 
+    public static double[][] distGlobal;
+    public static double[][] distCentreCentre;
+    public static double[][] distMissionCentre;
+    public static double[][] distMissionMission;
+
     List<Centre> listCentre;
     List<Mission> listMission;
     List<Employee> listEmployee;
@@ -19,7 +25,11 @@ public class SessadGestion {
 
     Map<Integer, String> mapInstance;
 
-    public SessadGestion(){
+    Genetic genetic;
+
+
+
+    public SessadGestion(List<Node> listNodes){
 
         mapInstance = new HashMap<>();
 
@@ -34,14 +44,16 @@ public class SessadGestion {
         listMission = new ArrayList<>();
         listEmployee = new ArrayList<>();
 
-        generateInstance(1);
+        generateInstance(2);
 
 
         instance.loadCentres(listCentre);
         instance.loadEmployees(listEmployee, listCentre);
         instance.loadMissions(listMission);
 
-        //
+        generatePosition(listNodes);
+
+        genetic = new Genetic(listMission, listCentre, distMissionCentre);
     }
 
     private void generateInstance(int instanceNumber) {
@@ -72,7 +84,7 @@ public class SessadGestion {
     public static void main(String[] args) {
 
         // Launch the JavaFX application
-        SessadGestion sessadGestion = new SessadGestion();
+        //SessadGestion sessadGestion = new SessadGestion();
         //sessadGestion.displayInformations();
     }
 
@@ -85,8 +97,39 @@ public class SessadGestion {
     }
 
     public void generatePosition(List<Node> listNodes){
-        instance.loadDistances(listCentre, listMission, listNodes);
+        distGlobal = instance.loadDistances(listCentre, listMission, listNodes);
+
+        distCentreCentre = new double[listCentre.size()][listCentre.size()];
+        distMissionCentre = new double[listMission.size()][listCentre.size()];
+        distMissionMission = new double[listMission.size()][listMission.size()];
+
+        cutMatrix(distGlobal, distCentreCentre, distMissionCentre, distMissionMission, listCentre.size(), listMission.size());
     }
 
+    public void cutMatrix(double[][] distGlobal, double[][] distCentreCentre, double[][] distCentreMission, double[][] distMissionMission, int sizeCentre, int sizeMission){
+
+        System.out.println("listCentre.size() : "+sizeCentre);
+        System.out.println("listMission.size() : "+sizeMission);
+        System.out.println("distancesMatrix.length : "+distGlobal.length);
+
+        //Matrice centre centre
+        for (int l = 0; l < sizeCentre; l++) {
+            for (int c = 0; c < sizeCentre; c++) {
+                distCentreCentre[l][c] = distGlobal[l][c];
+            }
+        }
+        //Matrice centre mission
+        for (int l = sizeCentre; l < sizeCentre+sizeMission; l++) {
+            for (int c = 0; c < sizeCentre; c++) {
+                distCentreMission[l-sizeCentre][c] = distGlobal[l][c];
+            }
+        }
+        //Matrice mission mission
+        for (int l = sizeCentre; l < sizeCentre+sizeMission; l++) {
+            for (int c = sizeCentre; c < sizeCentre+sizeMission; c++) {
+                distMissionMission[l-sizeCentre][c-sizeCentre] = distGlobal[l][c];
+            }
+        }
+    }
 
 }

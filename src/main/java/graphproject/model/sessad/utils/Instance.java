@@ -109,7 +109,7 @@ public class Instance {
             }
     }
 
-    public void loadDistances(List<Centre> listCentre, List<Mission> listMission, List<Node> listNodes){
+    public double[][] loadDistances(List<Centre> listCentre, List<Mission> listMission, List<Node> listNodes){
 
         int size = listCentre.size() + listMission.size();
 
@@ -145,9 +145,7 @@ public class Instance {
         System.out.println("listMission.size() : "+listMission.size());
         System.out.println("distancesMatrix.length : "+distancesMatrix.length);
 
-        double[][] centreMatrix = new double[listCentre.size()][listCentre.size()];
-        double[][] centreMissionMatrix = new double[listMission.size()][listCentre.size()];
-        double[][] missionMatrix = new double[listMission.size()][listMission.size()];
+
 
         //cutMatrix(distancesMatrix, centreMatrix, centreMissionMatrix, missionMatrix, listCentre.size(), listMission.size());
 
@@ -155,33 +153,11 @@ public class Instance {
         double[] yCoordinate = new double[listMission.size()];
 
         setPositionFromDistances(distancesMatrix, listCentre, listMission, listNodes);
+
+        return distancesMatrix;
     }
 
-    public void cutMatrix(double[][] distanceMatrix, double[][] centreMatrix, double[][] centreMissionMatrix, double[][] missionMatrix, int sizeCentre, int sizeMission){
 
-        System.out.println("listCentre.size() : "+sizeCentre);
-        System.out.println("listMission.size() : "+sizeMission);
-        System.out.println("distancesMatrix.length : "+distanceMatrix.length);
-
-        //Matrice centre centre
-        for (int l = 0; l < sizeCentre; l++) {
-            for (int c = 0; c < sizeCentre; c++) {
-                centreMatrix[l][c] = distanceMatrix[l][c];
-            }
-        }
-        //Matrice centre mission
-        for (int l = sizeCentre; l < sizeCentre+sizeMission; l++) {
-            for (int c = 0; c < sizeCentre; c++) {
-                centreMissionMatrix[l-sizeCentre][c] = distanceMatrix[l][c];
-            }
-        }
-        //Matrice mission mission
-        for (int l = sizeCentre; l < sizeCentre+sizeMission; l++) {
-            for (int c = sizeCentre; c < sizeCentre+sizeMission; c++) {
-                missionMatrix[l-sizeCentre][c-sizeCentre] = distanceMatrix[l][c];
-            }
-        }
-    }
 
     public void setPositionFromDistances(double[][] distanceMatrix, List<Centre> listCentre, List<Mission> listMission, List<Node> listNodes){
 

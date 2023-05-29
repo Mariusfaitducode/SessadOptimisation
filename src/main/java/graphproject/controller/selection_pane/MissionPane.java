@@ -4,7 +4,6 @@ import graphproject.model.Node;
 import graphproject.model.sessad.Mission;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 public class MissionPane {
     public Node selectedNode;
@@ -62,7 +61,7 @@ public class MissionPane {
 
         textDay.setText("Jour : " + (selectedMission.getDay()));
 
-        textPeriod.setText("Horaires : " + (selectedMission.getStartingPeriod()) + " - " + (selectedMission.getEndingPeriod()));
+        textPeriod.setText("Horaires : " + (selectedMission.getStart()) + " - " + (selectedMission.getEnd()));
 
         textSkill.setText("Compétence : " + selectedMission.getSkill().toString());
 

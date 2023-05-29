@@ -94,10 +94,12 @@ public class AppController implements Initializable {
 
     public void testSessad(){
 
-        SessadGestion sessadGestion = new SessadGestion();
         List<Node> listNode = new ArrayList<>();
 
-        sessadGestion.generatePosition(listNode);
+
+        SessadGestion sessadGestion = new SessadGestion(listNode);
+
+        //sessadGestion.generatePosition(listNode);
 
 
         Graph graph = new Graph("Graph Sessad");
