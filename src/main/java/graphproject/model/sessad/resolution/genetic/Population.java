@@ -28,6 +28,8 @@ public class Population {
 
                 if (employee.canTakeMission2(mission)){
 
+                    System.out.println("Employee " + employee.getId() + " can take mission " + mission.getId() + "in centre " + centre.getId() + "\n");
+
                     genome[mission.getId() - 1] = employee.getId();
 
                     mission.setEmployee(employee);
@@ -43,11 +45,13 @@ public class Population {
 
     Genome[] population;
 
+    private int sizePopulation;
+
     public Population(int sizePopulation, List<Mission> listMission, List<Centre> listCentre){
 
-
-
         int sizeGenome = listMission.size();
+
+        this.sizePopulation = sizePopulation;
 
         List<Integer> listRef = new ArrayList<>(0);
 
@@ -90,11 +94,7 @@ public class Population {
                 //Ajout d'un chromosome
                 population[i].addChromosome(listMission.get(c), centre);
             }
-
-
-
         }
+        System.out.println("Population initialized : " + sizePopulation);
     }
-
-
 }

@@ -38,6 +38,8 @@ public class GraphController {
     private SelectionPaneController selectionPaneController;
     private NodeController nodeController;
 
+    private ToolsController toolsController;
+
     // App attribute
     private Graph graph;
 
@@ -77,6 +79,8 @@ public class GraphController {
 
         this.nodeController = new NodeController(graph, centerPane, contextMenu, selectionPaneController);
 
+        this.toolsController = new ToolsController(toolsBar, selectionPaneController);
+
         // Initializing Graphic Rendering
 
         initializeCenterPaneSettings();
@@ -87,6 +91,7 @@ public class GraphController {
         listenerZoomGraph();
         listenerMoveOnGraph();
         listenerCoordinateOnMousePressed();
+        listenerTest();
 //        listenerSaveGraph();
 
         // All global variables
@@ -99,8 +104,7 @@ public class GraphController {
     public void setGraph(Graph graph) {
 
         this.graph = graph;
-
-        this.sessadGestionController = new SessadGestionController(graph.getSessadGestion(), selectionPaneController, toolsBar);
+        this.sessadGestionController = new SessadGestionController(graph);
     }
 
     public void clearGraph() {
@@ -121,6 +125,16 @@ public class GraphController {
 
         //Close Right Sidebar
         selectionPaneController.closeSelectionPane();
+    }
+    public void listenerTest(){
+
+        toolsController.getTest().setOnMouseClicked(event->{
+            if (graph != null) {
+                sessadGestionController.getSessadGestion().getResolution().startGeneticAlgo();
+                graph.setLink();
+                displayGraph();
+            }
+        });
     }
 
     // Hide Context Menu when clicking outside a node
@@ -214,7 +228,6 @@ public class GraphController {
             double dX = (event.getX() - initialX) * (centerPane.getBoundsInParent().getWidth()/8000);
             double dY = (event.getY() - initialY) * (centerPane.getBoundsInParent().getHeight()/6240);
 
-            System.out.println("--------------------------------");
             if (dX < 0) {
                 if (borderRight < 0) {
                     System.out.println("out!!!! right");

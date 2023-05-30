@@ -1,6 +1,7 @@
 package graphproject.model.sessad;
 
 import graphproject.model.Node;
+import graphproject.model.sessad.resolution.Resolution;
 import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.utils.Instance;
 
@@ -27,20 +28,11 @@ public class SessadGestion {
 
 //    Map<Integer, String> mapInstance;
 
-    Genetic genetic;
+    Resolution resolution;
 
 
 
     public SessadGestion(int idInstanceList, List<Node> listNodes){
-
-//        mapInstance = new HashMap<>();
-//
-//        mapInstance.put(1, "30Missions-2centres");
-//        mapInstance.put(2, "66Missions-2centres");
-//        mapInstance.put(3, "94Missions-2centres");
-//        mapInstance.put(4, "94Missions-3centres");
-//        mapInstance.put(5, "100Missions-2centres");
-//        mapInstance.put(6, "200Missions-2centres");
 
         listCentre = new ArrayList<>();
         listMission = new ArrayList<>();
@@ -57,10 +49,12 @@ public class SessadGestion {
         generatePosition(listNodes);
 
         //Algo de résolution
-        genetic = new Genetic(listMission, listCentre, distMissionCentre);
+        resolution = new Resolution(listMission, listCentre);
 
 
     }
+
+    public Resolution getResolution() {return resolution;}
 
     private void generateInstance(int instanceNumber) {
         String directoryPath = "src\\main\\resources\\instances\\"+mapInstance.get(instanceNumber)+"\\";

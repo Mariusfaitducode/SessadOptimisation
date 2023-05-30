@@ -19,14 +19,14 @@ public class Genetic {
         this.distanceMatrix = distanceMatrix;
 
         //Création population initiale
-        population = new Population(1, listMission, listCentre);
+
 
         //Fitness  
 
         //Creation de nouveux individus
     }
 
-    public void Initialisation(){
-
+    public void generatePopulation(int popSize){
+        population = new Population(popSize, listMission, listCentre);
     }
 }

@@ -1,5 +1,6 @@
 package graphproject.controller;
 
+import graphproject.model.Graph;
 import graphproject.model.Node;
 import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.SessadGestion;
@@ -10,11 +11,15 @@ import javafx.scene.shape.Circle;
 public class SessadGestionController {
     SessadGestion sessadGestion;
 
-    ToolsController toolsController;
 
-    public SessadGestionController(SessadGestion sessadGestion, SelectionPaneController selectionPaneController, HBox toolsBar) {
-        this.toolsController = new ToolsController(toolsBar, selectionPaneController);
-        this.sessadGestion = sessadGestion;
+    public SessadGestionController(Graph graph) {
+
+        this.sessadGestion = graph.getSessadGestion();
+
+    }
+
+    public SessadGestion getSessadGestion() {
+        return sessadGestion;
     }
 
     public void setNodeColor(Circle circle, Node node) {
@@ -50,4 +55,38 @@ public class SessadGestionController {
             }
         }
     }
+    //TODO : set color to link
+
+//    public void setLink() {
+//        for (Employee employee : sessadGestion.getListEmployee()){
+//
+//            Color color;
+//
+//            if (employee.getCentre().getId() == 1){
+//                float nuance = (float)employee.getId() * 1 / sessadGestion.getListEmployee().size();
+//
+//                color = new Color(0,0, nuance, 1);
+//            }
+//            else{
+//                float nuance = (float)employee.getId() * 1 / sessadGestion.getListEmployee().size();
+//                color = new Color(0, nuance, 0, 1);
+//            }
+//
+//            for (int day = 1; day < 6; day++ ){
+//
+//                Node firstNode = employee.getCentre().getNode();
+//
+//                int[] index = new int[1];
+//
+//                for (Mission mission : employee.getListMission(day, index)){
+//
+//                    graph.addLink(firstNode, mission.getNode(), color);
+//                    firstNode = mission.getNode();
+//                }
+//                graph.addLink(firstNode, employee.getCentre().getNode());
+//            }
+//
+//
+//        }
+//    }
 }

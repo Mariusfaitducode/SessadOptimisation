@@ -1,5 +1,7 @@
 package graphproject.model;
 
+import graphproject.model.sessad.Employee;
+import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.SessadGestion;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
@@ -41,6 +43,28 @@ public class Graph {
 
     public String getName(){return this.name;}
 
+    public void setLink() {
+        for (Employee employee : sessadGestion.getListEmployee()){
+            System.out.println("nbr mission : " + employee.getListMission().size());
+
+            for (int day = 1; day < 6; day++ ){
+
+                Node firstNode = employee.getCentre().getNode();
+
+                int[] index = new int[1];
+
+                for (Mission mission : employee.getListMission(day, index)){
+
+                    System.out.println("employe  " +employee.getId() + " mission : " + mission.getId());
+
+                    addLink(firstNode, mission.getNode());
+                    firstNode = mission.getNode();
+                }
+                addLink(firstNode, employee.getCentre().getNode());
+            }
+        }
+    }
+
 //    public Node addNode(int x, int y){
 //        int id = nodes.size();
 //        String name = "node" + id;
@@ -54,11 +78,11 @@ public class Graph {
 //        nodes.add(node);
 //    }
 
-//    public void addLink(Node node, Node linkedNode) {
-//        node.links.add(new Link(linkedNode));
-//        //linkedNode.links.add()
-//        linkedNode.linkedNodeList.add(node);
-//    }
+    public void addLink(Node node, Node linkedNode) {
+        node.links.add(new Link(linkedNode));
+        //linkedNode.links.add()
+        linkedNode.linkedNodeList.add(node);
+    }
 
 //    public void addLink(Node node, Node linkedNode, Color color) {
 //        node.links.add(new Link(linkedNode, color));

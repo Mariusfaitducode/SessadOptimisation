@@ -55,9 +55,10 @@ public class Employee {
 
                 listMissionDay.add(mission);
             }
-            else if (mission.getDay() > day){
-                break;
-            }
+            //TODO : A vérifier
+//            else if (mission.getDay() > day){
+//                break;
+//            }
             else{
                 startIndex[0]++;
             }
