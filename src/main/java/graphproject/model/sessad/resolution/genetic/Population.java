@@ -13,36 +13,6 @@ import static graphproject.model.sessad.SessadGestion.distMissionCentre;
 
 public class Population {
 
-    public class Genome{
-        int[] genome;
-        double fitness;
-
-        public Genome(int sizeGenome){
-            this.genome = new int[sizeGenome];
-            //this.fitness = fitness;
-        }
-
-        public void addChromosome(Mission mission, Centre centre){
-
-            for (Employee employee : centre.getListEmployee()){
-
-                if (employee.canTakeMission2(mission)){
-
-//                    System.out.println("Employee " + employee.getId() + " can take mission " + mission.getId() + "in centre " + centre.getId() + " day " + mission.getDay());
-
-                    genome[mission.getId() - 1] = employee.getId();
-
-                    mission.setEmployee(employee);
-
-                    break;
-                }
-
-            }
-        }
-
-
-    }
-
     Genome[] population;
 
     private int sizePopulation;
@@ -67,6 +37,17 @@ public class Population {
         //Parcours de la population
         for (int i = 0; i < sizePopulation; i++){
 
+            //Pour chaque génome on réinitialise la liste des missions et des centres
+
+            for (Mission mission : listMission){
+                mission.setEmployee(null);
+            }
+            for (Centre centre : listCentre){
+                for (Employee employee : centre.getListEmployee()){
+                    employee.setListMission(new ArrayList<>(0));
+                }
+            }
+
             //On définit un génome de taille sizeGenome
             population[i] = new Genome(sizeGenome);
 
@@ -84,6 +65,7 @@ public class Population {
                 //Parcours des centres
                 for (int l = 0; l < sizeCentre; l++){
 
+                    //Détermine le centre le plus proche
                     if (distMissionCentre[c][l] < min){
 
                         min = distMissionCentre[c][l];
@@ -96,5 +78,27 @@ public class Population {
             }
         }
         System.out.println("Population initialized : " + sizePopulation);
+    }
+
+    public void evaluatePopulation(List<Mission> listMission, List<Employee> listEmployee){
+        for (Genome genome : population){
+
+            for (Mission mission : listMission){
+                mission.setEmployee(null);
+            }
+            for (Employee employee : listEmployee){
+                employee.setListMission(new ArrayList<>(0));
+            }
+
+            genome.determineFitness(listMission, listEmployee);
+
+            System.out.println("Fitness : " + genome.fitness);
+        }
+    }
+
+    public void displayPopulation(){
+        for (Genome genome : population){
+            genome.displayGenome();
+        }
     }
 }

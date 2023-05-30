@@ -44,11 +44,14 @@ public class Employee {
 
     public List<Mission> getListMission(){return listMission;}
 
-    public List<Mission> getListMission(int day, int[] startIndex){
+    public void setListMission(List<Mission> listMission){this.listMission = listMission;}
+
+
+    public List<Mission> getListMission(int day){
 
         List<Mission> listMissionDay = new ArrayList<>(0);
 
-        startIndex[0] = 0;
+
 
         for (Mission mission : listMission){
             if (mission.getDay() == day){
@@ -58,13 +61,28 @@ public class Employee {
             //TODO : A vérifier
             else if (mission.getDay() > day){
                 break;
-           }
-            else{
-                startIndex[0]++;
             }
+
         }
 
         return listMissionDay;
+    }
+
+    public void addMission(Mission mission){
+
+        //place la mission au bon endroit dans la liste
+
+        if (listMission.size() == 0){
+            listMission.add(mission);
+            return;
+        }
+
+        for (int i = 0; i < listMission.size(); i++){
+            if (listMission.get(i).getDay() > mission.getDay()){
+                listMission.add(i, mission);
+                return;
+            }
+        }
     }
 
     public void display(){
@@ -74,86 +92,7 @@ public class Employee {
         System.out.println("Employee specialty : "+specialty);
     }
 
-    /*public boolean canTakeMission(Mission mission){
-
-        double totalDayHours = 0;
-
-        int startDay = mission.getStart();
-        int endDay = mission.getEnd();
-
-        Mission previousMission = null;
-        Mission nextMission = null;
-
-        int previousTime = 1000000000;
-        int nextTime = 1000000000;
-
-
-        List<Mission> listMissionDay = getListMission(mission.getDay());
-
-        //int lastMissionEnd = 0;
-        Mission lastMission = null;
-
-        double[][] distMissionMission = SessadGestion.distMissionMission;
-
-        //détermine l'heure de début de journée
-        if ( !listMissionDay.isEmpty()){
-            lastMission = listMissionDay.get(0);
-        }
-
-        for (Mission missionEmployee : listMissionDay){
-
-            //Verification horaire valide
-
-            startDay = Math.min(startDay, missionEmployee.getStart());
-            endDay = Math.max(endDay, missionEmployee.getEnd());
-
-
-            //Détermination de la mission précédente et suivante
-            int time = mission.getStart() - missionEmployee.getEnd();
-
-            if (time > 0 && time < previousTime){
-                previousMission = missionEmployee;
-                previousTime = time;
-            }
-
-            time = missionEmployee.getStart() - mission.getEnd();
-
-            if (time > 0 && time < nextTime){
-                nextMission = missionEmployee;
-                nextTime = time;
-            }
-
-            //Détermination taux horaire
-
-            double distance = distMissionMission[lastMission.getId() - 1][missionEmployee.getId() - 1];
-            double roadHours = distance / SPEED;
-
-            totalDayHours += missionEmployee.getEnd() - missionEmployee.getStart() + roadHours;
-
-
-            //Verification chevauchement horaire
-            if ( (mission.getStart() >= missionEmployee.getStart() && mission.getStart() <= missionEmployee.getEnd()) ||
-                    (mission.getEnd() >= missionEmployee.getStart() && mission.getEnd() <= missionEmployee.getEnd()) ){
-                return false;
-            }
-        }
-
-        //Verification taux horaire et amplitude horaire
-        totalDayHours += mission.getEnd() - mission.getStart();
-
-        if (totalDayHours > MAX_HOURS || endDay - startDay > MAX_TIME_SLOTS){
-            return false;
-        }
-
-        //Verification compétence
-        if (mission.getSkill() != skill){
-            return false;
-        }
-
-        return true;
-    }*/
-
-    public boolean canTakeMission2(Mission mission){
+    public boolean canTakeMission(Mission mission){
 
 
         //Récupère la liste de missions du jour avec nouvelle mission
@@ -166,6 +105,8 @@ public class Employee {
         }
         //Si l'employée n'a que une mission, la mission est valide
         else if (listMissionDay.size() == 1){
+            //System.out.println("Mission unique valide");
+
             return true;
         }
         else{
@@ -185,6 +126,7 @@ public class Employee {
 
             if (timeSlots > MAX_TIME_SLOTS){
                 listMission.remove(mission);
+                //System.out.println("Plage horaire trop grande");
                 return false;
             }
 
@@ -206,11 +148,15 @@ public class Employee {
                 lastMission = missionEmployee;
             }
 
-            //Verification taux horaire et amplitude horaire
+            //System.out.println("Taux horaire : "+totalDayHours);
+            //Verification taux horaire
             if (totalDayHours > MAX_HOURS){
                 listMission.remove(mission);
+                //System.out.println("Taux horaire trop grand");
+                //System.out.println("Taux horaire : "+totalDayHours);
                 return false;
             }
+            //System.out.println("Mission valide");
             return true;
         }
     }
@@ -219,12 +165,14 @@ public class Employee {
     public List<Mission> insertMission(Mission mission){
 
         if (skill != mission.getSkill()){
+
+            //System.out.println("Skill différent");
             return null;
         }
 
-        int[] index = new int[1];
+        //int[] index = new int[1];
 
-        List<Mission> listMissionDay = getListMission(mission.getDay(), index);
+        List<Mission> listMissionDay = getListMission(mission.getDay());
 
         //int startIndex = listMission.indexOf(listMissionDay.get(0));
 
@@ -234,12 +182,9 @@ public class Employee {
 
         if (listMissionDay.isEmpty()){
             listMissionDay.add(mission);
-            if (index[0] + 1 >= listMission.size()){
-                listMission.add(mission);
-            }
-            else{
-                listMission.add(index[0] + 1, mission);
-            }
+
+            addMission(mission);
+
             //listMission.add(index[0] + 1, mission);
             return listMissionDay;
         }
@@ -247,6 +192,7 @@ public class Employee {
             lastMission = listMissionDay.get(0);
         }
 
+        int index = 0;
 
         for (Mission missionEmployee : listMissionDay){
 
@@ -264,13 +210,14 @@ public class Employee {
                     if (nextRoadHours < missionEmployee.getStart() - mission.getEnd()){
                         listMissionDay.add(listMissionDay.indexOf(missionEmployee), mission);
 
-                        index[0] = listMission.indexOf(missionEmployee);
-                        listMission.add(index[0], mission);
+                        index = listMission.indexOf(missionEmployee);
+                        listMission.add(index, mission);
 
                         return listMissionDay;
                     }
                     //Si la mission n'est pas plaçable
                     else{
+                        //System.out.println("Mission non plaçable");
                         return null;
                     }
                 }
@@ -286,14 +233,15 @@ public class Employee {
                     if (previousRoadHours < mission.getStart() - lastMission.getEnd() && nextRoadHours < missionEmployee.getStart() - mission.getEnd()){
                         listMissionDay.add(listMissionDay.indexOf(missionEmployee), mission);
 
-                        index[0] = listMission.indexOf(missionEmployee);
-                        listMission.add(index[0], mission);
+                        index = listMission.indexOf(missionEmployee);
+                        listMission.add(index, mission);
 
                         return listMissionDay;
                     }
                 }
                 //Si la mission n'est pas plaçable
                 else{
+                    //System.out.println("Mission non plaçable");
                     return null;
                 }
             }
@@ -307,8 +255,8 @@ public class Employee {
                 if (previousRoadHours < mission.getStart() - missionEmployee.getEnd()){
                     listMissionDay.add(mission);
 
-                    index[0] = listMission.indexOf(missionEmployee) + 1;
-                    listMission.add(index[0], mission);
+                    index = listMission.indexOf(missionEmployee) + 1;
+                    listMission.add(index, mission);
 
                     return listMissionDay;
                 }
@@ -316,6 +264,7 @@ public class Employee {
             lastMission = missionEmployee;
         }
 
+        //System.out.println("Mission non plaçable");
         return null;
     }
 

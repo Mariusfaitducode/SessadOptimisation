@@ -46,7 +46,7 @@ public class SessadGestion {
         generatePosition(listNodes);
 
         //Algo de résolution
-        resolution = new Resolution(listMission, listCentre);
+        resolution = new Resolution(listMission, listCentre, listEmployee);
 
         //resolution.startGeneticAlgo();
     }

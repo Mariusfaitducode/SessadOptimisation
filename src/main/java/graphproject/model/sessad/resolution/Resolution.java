@@ -1,12 +1,11 @@
 package graphproject.model.sessad.resolution;
 
 import graphproject.model.sessad.Centre;
+import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.resolution.genetic.Genetic;
 
 import java.util.List;
-
-import static graphproject.model.sessad.SessadGestion.distMissionCentre;
 
 public class Resolution {
 
@@ -16,11 +15,24 @@ public class Resolution {
 
 //    private Permutation permutation;
 
-    public Resolution(List<Mission> listMission, List<Centre> listCentre){
-        genetic = new Genetic(listMission, listCentre, distMissionCentre);
+    public Resolution(List<Mission> listMission, List<Centre> listCentre, List<Employee> listEmployee){
+
+        genetic = new Genetic(listMission, listCentre, listEmployee, 10);
     }
 
     public void startGeneticAlgo() {
-        genetic.generatePopulation(1);
+
+        //création population initiale
+        genetic.generatePopulation();
+
+        genetic.getPopulation().displayPopulation();
+
+        //fitness
+        //genetic.fitness();
+
+
+
+        //création de nouveaux individus
+
     }
 }

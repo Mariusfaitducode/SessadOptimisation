@@ -82,7 +82,6 @@ public class App {
 
         List<Node> listNode = new ArrayList<>();
 
-
         this.sessadGestion = new SessadGestion(idInstance, listNode);
 
         generateGraphsFromSessadGestion(listNode);
@@ -116,8 +115,6 @@ public class App {
         this.choiceBoxDay.getItems().add("global");
 
         int max_day = 7;
-
-
 
         //Initialisation des graphs de chaque jours
 

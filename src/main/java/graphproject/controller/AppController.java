@@ -132,17 +132,13 @@ public class AppController implements Initializable {
 
                 Node firstNode = employee.getCentre().getNode();
 
-                int[] index = new int[1];
-
-                for (Mission mission : employee.getListMission(day, index)){
+                for (Mission mission : employee.getListMission(day)){
 
                     graph.addLink(firstNode, mission.getNode());
                     firstNode = mission.getNode();
                 }
                 graph.addLink(firstNode, employee.getCentre().getNode());
             }
-
-
         }
 
 
