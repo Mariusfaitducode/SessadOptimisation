@@ -1,12 +1,15 @@
 package graphproject.model;
 
 import graphproject.controller.GraphController;
+import graphproject.controller.ToolsController;
+import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.Place;
 import graphproject.model.sessad.SessadGestion;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -24,13 +27,19 @@ public class App {
     private ChoiceBox<String> choiceBoxDay;
     private ChangeListener<Number> choiceBoxDayListener;
 
-    public App(GraphController graphController, Pane parentCenterPane) {
+    private ToolsController toolsController;
+
+    public App(GraphController graphController, Pane parentCenterPane, HBox toolsBar) {
 
         this.graphController = graphController;
+
+        this.toolsController = new ToolsController(toolsBar);
 
         graphs = new ArrayList<>(0);
 
         choiceBoxDay = (ChoiceBox<String>) parentCenterPane.lookup("#graph-day-selection");
+
+        listenerTest(toolsController);
 
         if (choiceBoxDay == null) {
             System.out.println("ChoiceBox not found");
@@ -46,6 +55,24 @@ public class App {
         };
     }
 
+    public void listenerTest(ToolsController toolsController){
+
+        toolsController.getTest().setOnMouseClicked(event->{
+            if (!graphController.graphIsNull()) {
+                sessadGestion.getResolution().startGeneticAlgo();
+                //graph.setLink();
+                graphController.displayGraph();
+                List<Employee> employees = sessadGestion.getListEmployee();
+                for (Employee employee : employees) {
+                    List<Mission> missions = employee.getListMission();
+                    for (Mission mission : missions) {
+                        System.out.println("Centre : " + employee.getCentre().getId() + ",Employee : " + employee.getId() + ",day " + mission.getDay() + ",mission : " + mission.getName());
+                    }
+                }
+            }
+        });
+    }
+
     public void createNewInstance(int idInstance) {
 
         graphs.clear();
@@ -56,7 +83,7 @@ public class App {
         List<Node> listNode = new ArrayList<>();
 
 
-        SessadGestion sessadGestion = new SessadGestion(idInstance, listNode);
+        this.sessadGestion = new SessadGestion(idInstance, listNode);
 
         generateGraphsFromSessadGestion(listNode);
 
@@ -148,6 +175,8 @@ public class App {
 
         choiceBoxDay.getSelectionModel().selectedIndexProperty().addListener(choiceBoxDayListener);
     }
+
+
 //    private void generateAllGraphsFromInstances() {
 //        System.out.println("7 instances loaded from files : ");
 //        for (int idInstance = 1; idInstance < 7 ; idInstance++) {

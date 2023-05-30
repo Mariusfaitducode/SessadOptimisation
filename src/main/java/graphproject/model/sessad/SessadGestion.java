@@ -48,7 +48,7 @@ public class SessadGestion {
         //Algo de résolution
         resolution = new Resolution(listMission, listCentre);
 
-        resolution.startGeneticAlgo();
+        //resolution.startGeneticAlgo();
     }
 
     public Resolution getResolution() {return resolution;}

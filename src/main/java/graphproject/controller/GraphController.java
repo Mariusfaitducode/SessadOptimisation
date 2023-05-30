@@ -4,16 +4,12 @@ import graphproject.controller.graphics.Graphics;
 import graphproject.model.Graph;
 import graphproject.model.Link;
 import graphproject.model.Node;
-import graphproject.model.sessad.Employee;
-import graphproject.model.sessad.Mission;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
-import java.util.List;
 
 
 //Permet de modifier un graphe
@@ -40,7 +36,7 @@ public class GraphController {
     private SelectionPaneController selectionPaneController;
     private NodeController nodeController;
 
-    private ToolsController toolsController;
+
 
     // App attribute
     private Graph graph;
@@ -81,7 +77,7 @@ public class GraphController {
 
         this.nodeController = new NodeController(graph, centerPane, contextMenu, selectionPaneController);
 
-        this.toolsController = new ToolsController(toolsBar, selectionPaneController);
+
 
         // Initializing Graphic Rendering
 
@@ -93,7 +89,7 @@ public class GraphController {
         listenerZoomGraph();
         listenerMoveOnGraph();
         listenerCoordinateOnMousePressed();
-        listenerTest();
+        //listenerTest();
 //        listenerSaveGraph();
 
         // All global variables
@@ -130,23 +126,7 @@ public class GraphController {
         //Close Right Sidebar
         selectionPaneController.closeSelectionPane();
     }
-    public void listenerTest(){
 
-        toolsController.getTest().setOnMouseClicked(event->{
-            if (graph != null) {
-                sessadGestionController.getSessadGestion().getResolution().startGeneticAlgo();
-                //graph.setLink();
-                displayGraph();
-                List<Employee> employees = sessadGestionController.getSessadGestion().getListEmployee();
-                for (Employee employee : employees) {
-                    List<Mission> missions = employee.getListMission();
-                    for (Mission mission : missions) {
-                        System.out.println("Centre : " + employee.getCentre().getId() + ",Employee : " + employee.getId() + ",day " + mission.getDay() + ",mission : " + mission.getName());
-                    }
-                }
-            }
-        });
-    }
 
     // Hide Context Menu when clicking outside a node
     public void listenerContextMenu() {
