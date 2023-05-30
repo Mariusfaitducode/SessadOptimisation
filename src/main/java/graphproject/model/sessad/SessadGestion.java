@@ -50,8 +50,6 @@ public class SessadGestion {
 
         //Algo de résolution
         resolution = new Resolution(listMission, listCentre);
-
-
     }
 
     public Resolution getResolution() {return resolution;}

@@ -28,7 +28,7 @@ public class Population {
 
                 if (employee.canTakeMission2(mission)){
 
-                    System.out.println("Employee " + employee.getId() + " can take mission " + mission.getId() + "in centre " + centre.getId() + "\n");
+//                    System.out.println("Employee " + employee.getId() + " can take mission " + mission.getId() + "in centre " + centre.getId() + " day " + mission.getDay());
 
                     genome[mission.getId() - 1] = employee.getId();
 

@@ -144,9 +144,9 @@
                      <menus>
                         <Menu mnemonicParsing="false" text="File">
                            <items>
-                              <Menu fx:id="openGraphsMenu" mnemonicParsing="false" onMenuValidation="#openInstances" text="Open Instance">
+                              <Menu fx:id="openGraphsMenu" mnemonicParsing="false" text="Open Instance">
                                  <items>
-                                    <MenuItem fx:id="noRecentInstance" mnemonicParsing="false" text="No Recent Instance" />
+
                                  </items>
                               </Menu>
                               <MenuItem mnemonicParsing="false" onAction="#closeInstance" text="Close Instance" />

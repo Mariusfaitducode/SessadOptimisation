@@ -11,18 +11,24 @@ import static graphproject.model.sessad.utils.Dictionary.mapInstance;
 
 public class App {
 
-    private final List<Graph> graphs;
+    private SessadGestion sessadGestion;
+    private List<Graph> graphs;
 
     public App() {
         graphs = new ArrayList<>(0);
 
-        generateAllGraphsFromInstances();
+//        generateAllGraphsFromInstances();
 //        generateAllGraphsFromSave();
     }
 
-    public List<Graph> getGraphs() {
-        return graphs;
+    public void createNewInstance(int idInstance) {
+        //TODO : Marius
+        System.out.println("Creating and opening Instance : " + idInstance);
     }
+
+//    public List<Graph> getGraphs() {
+//        return graphs;
+//    }
 
     // create a new graph
 //    public void createNewGraph(String name) {
@@ -34,9 +40,9 @@ public class App {
 //        return graphs.get(graphs.size() - 1);
 //    }
 
-    public int getNumberOfGraphs() {
-        return graphs.size();
-    }
+//    public int getNumberOfGraphs() {
+//        return graphs.size();
+//    }
 
 //    private void generateAllGraphsFromSave() {
 //        String directoryPath = "src\\main\\resources\\saves\\";
@@ -58,14 +64,14 @@ public class App {
 //        }
 //    }
 
-    private void generateAllGraphsFromInstances() {
-        System.out.println("7 instances loaded from files : ");
-        for (int idInstance = 1; idInstance < 7 ; idInstance++) {
-
-            String instanceName = mapInstance.get(idInstance);
-            System.out.println(" - " + instanceName);
-            Graph graph = new Graph(instanceName, idInstance);
-            graphs.add(graph);
-        }
-    }
+//    private void generateAllGraphsFromInstances() {
+//        System.out.println("7 instances loaded from files : ");
+//        for (int idInstance = 1; idInstance < 7 ; idInstance++) {
+//
+//            String instanceName = mapInstance.get(idInstance);
+//            System.out.println(" - " + instanceName);
+//            Graph graph = new Graph(instanceName, idInstance);
+//            graphs.add(graph);
+//        }
+//    }
 }
