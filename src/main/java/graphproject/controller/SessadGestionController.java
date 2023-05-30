@@ -4,7 +4,6 @@ import graphproject.model.Graph;
 import graphproject.model.Node;
 import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.SessadGestion;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -14,7 +13,7 @@ public class SessadGestionController {
 
     public SessadGestionController(Graph graph) {
 
-        this.sessadGestion = graph.getSessadGestion();
+        //this.sessadGestion = graph.getSessadGestion();
 
     }
 

@@ -6,7 +6,6 @@ import graphproject.model.Link;
 import graphproject.model.Node;
 import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
-import graphproject.model.sessad.SessadGestion;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -136,7 +135,7 @@ public class GraphController {
         toolsController.getTest().setOnMouseClicked(event->{
             if (graph != null) {
                 sessadGestionController.getSessadGestion().getResolution().startGeneticAlgo();
-                graph.setLink();
+                //graph.setLink();
                 displayGraph();
                 List<Employee> employees = sessadGestionController.getSessadGestion().getListEmployee();
                 for (Employee employee : employees) {

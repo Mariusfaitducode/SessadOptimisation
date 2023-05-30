@@ -2,14 +2,11 @@ package graphproject.model.sessad;
 
 import graphproject.model.Node;
 import graphproject.model.sessad.resolution.Resolution;
-import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.utils.Instance;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static graphproject.model.sessad.utils.Dictionary.mapInstance;
 
@@ -58,7 +55,12 @@ public class SessadGestion {
 
     private void generateInstance(int instanceNumber) {
         String directoryPath = "src\\main\\resources\\instances\\"+mapInstance.get(instanceNumber)+"\\";
+        System.out.println("Loading instance : " + mapInstance.get(instanceNumber));
+
         File directory = new File(directoryPath);
+
+
+
         File[] files = directory.listFiles();
 
         instance = new Instance(files[0], files[1], files[2], files[3]);

@@ -72,7 +72,7 @@ public class AppController implements Initializable {
 
         graphController = new GraphController(centerPane, missionRightPane, itineraryRightPane, graphTitle, centreRightPane, toolsBar, parentCenterPane, zoomText);
 
-        app = new App();
+        app = new App(graphController);
         createInstances();
     }
 

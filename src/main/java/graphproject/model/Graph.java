@@ -1,15 +1,5 @@
 package graphproject.model;
 
-import graphproject.model.sessad.Employee;
-import graphproject.model.sessad.Mission;
-import graphproject.model.sessad.SessadGestion;
-import javafx.scene.control.Alert;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +8,15 @@ public class Graph {
     private String name;
     private final List <Node> nodes;
 
-    private SessadGestion sessadGestion;
+    //private SessadGestion sessadGestion;
 
     public Graph(String name, int idInstance){
         this.name = name;
         this.nodes = new ArrayList<>(0);
-        this.sessadGestion = new SessadGestion(idInstance, nodes);
+        //this.sessadGestion = new SessadGestion(idInstance, nodes);
     }
 
-    public SessadGestion getSessadGestion(){return sessadGestion;}
+    //public SessadGestion getSessadGestion(){return sessadGestion;}
 
     public List <Node> getNodes(){return nodes;}
 
@@ -43,7 +33,7 @@ public class Graph {
 
     public String getName(){return this.name;}
 
-    public void setLink() {
+    /*public void setLink() {
         for (Employee employee : sessadGestion.getListEmployee()){
             System.out.println("nbr mission : " + employee.getListMission().size());
 
@@ -63,7 +53,7 @@ public class Graph {
                 addLink(firstNode, employee.getCentre().getNode());
             }
         }
-    }
+    }*/
 
     public Node addNode(int x, int y){
         int id = nodes.size();
