@@ -65,18 +65,18 @@ public class Graph {
         }
     }
 
-//    public Node addNode(int x, int y){
-//        int id = nodes.size();
-//        String name = "node" + id;
-//
-//        Node node = new Node(id, name, x, y);
-//        nodes.add(node);
-//        return node;
-//    }
+    public Node addNode(int x, int y){
+        int id = nodes.size();
+        String name = "node" + id;
 
-//    public void addNode(Node node){
-//        nodes.add(node);
-//    }
+        Node node = new Node(id, name, x, y);
+        nodes.add(node);
+        return node;
+    }
+
+    public void addNode(Node node){
+        nodes.add(node);
+    }
 
     public void addLink(Node node, Node linkedNode) {
         node.links.add(new Link(linkedNode));

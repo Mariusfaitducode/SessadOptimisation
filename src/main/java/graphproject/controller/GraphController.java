@@ -13,6 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.util.List;
+
 
 //Permet de modifier un graphe
 public class GraphController {
@@ -114,6 +116,8 @@ public class GraphController {
     public boolean graphIsNull() {
         return graph == null;
     }
+
+
 
     public void closeGraph() {
 

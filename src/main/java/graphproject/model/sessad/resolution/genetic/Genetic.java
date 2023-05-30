@@ -16,7 +16,7 @@ public class Genetic {
     public Genetic(List<Mission> listMission, List<Centre> listCentre, double[][] distanceMatrix){
         this.listMission = listMission;
         this.listCentre = listCentre;
-        this.distanceMatrix = distanceMatrix;
+        //this.distanceMatrix = distanceMatrix;
 
         //Création population initiale
 
