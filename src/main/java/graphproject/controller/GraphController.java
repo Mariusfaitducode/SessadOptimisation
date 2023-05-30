@@ -4,6 +4,7 @@ import graphproject.controller.graphics.Graphics;
 import graphproject.model.Graph;
 import graphproject.model.Link;
 import graphproject.model.Node;
+import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.SessadGestion;
 import javafx.scene.control.ContextMenu;
@@ -137,6 +138,13 @@ public class GraphController {
                 sessadGestionController.getSessadGestion().getResolution().startGeneticAlgo();
                 graph.setLink();
                 displayGraph();
+                List<Employee> employees = sessadGestionController.getSessadGestion().getListEmployee();
+                for (Employee employee : employees) {
+                    List<Mission> missions = employee.getListMission();
+                    for (Mission mission : missions) {
+                        System.out.println("Centre : " + employee.getCentre().getId() + ",Employee : " + employee.getId() + ",day " + mission.getDay() + ",mission : " + mission.getName());
+                    }
+                }
             }
         });
     }
@@ -323,25 +331,6 @@ public class GraphController {
             // Crée un cercle avec un rayon de 10 pixels
             Circle circle = Graphics.DesignCircle(node.getX(), node.getY(), 10);
             sessadGestionController.setNodeColor(circle, node);
-
-//            if (node.isCentre()){
-//                circle.setFill(Color.ORANGE);
-//            }
-//            else{
-//                Mission mission = (Mission) node.getListPlace().get(0);
-//
-//                if (mission.getEmployee() != null){
-//
-//                    if (mission.getEmployee().getCentre().getId() == 1){
-//                        circle.setFill(Color.BLUE);
-//                    }
-//                    else{
-//                        circle.setFill(Color.GREEN);
-//                    }
-//
-//                }
-//
-//            }
 
             // Add event listener to the node
             nodeController.listenerNode(circle, node, centerPane);

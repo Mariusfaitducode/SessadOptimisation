@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import static graphproject.model.sessad.utils.Dictionary.mapInstance;
+
 //Regroupe la gestion de toutes les interactions de l'utilisateur
 
 public class AppController implements Initializable {
@@ -59,7 +61,6 @@ public class AppController implements Initializable {
 
 //    private PopupController popupController;
 
-    private MenuController menuController;
 
 
     @Override
@@ -70,9 +71,9 @@ public class AppController implements Initializable {
         //searchPathRightPane.setVisible(false);
 
         graphController = new GraphController(centerPane, missionRightPane, itineraryRightPane, graphTitle, centreRightPane, toolsBar, parentCenterPane, zoomText);
-        menuController = new MenuController(openGraphsMenu, noRecentInstance);
 
-        //app = new App();
+        app = new App();
+        createInstances();
     }
 
     //Tout ce qui déclenche les actions
@@ -87,9 +88,9 @@ public class AppController implements Initializable {
 //        graphController.openGraph(popupController.generateGraph(centerPane));
 //    }
 
-    public void openInstances() {
-        menuController.openExistingGraphsItem(app, graphController);
-    }
+//    public void openInstances() {
+//        menuController.openExistingGraphsItem(app, graphController);
+//    }
 
     public void closeInstance() {
         graphController.closeGraph();
@@ -100,7 +101,51 @@ public class AppController implements Initializable {
         System.out.println("The system to save results of the optimisation is not made yet.\n");
     }
 
+    public void createInstances(){
 
+        for(int idInstance = 1; idInstance < 7; idInstance++) {
+            MenuItem menuItem = new MenuItem();
+            menuItem.setText(mapInstance.get(idInstance));
+
+            // Ajoute des listermers aux menu instances
+            int finalIdInstance = idInstance;
+            menuItem.setOnAction(actionEvent -> app.createNewInstance(finalIdInstance));
+
+            //on initialise les sous-menu dans le menu
+            openGraphsMenu.getItems().add(menuItem);
+
+        }
+
+//        if (app.getNumberOfGraphs() > 0) {
+//            int i = 0;
+//            for (Graph graph : app.getGraphs()) {
+//
+//                String graphName = graph.getName();
+//                boolean set = false;
+//
+//                for (MenuItem item : openGraphsMenu.getItems()) {
+//                    if (item.getText().equals(graphName)) {
+//                        set = true;
+//                    }
+//                }
+//
+//                if (!set) {
+//                    MenuItem menuItem = new MenuItem();
+//                    menuItem.setText(graphName);
+//
+//                    //On déclare ce qui se passe lorsqu'on clique sur les sous menu
+//                    //(Ouvrir le graphe correspondant)
+//                    menuItem.setOnAction(actionEvent -> graphController.openGraph(graph));
+//
+//                    //on ajoute les sous-menu dans le menu
+//                    openGraphsMenu.getItems().add(menuItem);
+//                }
+//            }
+//            noRecentGraphMenuItem.setVisible(false);
+//        } else {
+//            noRecentGraphMenuItem.setVisible(true);
+//        }
+    }
 
     public void testSessad(){
 
