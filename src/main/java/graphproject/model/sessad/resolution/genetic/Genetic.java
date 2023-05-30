@@ -48,5 +48,36 @@ public class Genetic {
         population.evaluatePopulation(listMission, listEmployee);
     }
 
+    public void singlePointCrossover(){
+        //population.displayPopulation();
+        //Genome parent1 = new Genome(listMission.size());
+        //Genome parent2 = new Genome(listMission.size());
+
+        Genome[] parents = population.selectParents();
+
+        System.out.println("Parent 1");
+        parents[0].displayGenome();
+        System.out.println("Parent 2");
+        parents[1].displayGenome();
+
+        int genomeLength = listMission.size();
+
+        int crossoverPoint = (int) (Math.random() * genomeLength); // genomeLength est la longueur du génome
+
+        // Effectue le croisement
+        Genome offspring1 = new Genome(genomeLength);
+        Genome offspring2 = new Genome(genomeLength);
+
+        for (int i = 0; i < genomeLength; i++) {
+            if (i < crossoverPoint) {
+                offspring1.setGene(i, parents[0].getGene(i));
+                offspring2.setGene(i, parents[1].getGene(i));
+            } else {
+                offspring1.setGene(i, parents[1].getGene(i));
+                offspring2.setGene(i, parents[0].getGene(i));
+            }
+        }
+    }
+
 
 }

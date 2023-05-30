@@ -15,6 +15,20 @@ public class Genome{
         this.fitness = 0;
     }
 
+    public Genome(Genome genome){
+        this.genome = genome.genome;
+        this.fitness = genome.fitness;
+    }
+
+    public void setGene(int index, int gene){
+        this.genome[index] = gene;
+    }
+
+    public int getGene(int index){
+        return this.genome[index];
+    }
+
+
     public void addChromosome(Mission mission, Centre centre){
 
         for (Employee employee : centre.getListEmployee()){

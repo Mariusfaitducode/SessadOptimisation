@@ -101,4 +101,41 @@ public class Population {
             genome.displayGenome();
         }
     }
+
+    public Genome[] selectParents(){
+        double totalFitness = 0.0;
+        for (Genome genome : population) {
+            totalFitness += genome.fitness;
+        }
+
+        // Sélectionner un premier génome
+        double randomValue1 = Math.random() * totalFitness;
+        double cumulativeFitness = 0.0;
+        Genome selectedGenome1 = null;
+        for (Genome genome : population) {
+            cumulativeFitness += genome.fitness;
+            if (cumulativeFitness >= randomValue1) {
+                selectedGenome1 = new Genome(genome);
+                break;
+            }
+        }
+
+        // Sélectionner un deuxième génome (assure-toi de ne pas sélectionner le même génome qu'auparavant)
+        double randomValue2 = Math.random() * (totalFitness - selectedGenome1.fitness);
+        cumulativeFitness = 0.0;
+        Genome selectedGenome2 = null;
+        for (Genome genome : population) {
+            if (genome != selectedGenome1) {
+                cumulativeFitness += genome.fitness;
+                if (cumulativeFitness >= randomValue2) {
+                    selectedGenome2 = new Genome(genome);
+                    break;
+                }
+            }
+        }
+
+        Genome[] parents = new Genome[]{selectedGenome1, selectedGenome2};
+
+        return parents;
+    }
 }

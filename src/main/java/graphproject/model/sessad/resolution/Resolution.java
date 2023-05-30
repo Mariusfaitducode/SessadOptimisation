@@ -28,8 +28,9 @@ public class Resolution {
         genetic.getPopulation().displayPopulation();
 
         //fitness
-        //genetic.fitness();
+        genetic.fitness();
 
+        genetic.singlePointCrossover();
 
 
         //création de nouveaux individus
