@@ -72,25 +72,9 @@ public class AppController implements Initializable {
 
         graphController = new GraphController(centerPane, missionRightPane, itineraryRightPane, graphTitle, centreRightPane, toolsBar, parentCenterPane, zoomText);
 
-        app = new App(graphController);
+        app = new App(graphController, parentCenterPane);
         createInstances();
     }
-
-    //Tout ce qui déclenche les actions
-    //
-//    @FXML
-//    public void createNewGraphPopup() {
-//        popupController = new PopupController(popupPane, rbutton1, rbutton2, rbutton3, nameGraph, nodesNumber, app);
-//        popupController.setVisible(true);
-//    }
-
-//    public void generateGraph() {
-//        graphController.openGraph(popupController.generateGraph(centerPane));
-//    }
-
-//    public void openInstances() {
-//        menuController.openExistingGraphsItem(app, graphController);
-//    }
 
     public void closeInstance() {
         graphController.closeGraph();
@@ -115,36 +99,6 @@ public class AppController implements Initializable {
             openGraphsMenu.getItems().add(menuItem);
 
         }
-
-//        if (app.getNumberOfGraphs() > 0) {
-//            int i = 0;
-//            for (Graph graph : app.getGraphs()) {
-//
-//                String graphName = graph.getName();
-//                boolean set = false;
-//
-//                for (MenuItem item : openGraphsMenu.getItems()) {
-//                    if (item.getText().equals(graphName)) {
-//                        set = true;
-//                    }
-//                }
-//
-//                if (!set) {
-//                    MenuItem menuItem = new MenuItem();
-//                    menuItem.setText(graphName);
-//
-//                    //On déclare ce qui se passe lorsqu'on clique sur les sous menu
-//                    //(Ouvrir le graphe correspondant)
-//                    menuItem.setOnAction(actionEvent -> graphController.openGraph(graph));
-//
-//                    //on ajoute les sous-menu dans le menu
-//                    openGraphsMenu.getItems().add(menuItem);
-//                }
-//            }
-//            noRecentGraphMenuItem.setVisible(false);
-//        } else {
-//            noRecentGraphMenuItem.setVisible(true);
-//        }
     }
 
     public void testSessad(){
