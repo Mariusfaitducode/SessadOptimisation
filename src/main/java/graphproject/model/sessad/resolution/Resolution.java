@@ -27,13 +27,19 @@ public class Resolution {
 
         genetic.getPopulation().displayPopulation();
 
-        //fitness
-        genetic.fitness();
-
-        genetic.singlePointCrossover();
 
 
-        //création de nouveaux individus
+        for (int i = 0; i < 100; i++){
+            System.out.println("------Génération "+ i + " ---------------------");
+
+            //fitness
+            genetic.fitness();
+
+            //création de nouveaux individus
+            genetic.generateNewGeneration();
+        }
+
+
 
     }
 }

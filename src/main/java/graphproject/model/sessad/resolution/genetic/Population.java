@@ -17,11 +17,16 @@ public class Population {
 
     private int sizePopulation;
 
-    public Population(int sizePopulation, List<Mission> listMission, List<Centre> listCentre){
+    public Population(int sizePopulation){
+        this.sizePopulation = sizePopulation;
+        //On définit une population de taille sizePopulation
+        population = new Genome[sizePopulation];
+    }
 
+    public void initializePopulation( List<Mission> listMission, List<Centre> listCentre){
         int sizeGenome = listMission.size();
 
-        this.sizePopulation = sizePopulation;
+
 
         List<Integer> listRef = new ArrayList<>(0);
 
@@ -29,8 +34,7 @@ public class Population {
             listRef.add(i);
         }
 
-        //On définit une population de taille sizePopulation
-        population = new Genome[sizePopulation];
+
 
         int sizeCentre = distCentreCentre.length;
 
@@ -137,5 +141,30 @@ public class Population {
         Genome[] parents = new Genome[]{selectedGenome1, selectedGenome2};
 
         return parents;
+    }
+
+    public Genome[] crossover(Genome parent1, Genome parent2){
+
+        int genomeLength = parent1.genome.length;
+
+        int crossoverPoint = (int) (Math.random() * genomeLength); // genomeLength est la longueur du génome
+
+        // Effectue le croisement
+        Genome offspring1 = new Genome(genomeLength);
+        Genome offspring2 = new Genome(genomeLength);
+
+        for (int i = 0; i < genomeLength; i++) {
+            if (i < crossoverPoint) {
+                offspring1.setGene(i, parent1.getGene(i));
+                offspring2.setGene(i, parent2.getGene(i));
+            } else {
+                offspring1.setGene(i, parent2.getGene(i));
+                offspring2.setGene(i, parent1.getGene(i));
+            }
+        }
+        Genome[] children = new Genome[]{offspring1, offspring2};
+
+        return children;
+
     }
 }

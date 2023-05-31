@@ -83,6 +83,7 @@ public class Employee {
                 return;
             }
         }
+        listMission.add(mission);
     }
 
     public void display(){
