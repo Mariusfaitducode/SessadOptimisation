@@ -41,21 +41,21 @@ public class NodeController {
         this.graph = graph;
     }
 
-    public void updateNode(Node node) {
-
-        //Display new nodes
-        if (node.getCircle()==null) {
-            Circle circle = Graphics.DesignCircle(node.getX(), node.getY(), 10);
-
-            // Add event listener to the node
-            listenerNode(circle, node, centerPane);
-
-            // Add the circle to the pane
-            node.setCircle(circle);
-            centerPane.getChildren().add(circle);
-        }
-
-    }
+//    public void updateNode(Node node) {
+//
+//        //Display new nodes
+//        if (node.getCircle()==null) {
+//            Circle circle = Graphics.DesignCircle(node.getX(), node.getY(), 10);
+//
+//            // Add event listener to the node
+//            listenerNode(circle, node, centerPane);
+//
+//            // Add the circle to the pane
+//            node.setCircle(circle);
+//            centerPane.getChildren().add(circle);
+//        }
+//
+//    }
 
     // Display the information of the node when clicked on it
     public void listenerNode(Circle circle, Node node, Pane centerPane) {

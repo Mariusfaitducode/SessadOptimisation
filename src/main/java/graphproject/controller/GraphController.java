@@ -4,6 +4,7 @@ import graphproject.controller.graphics.Graphics;
 import graphproject.model.Graph;
 import graphproject.model.Link;
 import graphproject.model.Node;
+import graphproject.model.sessad.Mission;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -36,20 +37,20 @@ public class GraphController {
     private SelectionPaneController selectionPaneController;
     private NodeController nodeController;
 
-
+    private NavigationController navigationController;
 
     // App attribute
     private Graph graph;
 
     private Label graphTitle;
 
-    private Label zoomText;
+//    private Label zoomText;
 
     // Global variables
 
-    private double initialX;
-
-    private double initialY;
+//    private double initialX;
+//
+//    private double initialY;
 
     GraphController(){};
 
@@ -68,7 +69,7 @@ public class GraphController {
         this.graphTitle = graphTitle;
         this.toolsBar = toolsBar;
         this.parentCenterPane = parentCenterPane;
-        this.zoomText = zoomText;
+//        this.zoomText = zoomText;
 //        this.buttonSaveGraph = buttonSaveGraph;
 
         // tools
@@ -77,7 +78,7 @@ public class GraphController {
 
         this.nodeController = new NodeController(graph, centerPane, contextMenu, selectionPaneController);
 
-
+        this.navigationController = new NavigationController(centerPane, zoomText);
 
         // Initializing Graphic Rendering
 
@@ -86,24 +87,24 @@ public class GraphController {
         // All initialize listeners
 
         listenerContextMenu();
-        listenerZoomGraph();
-        listenerMoveOnGraph();
-        listenerCoordinateOnMousePressed();
-        //listenerTest();
-//        listenerSaveGraph();
-
-        // All global variables
-
-        initialX = 0;
-        initialY = 0;
+//        listenerZoomGraph();
+//        listenerMoveOnGraph();
+//        listenerCoordinateOnMousePressed();
+//        //listenerTest();
+////        listenerSaveGraph();
+//
+//        // All global variables
+//
+//        initialX = 0;
+//        initialY = 0;
 
     }
 
     public void setGraph(Graph graph) {
-
         this.graph = graph;
-        this.sessadGestionController = new SessadGestionController(graph);
     }
+
+    public Graph getGraph() {return graph;}
 
     public void clearGraph() {
         centerPane.getChildren().clear();
@@ -139,116 +140,116 @@ public class GraphController {
         });
     }
 
-    private void listenerZoomGraph() {
-        centerPane.setOnScroll(event -> {
-
-            double zoomFactor;
-
-            if (event.getDeltaY() > 0 ) {
-                zoomFactor = 0.1;
-            } else {
-                zoomFactor = -0.1;
-            }
-
-            double translateX = centerPane.getTranslateX();
-            double translateY = centerPane.getTranslateY();
-
-            double newScaleX = centerPane.getScaleX() + zoomFactor;
-            double newScaleY = centerPane.getScaleX() + zoomFactor;
-
-            double dX;
-            double dY;
-
-            if (event.getDeltaY() > 0 ) {
-                dX = - ((event.getX() - (centerPane.getWidth()/2)) * (1 - centerPane.getScaleX() / newScaleX));
-                dY = - ((event.getY() - (centerPane.getHeight()/2)) * (1 - centerPane.getScaleY() / newScaleY));
-            } else {
-                dX = (event.getX() - (centerPane.getWidth()/2)) * (centerPane.getScaleX() / newScaleX - 1);
-                dY = (event.getY() - (centerPane.getHeight()/2)) * (centerPane.getScaleY() / newScaleY - 1);
-            }
-
-            newScaleX = (double)Math.round(newScaleX * 10) / 10;
-            newScaleY = (double)Math.round(newScaleY * 10) / 10;
-
-            if (newScaleX >= 0.099 && newScaleY >= 0.099) {
-
-                centerPane.setScaleX(newScaleX);
-                centerPane.setScaleY(newScaleY);
-                zoomText.setText("ZOOM : " + (int)(newScaleX*100) + " %");
-
-                centerPane.setTranslateX(translateX+dX*(centerPane.getBoundsInParent().getWidth()/8000));
-                centerPane.setTranslateY(translateY+dY*(centerPane.getBoundsInParent().getHeight()/6240));
-
-                double borderLeft = centerPane.getTranslateX() - 4000 * (centerPane.getScaleX()-0.1);
-                double borderTop = centerPane.getTranslateY() - 3120 * (centerPane.getScaleX()-0.1);
-                double borderRight = centerPane.getTranslateX() + 4000 * (centerPane.getScaleX()-0.1);
-                double borderBottom = centerPane.getTranslateY() + 3120 * (centerPane.getScaleX()-0.1);
-
-                if (borderLeft > 0) {
-                    centerPane.setTranslateX(centerPane.getTranslateX() - borderLeft);
-                } else if (borderRight < 0) {
-                    centerPane.setTranslateX(centerPane.getTranslateX() - borderRight);
-                }
-
-                if (borderTop > 0) {
-                    centerPane.setTranslateY(centerPane.getTranslateY() - borderTop);
-                } else if (borderBottom < 0) {
-                    centerPane.setTranslateY(centerPane.getTranslateY() - borderBottom);
-                }
-            }
-
-        });
-    }
-
-    private void listenerCoordinateOnMousePressed() {
-        centerPane.setOnMousePressed(event -> {
-            
-            initialX = event.getX();
-            initialY = event.getY();
-        });
-    }
-
-    private void listenerMoveOnGraph() {
-        centerPane.setOnMouseDragged(event -> {
-
-            double borderLeft = centerPane.getTranslateX() - 4000 * (centerPane.getScaleX()-0.1);
-            double borderTop = centerPane.getTranslateY() - 3120 * (centerPane.getScaleX()-0.1);
-            double borderRight = centerPane.getTranslateX() + 4000 * (centerPane.getScaleX()-0.1);
-            double borderBottom = centerPane.getTranslateY() + 3120 * (centerPane.getScaleX()-0.1);
-
-            double dX = (event.getX() - initialX) * (centerPane.getBoundsInParent().getWidth()/8000);
-            double dY = (event.getY() - initialY) * (centerPane.getBoundsInParent().getHeight()/6240);
-
-            if (dX < 0) {
-                if (borderRight < 0) {
-                    System.out.println("out!!!! right");
-                } else  {
-                    centerPane.setTranslateX(centerPane.getTranslateX() + dX);
-                }
-            } else {
-                if (borderLeft > 0) {
-                    System.out.println("out!!!! left");
-                } else  {
-                    centerPane.setTranslateX(centerPane.getTranslateX() + dX);
-                }
-            }
-
-            if (dY < 0) {
-                if (borderBottom < 0) {
-                    System.out.println("out!!!! bottom");
-                } else  {
-                    centerPane.setTranslateY(centerPane.getTranslateY() + dY);
-                }
-            } else {
-                if (borderTop > 0) {
-                    System.out.println("out!!!! top");
-                } else  {
-                    centerPane.setTranslateY(centerPane.getTranslateY() + dY);
-                }
-            }
-
-        });
-    }
+//    private void listenerZoomGraph() {
+//        centerPane.setOnScroll(event -> {
+//
+//            double zoomFactor;
+//
+//            if (event.getDeltaY() > 0 ) {
+//                zoomFactor = 0.1;
+//            } else {
+//                zoomFactor = -0.1;
+//            }
+//
+//            double translateX = centerPane.getTranslateX();
+//            double translateY = centerPane.getTranslateY();
+//
+//            double newScaleX = centerPane.getScaleX() + zoomFactor;
+//            double newScaleY = centerPane.getScaleX() + zoomFactor;
+//
+//            double dX;
+//            double dY;
+//
+//            if (event.getDeltaY() > 0 ) {
+//                dX = - ((event.getX() - (centerPane.getWidth()/2)) * (1 - centerPane.getScaleX() / newScaleX));
+//                dY = - ((event.getY() - (centerPane.getHeight()/2)) * (1 - centerPane.getScaleY() / newScaleY));
+//            } else {
+//                dX = (event.getX() - (centerPane.getWidth()/2)) * (centerPane.getScaleX() / newScaleX - 1);
+//                dY = (event.getY() - (centerPane.getHeight()/2)) * (centerPane.getScaleY() / newScaleY - 1);
+//            }
+//
+//            newScaleX = (double)Math.round(newScaleX * 10) / 10;
+//            newScaleY = (double)Math.round(newScaleY * 10) / 10;
+//
+//            if (newScaleX >= 0.099 && newScaleY >= 0.099) {
+//
+//                centerPane.setScaleX(newScaleX);
+//                centerPane.setScaleY(newScaleY);
+//                zoomText.setText("ZOOM : " + (int)(newScaleX*100) + " %");
+//
+//                centerPane.setTranslateX(translateX+dX*(centerPane.getBoundsInParent().getWidth()/8000));
+//                centerPane.setTranslateY(translateY+dY*(centerPane.getBoundsInParent().getHeight()/6240));
+//
+//                double borderLeft = centerPane.getTranslateX() - 4000 * (centerPane.getScaleX()-0.1);
+//                double borderTop = centerPane.getTranslateY() - 3120 * (centerPane.getScaleX()-0.1);
+//                double borderRight = centerPane.getTranslateX() + 4000 * (centerPane.getScaleX()-0.1);
+//                double borderBottom = centerPane.getTranslateY() + 3120 * (centerPane.getScaleX()-0.1);
+//
+//                if (borderLeft > 0) {
+//                    centerPane.setTranslateX(centerPane.getTranslateX() - borderLeft);
+//                } else if (borderRight < 0) {
+//                    centerPane.setTranslateX(centerPane.getTranslateX() - borderRight);
+//                }
+//
+//                if (borderTop > 0) {
+//                    centerPane.setTranslateY(centerPane.getTranslateY() - borderTop);
+//                } else if (borderBottom < 0) {
+//                    centerPane.setTranslateY(centerPane.getTranslateY() - borderBottom);
+//                }
+//            }
+//
+//        });
+//    }
+//
+//    private void listenerCoordinateOnMousePressed() {
+//        centerPane.setOnMousePressed(event -> {
+//
+//            initialX = event.getX();
+//            initialY = event.getY();
+//        });
+//    }
+//
+//    private void listenerMoveOnGraph() {
+//        centerPane.setOnMouseDragged(event -> {
+//
+//            double borderLeft = centerPane.getTranslateX() - 4000 * (centerPane.getScaleX()-0.1);
+//            double borderTop = centerPane.getTranslateY() - 3120 * (centerPane.getScaleX()-0.1);
+//            double borderRight = centerPane.getTranslateX() + 4000 * (centerPane.getScaleX()-0.1);
+//            double borderBottom = centerPane.getTranslateY() + 3120 * (centerPane.getScaleX()-0.1);
+//
+//            double dX = (event.getX() - initialX) * (centerPane.getBoundsInParent().getWidth()/8000);
+//            double dY = (event.getY() - initialY) * (centerPane.getBoundsInParent().getHeight()/6240);
+//
+//            if (dX < 0) {
+//                if (borderRight < 0) {
+//                    System.out.println("out!!!! right");
+//                } else  {
+//                    centerPane.setTranslateX(centerPane.getTranslateX() + dX);
+//                }
+//            } else {
+//                if (borderLeft > 0) {
+//                    System.out.println("out!!!! left");
+//                } else  {
+//                    centerPane.setTranslateX(centerPane.getTranslateX() + dX);
+//                }
+//            }
+//
+//            if (dY < 0) {
+//                if (borderBottom < 0) {
+//                    System.out.println("out!!!! bottom");
+//                } else  {
+//                    centerPane.setTranslateY(centerPane.getTranslateY() + dY);
+//                }
+//            } else {
+//                if (borderTop > 0) {
+//                    System.out.println("out!!!! top");
+//                } else  {
+//                    centerPane.setTranslateY(centerPane.getTranslateY() + dY);
+//                }
+//            }
+//
+//        });
+//    }
 
     //Listener link
     public void listenerLink(Node node, Link link){
@@ -282,7 +283,7 @@ public class GraphController {
         });
     }
 
-    public void openGraph(Graph openedGraph){
+    public void openGraph(Graph openedGraph) {
         closeGraph();
         setGraph(openedGraph);
         displayGraph();
@@ -298,7 +299,6 @@ public class GraphController {
     public void displayGraph() {
 
         updateAllNodes();
-
         updateLinks();
 
     }
@@ -309,7 +309,7 @@ public class GraphController {
 
             // Crée un cercle avec un rayon de 10 pixels
             Circle circle = Graphics.DesignCircle(node.getX(), node.getY(), 10);
-            sessadGestionController.setNodeColor(circle, node);
+            graph.setNodeColor(circle, node);
 
             // Add event listener to the node
             nodeController.listenerNode(circle, node, centerPane);
@@ -375,6 +375,8 @@ public class GraphController {
         contextMenu.getItems().clear();
         contextMenu.hide();
     }
+
+
 
 //    private void listenerSaveGraph() {
 //        buttonSaveGraph.setOnAction(actionEvent -> {

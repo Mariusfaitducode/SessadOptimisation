@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,17 +61,98 @@ public class App {
         toolsController.getTest().setOnMouseClicked(event->{
             if (!graphController.graphIsNull()) {
                 sessadGestion.getResolution().startGeneticAlgo();
-                //graph.setLink();
+                setLinks(sessadGestion.getListEmployee(), sessadGestion.getListMission());
                 graphController.displayGraph();
-                List<Employee> employees = sessadGestion.getListEmployee();
-                for (Employee employee : employees) {
-                    List<Mission> missions = employee.getListMission();
-                    for (Mission mission : missions) {
-                        System.out.println("Centre : " + employee.getCentre().getId() + ",Employee : " + employee.getId() + ",day " + mission.getDay() + ",mission : " + mission.getName());
+//                List<Employee> employees = sessadGestion.getListEmployee();
+//                for (Employee employee : employees) {
+//                    List<Mission> missions = employee.getListMission();
+//                    for (Mission mission : missions) {
+//                        System.out.println("Centre : " + employee.getCentre().getId() + ",Employee : " + employee.getId() + ",day " + mission.getDay() + ",mission : " + mission.getName());
+//                    }
+//                }
+            }
+        });
+    }
+
+    public void setLinks(List<Employee> listEmployee, List<Mission> listMission) {
+
+
+        int sizeList = listEmployee.size();
+
+        for (Employee employee : listEmployee){
+
+            Color colorEmployee = findColorForEmployee(employee.getId(), sizeList);
+
+            for (int day = 1; day < 6; day++ ){
+
+                Node firstNode = employee.getCentre().getNode();
+
+                for (Mission mission : employee.getListMission(day)){
+                    for (int idGraph = 0; idGraph < graphs.size(); idGraph++) {
+                        if (idGraph == 0) {
+                            graphs.get(idGraph).addLink(firstNode, mission.getNode(), colorEmployee);
+                        } else if (idGraph == day) {
+                            graphs.get(idGraph).addLink(firstNode, mission.getNode(), colorEmployee);
+                        }
+                    }
+
+                    firstNode = mission.getNode();
+                }
+
+                for (int idGraph = 0; idGraph < graphs.size(); idGraph++) {
+                    if (idGraph == 0) {
+                        graphs.get(idGraph).addLink(firstNode, employee.getCentre().getNode(), colorEmployee);
+                    } else if (idGraph == day) {
+                        graphs.get(idGraph).addLink(firstNode, employee.getCentre().getNode(), colorEmployee);
                     }
                 }
             }
-        });
+        }
+
+//        System.out.println("updateLinks");
+        for (Node node: graphs.get(0).getNodes()) {
+
+            for (Link link : node.getLinks()) {
+
+//                System.out.println("node: " + node.getName() + " link: " + link.getNode().getName());
+            }
+        }
+
+        System.out.println("updateLinks from employee");
+        for (Employee employee : listEmployee){
+
+            for (int day = 1; day < 6; day++ ) {
+
+                for (Mission mission : employee.getListMission(day)) {
+                    System.out.println("Centre : " + employee.getCentre().getId() + ",Employee : " + employee.getId() + ",day " + mission.getDay() + ",mission : " + mission.getName());
+                }
+            }
+        }
+
+        System.out.println("updateLinks from mission");
+        for (Mission mission : listMission){
+            if (mission.getEmployee() != null) {
+                System.out.println("Mission : " + mission.getName() + ",day " + mission.getDay() + ",employee : " + mission.getEmployee().getId());
+            }
+        }
+    }
+
+    public Color findColorForEmployee(int idEmployee, int sizeList) {
+        int totalColor = (255 * 6 + 1);
+        int idColor = (totalColor / sizeList) * idEmployee;
+        if (idColor < 255) {
+            return Color.rgb(0, idColor, 255);
+        } else if (idColor < 255 * 2) {
+            return Color.rgb(0, 255, 255 - (idColor - 255));
+        } else if (idColor < 255 * 3) {
+            return Color.rgb(idColor - 255 * 2, 255, 0);
+        } else if (idColor < 255 * 4) {
+            return Color.rgb(255, 255 - (idColor - 255 * 3), 0);
+        } else if (idColor < 255 * 5) {
+            return Color.rgb(255, 0, idColor - 255 * 4);
+        } else {
+            return Color.rgb(255 - (idColor - 255 * 5), 0, 255);
+        }
     }
 
     public void createNewInstance(int idInstance) {
@@ -114,7 +196,7 @@ public class App {
         graphs.add(initialGraph);
         this.choiceBoxDay.getItems().add("global");
 
-        int max_day = 7;
+        int max_day = 6;
 
         //Initialisation des graphs de chaque jours
 

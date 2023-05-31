@@ -21,19 +21,15 @@ public class Genome{
 
             if (employee.canTakeMission(mission)){
 
-//                    System.out.println("Employee " + employee.getId() + " can take mission " + mission.getId() + "in centre " + centre.getId() + " day " + mission.getDay());
-
                 genome[mission.getId() - 1] = employee.getId();
 
-                for (Mission m : employee.getListMission()){
-                    System.out.print(m.getId()+ " ");
-                }
-
                 mission.setEmployee(employee);
+                employee.addMission(mission);
 
                 break;
             }
             else{
+
                 genome[mission.getId() - 1] = 0;
             }
 
@@ -60,7 +56,7 @@ public class Genome{
 //                    System.out.print(m.getId()+ " ");
 //                }
 //                System.out.println();
-
+                // TODO: faire une fonction can take mission globale car celle ci retepe beaucoup d'étapes
                 if (employee.canTakeMission(mission)){
 
                     this.fitness++;

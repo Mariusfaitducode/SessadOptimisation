@@ -42,6 +42,8 @@ public class Mission extends Place {
     public int getDay(){return day;}
     public void setDay(int day){this.day = day;}
 
+    public int getTime() {return day * 24 * 60 + startingPeriod;}
+
     public int getStart(){return startingPeriod;}
     public void setStart(int startingPeriod){this.startingPeriod = startingPeriod;}
 

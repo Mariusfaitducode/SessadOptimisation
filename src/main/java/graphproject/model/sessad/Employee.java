@@ -5,7 +5,6 @@ import graphproject.model.sessad.skill.Specialty;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static graphproject.model.sessad.SessadGestion.distMissionCentre;
 import static graphproject.model.sessad.SessadGestion.distMissionMission;
 
@@ -68,21 +67,42 @@ public class Employee {
         return listMissionDay;
     }
 
+    public List<Mission> addMission(List<Mission> listMission, Mission mission){
+
+        //place la mission au bon endroit dans la liste
+
+        if (listMission.size() == 0){
+            listMission.add(mission);
+            return listMission;
+        }
+
+        for (int i = 0; i < listMission.size(); i++){
+            if (listMission.get(i).getDay() > mission.getDay()){
+                listMission.add(i, mission);
+                return listMission;
+            }
+        }
+        System.out.println("Erreur addMission");
+        return null;
+    }
+
     public void addMission(Mission mission){
 
         //place la mission au bon endroit dans la liste
 
         if (listMission.size() == 0){
             listMission.add(mission);
-            return;
-        }
-
-        for (int i = 0; i < listMission.size(); i++){
-            if (listMission.get(i).getDay() > mission.getDay()){
-                listMission.add(i, mission);
-                return;
+        } else if (listMission.get(listMission.size() - 1).getTime() < mission.getTime()) {
+            listMission.add(mission);
+        } else {
+            for (int i = 0; i < listMission.size(); i++){
+                if (listMission.get(i).getTime() > mission.getTime()){
+                    listMission.add(i, mission);
+                    break;
+                }
             }
         }
+
     }
 
     public void display(){
@@ -94,18 +114,15 @@ public class Employee {
 
     public boolean canTakeMission(Mission mission){
 
-
         //Récupère la liste de missions du jour avec nouvelle mission
         List<Mission> listMissionDay = insertMission(mission);
-
         //Si la liste est null, la mission n'est pas valide
         if (listMissionDay == null){
-            listMission.remove(mission);
+//            listMission.remove(mission);
             return false;
         }
         //Si l'employée n'a que une mission, la mission est valide
         else if (listMissionDay.size() == 1){
-            //System.out.println("Mission unique valide");
 
             return true;
         }
@@ -125,8 +142,7 @@ public class Employee {
             double timeSlots = listMissionDay.get(listMissionDay.size() - 1).getEnd() - listMissionDay.get(0).getStart() + startHours + endHours;
 
             if (timeSlots > MAX_TIME_SLOTS){
-                listMission.remove(mission);
-                //System.out.println("Plage horaire trop grande");
+//                listMission.remove(mission);
                 return false;
             }
 
@@ -151,9 +167,7 @@ public class Employee {
             //System.out.println("Taux horaire : "+totalDayHours);
             //Verification taux horaire
             if (totalDayHours > MAX_HOURS){
-                listMission.remove(mission);
-                //System.out.println("Taux horaire trop grand");
-                //System.out.println("Taux horaire : "+totalDayHours);
+//                listMission.remove(mission);
                 return false;
             }
             //System.out.println("Mission valide");
@@ -170,20 +184,15 @@ public class Employee {
             return null;
         }
 
-        //int[] index = new int[1];
+        List<Mission> listMissionDay = new ArrayList<>(0);
+        listMissionDay.addAll(getListMission(mission.getDay()));
 
-        List<Mission> listMissionDay = getListMission(mission.getDay());
-
-        //int startIndex = listMission.indexOf(listMissionDay.get(0));
-
-
-
-        Mission lastMission = null;
+        Mission lastMission;
 
         if (listMissionDay.isEmpty()){
-            listMissionDay.add(mission);
+//            listMissionDay.add(mission);
 
-            addMission(mission);
+            listMissionDay = addMission(listMissionDay, mission);
 
             //listMission.add(index[0] + 1, mission);
             return listMissionDay;
@@ -192,7 +201,7 @@ public class Employee {
             lastMission = listMissionDay.get(0);
         }
 
-        int index = 0;
+        int index;
 
         for (Mission missionEmployee : listMissionDay){
 
@@ -210,8 +219,8 @@ public class Employee {
                     if (nextRoadHours < missionEmployee.getStart() - mission.getEnd()){
                         listMissionDay.add(listMissionDay.indexOf(missionEmployee), mission);
 
-                        index = listMission.indexOf(missionEmployee);
-                        listMission.add(index, mission);
+                        index = listMissionDay.indexOf(missionEmployee);
+                        listMissionDay.add(index, mission);
 
                         return listMissionDay;
                     }
@@ -233,8 +242,8 @@ public class Employee {
                     if (previousRoadHours < mission.getStart() - lastMission.getEnd() && nextRoadHours < missionEmployee.getStart() - mission.getEnd()){
                         listMissionDay.add(listMissionDay.indexOf(missionEmployee), mission);
 
-                        index = listMission.indexOf(missionEmployee);
-                        listMission.add(index, mission);
+                        index = listMissionDay.indexOf(missionEmployee);
+                        listMissionDay.add(index, mission);
 
                         return listMissionDay;
                     }
@@ -255,8 +264,8 @@ public class Employee {
                 if (previousRoadHours < mission.getStart() - missionEmployee.getEnd()){
                     listMissionDay.add(mission);
 
-                    index = listMission.indexOf(missionEmployee) + 1;
-                    listMission.add(index, mission);
+                    index = listMissionDay.indexOf(missionEmployee) + 1;
+                    listMissionDay.add(index, mission);
 
                     return listMissionDay;
                 }

@@ -1,5 +1,10 @@
 package graphproject.model;
 
+import graphproject.model.sessad.Employee;
+import graphproject.model.sessad.Mission;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,36 +38,49 @@ public class Graph {
 
     public String getName(){return this.name;}
 
-    /*public void setLink() {
-        for (Employee employee : sessadGestion.getListEmployee()){
-            System.out.println("nbr mission : " + employee.getListMission().size());
-
-            for (int day = 1; day < 6; day++ ){
-
-                Node firstNode = employee.getCentre().getNode();
-
-                int[] index = new int[1];
-
-                for (Mission mission : employee.getListMission(day, index)){
-
-                    System.out.println("employe  " +employee.getId() + " mission : " + mission.getId());
-
-                    addLink(firstNode, mission.getNode());
-                    firstNode = mission.getNode();
-                }
-                addLink(firstNode, employee.getCentre().getNode());
+    public void setNodeColor(Circle circle, Node node) {
+        if (node.isCentre()){
+            switch (node.getIdCentre()){
+                case 1:
+                    circle.setFill(Color.BLUE);
+                    break;
+                case 2:
+                    circle.setFill(Color.ORANGE);
+                    break;
+                case 3:
+                    circle.setFill(Color.GREEN);
+                    break;
             }
         }
-    }*/
+        else{
+            Mission mission = (Mission) node.getListPlace().get(0);
 
-    public Node addNode(int x, int y){
-        int id = nodes.size();
-        String name = "node" + id;
+            if (mission.getEmployee() != null){
 
-        Node node = new Node(id, name, x, y);
-        nodes.add(node);
-        return node;
+                switch (mission.getEmployee().getCentre().getId()){
+                    case 1:
+                        circle.setFill(Color.rgb(0,128,255));
+                        break;
+                    case 2:
+                        circle.setFill(Color.rgb(255,178,102));
+                        break;
+                    case 3:
+                        circle.setFill(Color.rgb(128,255,0));
+                        break;
+                }
+            }
+        }
     }
+
+
+//    public Node addNode(int x, int y){
+//        int id = nodes.size();
+//        String name = "node" + id;
+//
+//        Node node = new Node(id, name, x, y);
+//        nodes.add(node);
+//        return node;
+//    }
 
     public void addNode(Node node){
         nodes.add(node);
@@ -74,11 +92,11 @@ public class Graph {
         linkedNode.linkedNodeList.add(node);
     }
 
-//    public void addLink(Node node, Node linkedNode, Color color) {
-//        node.links.add(new Link(linkedNode, color));
-//        //linkedNode.links.add()
-//        linkedNode.linkedNodeList.add(node);
-//    }
+    public void addLink(Node node, Node linkedNode, Color color) {
+        node.links.add(new Link(linkedNode, color));
+        //linkedNode.links.add()
+        linkedNode.linkedNodeList.add(node);
+    }
 
 //    public Link getLinkFromIds(Node node, Node linkedNode) {
 //        for (Link link : node.getLinks()) {

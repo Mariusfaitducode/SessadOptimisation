@@ -17,7 +17,7 @@ public class Resolution {
 
     public Resolution(List<Mission> listMission, List<Centre> listCentre, List<Employee> listEmployee){
 
-        genetic = new Genetic(listMission, listCentre, listEmployee, 10);
+        genetic = new Genetic(listMission, listCentre, listEmployee, 1);
     }
 
     public void startGeneticAlgo() {
