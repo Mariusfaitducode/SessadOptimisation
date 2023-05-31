@@ -6,6 +6,9 @@ import graphproject.model.sessad.Mission;
 
 import java.util.List;
 
+import static graphproject.model.sessad.resolution.genetic.Genetic.lastIdEmployee;
+import static graphproject.model.sessad.resolution.genetic.Genetic.mutationRate;
+
 public class Genome{
     int[] genome;
     double fitness;
@@ -14,6 +17,20 @@ public class Genome{
         this.genome = new int[sizeGenome];
         this.fitness = 0;
     }
+
+    public Genome(Genome genome){
+        this.genome = genome.genome;
+        this.fitness = genome.fitness;
+    }
+
+    public void setGene(int index, int gene){
+        this.genome[index] = gene;
+    }
+
+    public int getGene(int index){
+        return this.genome[index];
+    }
+
 
     public void addChromosome(Mission mission, Centre centre){
 
@@ -65,6 +82,18 @@ public class Genome{
                     this.fitness = 0;
                     break;
                 }
+            }
+        }
+    }
+
+    public void mutation(){
+        for (int i = 0; i < genome.length; i++) {
+            if (Math.random() < mutationRate) { // mutationRate est une valeur entre 0 et 1, représentant la probabilité de mutation
+                // Effectue la mutation sur le gène
+                //offspring1.mutateGene(i);
+
+                int val = (int)(Math.random() * lastIdEmployee);
+                genome[i] = val;
             }
         }
     }
