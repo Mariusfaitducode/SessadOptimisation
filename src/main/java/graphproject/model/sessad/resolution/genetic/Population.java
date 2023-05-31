@@ -167,4 +167,19 @@ public class Population {
         return children;
 
     }
+
+    public Genome getBestGenome(){
+
+        double max = 0;
+        Genome bestGenome = new Genome(population[0].genome.length);
+
+        for (int i = 0; i < population.length; i++){
+
+            if ( population[i].fitness > max){
+                max = population[i].fitness;
+                bestGenome = new Genome(population[i]);
+            }
+        }
+        return bestGenome;
+    }
 }

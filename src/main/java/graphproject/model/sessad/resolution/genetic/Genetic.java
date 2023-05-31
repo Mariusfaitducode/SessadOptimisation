@@ -80,4 +80,15 @@ public class Genetic {
         }
         this.population = newPopulation;
     }
+
+    public void displayBestGenome(){
+
+        Genome bestGenome = population.getBestGenome();
+
+        bestGenome.instantiateGenome(listMission, listEmployee);
+
+        System.out.println("Best Genome :");
+        bestGenome.displayGenome();
+        System.out.println("Fitness = "+ bestGenome.fitness);
+    }
 }

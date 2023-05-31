@@ -17,7 +17,7 @@ public class Resolution {
 
     public Resolution(List<Mission> listMission, List<Centre> listCentre, List<Employee> listEmployee){
 
-        genetic = new Genetic(listMission, listCentre, listEmployee, 1);
+        genetic = new Genetic(listMission, listCentre, listEmployee, 100);
     }
 
     public void startGeneticAlgo() {
@@ -38,7 +38,8 @@ public class Resolution {
             //création de nouveaux individus
             genetic.generateNewGeneration();
         }
-
+        genetic.fitness();
+        genetic.displayBestGenome();
 
 
     }

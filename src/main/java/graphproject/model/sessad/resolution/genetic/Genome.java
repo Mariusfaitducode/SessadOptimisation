@@ -106,5 +106,21 @@ public class Genome{
         System.out.println();
     }
 
+
+    public void instantiateGenome(List<Mission> listMission, List<Employee> listEmployee){
+
+        for (int i = 0; i < genome.length; i++){
+
+            Mission mission = listMission.get(i);
+
+            if (genome[i] != 0){
+
+                Employee employee = listEmployee.get(genome[i] - 1);
+
+                mission.setEmployee(employee);
+                employee.addMission(mission);
+            }
+        }
+    }
 }
 
