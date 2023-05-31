@@ -76,6 +76,9 @@ public class Genome{
                 // TODO: faire une fonction can take mission globale car celle ci retepe beaucoup d'étapes
                 if (employee.canTakeMission(mission)){
 
+                    mission.setEmployee(employee);
+                    employee.addMission(mission);
+
                     this.fitness++;
                 }
                 else {
