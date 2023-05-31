@@ -252,7 +252,7 @@ public class GraphController {
 //    }
 
     //Listener link
-    public void listenerLink(Node node, Link link){
+    /*public void listenerLink(Node node, Link link){
 
         Node linkedNode = link.getNode();
 
@@ -281,7 +281,7 @@ public class GraphController {
             }
             event.consume();
         });
-    }
+    }*/
 
     public void openGraph(Graph openedGraph) {
         closeGraph();
@@ -339,7 +339,7 @@ public class GraphController {
                 link.setOrientedLine(arrow);
 
                 //Update listener of link
-                listenerLink(node, link);
+                //listenerLink(node, link);
 
             }
         }

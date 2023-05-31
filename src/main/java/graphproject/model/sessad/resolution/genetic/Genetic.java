@@ -15,7 +15,7 @@ public class Genetic {
 
     int popSize;
 
-    public static float mutationRate = 0.01f;
+    public static float mutationRate = 0.8f;
     public static int lastIdEmployee;
 
 
@@ -50,7 +50,16 @@ public class Genetic {
 
         Population newPopulation = new Population(popSize);
 
-        for (int i = 0; i < popSize / 2; i++){
+        Genome bestGenome = population.getBestGenome();
+
+        bestGenome.fitness = 0;
+
+        newPopulation.population[0] = bestGenome;
+        //newPopulation.population[1] = bestGenome;
+
+        int index = 1;
+
+        while (index < popSize){
 
             //Selection
             Genome[] parents = population.selectParents();
@@ -69,14 +78,18 @@ public class Genetic {
             children[1].displayGenome();*/
 
             //Mutation
-            children[0].mutation();
-            children[1].mutation();
+            children[0].mutation(listMission, listEmployee);
+            children[1].mutation(listMission, listEmployee);
 
 
-            int index = i * 2;
+
             newPopulation.population[index] = children[0];
-            newPopulation.population[index+1] = children[1];
+            index++;
 
+            if (index < popSize){
+                newPopulation.population[index] = children[1];
+                index++;
+            }
         }
         this.population = newPopulation;
     }
@@ -91,4 +104,6 @@ public class Genetic {
         bestGenome.displayGenome();
         System.out.println("Fitness = "+ bestGenome.fitness);
     }
+
+
 }

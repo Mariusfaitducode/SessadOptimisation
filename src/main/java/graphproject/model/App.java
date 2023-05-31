@@ -79,6 +79,19 @@ public class App {
 
         int sizeList = listEmployee.size();
 
+
+
+        /*for (Employee employee : listEmployee){
+            Color colorEmployee = findColorForEmployee(employee.getId(), sizeList);
+            Node firstNode = employee.getCentre().getNode();
+
+            for (Mission mission : employee.getListMission()){
+
+                graphs.get(0).addLink(firstNode, mission.getNode(), colorEmployee);
+                firstNode = mission.getNode();
+            }
+        }*/
+
         for (Employee employee : listEmployee){
 
             for (int day = 1; day < 6; day++ ){
@@ -89,24 +102,20 @@ public class App {
                 Node firstNode = employee.getCentre().getNode();
 
                 for (Mission mission : employee.getListMission(day)){
-                    for (int idGraph = 0; idGraph < graphs.size(); idGraph++) {
-                        if (idGraph == 0) {
-                            graphs.get(idGraph).addLink(firstNode, mission.getNode(), colorEmployee);
-                        } else if (idGraph == day) {
-                            graphs.get(idGraph).addLink(firstNode, mission.getNode(), colorEmployee);
-                        }
-                    }
+
+                    graphs.get(0).addLink(firstNode, mission.getNode(), colorEmployee);
+
+                    graphs.get(day).addLink(firstNode, mission.getNode(), colorEmployee);
 
                     firstNode = mission.getNode();
                 }
+                if(!employee.getListMission(day).isEmpty()){
+                    graphs.get(0).addLink(firstNode, employee.getCentre().getNode(), colorEmployee);
 
-                for (int idGraph = 0; idGraph < graphs.size(); idGraph++) {
-                    if (idGraph == 0) {
-                        graphs.get(idGraph).addLink(firstNode, employee.getCentre().getNode(), colorEmployee);
-                    } else if (idGraph == day) {
-                        graphs.get(idGraph).addLink(firstNode, employee.getCentre().getNode(), colorEmployee);
-                    }
+                    graphs.get(day).addLink(firstNode, employee.getCentre().getNode(), colorEmployee);
                 }
+
+
             }
         }
     }

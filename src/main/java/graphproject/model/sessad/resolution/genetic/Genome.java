@@ -4,6 +4,7 @@ import graphproject.model.sessad.Centre;
 import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static graphproject.model.sessad.resolution.genetic.Genetic.lastIdEmployee;
@@ -55,9 +56,9 @@ public class Genome{
 
     public void determineFitness(List<Mission> listMission, List<Employee> listEmployee){
 
-        displayGenome();
+        //displayGenome();
 
-        System.out.println();
+        //System.out.println();
 
         for (int i = 0; i < genome.length; i++){
 
@@ -67,13 +68,6 @@ public class Genome{
 
                 Employee employee = listEmployee.get(genome[i] - 1);
 
-//                System.out.println("Employee "+employee.getId()+ " ");
-//
-//                for (Mission m : employee.getListMission()){
-//                    System.out.print(m.getId()+ " ");
-//                }
-//                System.out.println();
-                // TODO: faire une fonction can take mission globale car celle ci retepe beaucoup d'étapes
                 if (employee.canTakeMission(mission)){
 
                     mission.setEmployee(employee);
@@ -89,14 +83,23 @@ public class Genome{
         }
     }
 
-    public void mutation(){
+    public void mutation(List<Mission> listMission, List<Employee> listEmployee){
         for (int i = 0; i < genome.length; i++) {
             if (Math.random() < mutationRate) { // mutationRate est une valeur entre 0 et 1, représentant la probabilité de mutation
                 // Effectue la mutation sur le gène
                 //offspring1.mutateGene(i);
 
+                int lastVal = genome[i];
+
                 int val = (int)(Math.random() * lastIdEmployee);
                 genome[i] = val;
+
+                //TODO complexity improvement : validity by only checking new mutation
+                determineFitness(listMission, listEmployee);
+
+                if (fitness == 0){
+                    genome[i] = lastVal;
+                }
             }
         }
     }
@@ -112,6 +115,8 @@ public class Genome{
 
     public void instantiateGenome(List<Mission> listMission, List<Employee> listEmployee){
 
+        clearInstance(listMission, listEmployee);
+
         for (int i = 0; i < genome.length; i++){
 
             Mission mission = listMission.get(i);
@@ -123,6 +128,15 @@ public class Genome{
                 mission.setEmployee(employee);
                 employee.addMission(mission);
             }
+        }
+    }
+
+    public void clearInstance(List<Mission> listMission, List<Employee> listEmployee){
+        for (Mission mission : listMission){
+            mission.setEmployee(null);
+        }
+        for (Employee employee : listEmployee){
+            employee.setListMission(new ArrayList<>(0));
         }
     }
 }

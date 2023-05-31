@@ -17,7 +17,7 @@ public class Resolution {
 
     public Resolution(List<Mission> listMission, List<Centre> listCentre, List<Employee> listEmployee){
 
-        genetic = new Genetic(listMission, listCentre, listEmployee, 100);
+        genetic = new Genetic(listMission, listCentre, listEmployee, 500);
     }
 
     public void startGeneticAlgo() {
@@ -25,12 +25,12 @@ public class Resolution {
         //création population initiale
         genetic.generatePopulation();
 
-        genetic.getPopulation().displayPopulation();
+        //genetic.getPopulation().displayPopulation();
 
 
 
-        for (int i = 0; i < 100; i++){
-            System.out.println("------Génération "+ i + " ---------------------");
+        for (int i = 0; i < 500; i++){
+            System.out.println("------ Génération "+ i + " ---------------------");
 
             //fitness
             genetic.fitness();
@@ -38,6 +38,8 @@ public class Resolution {
             //création de nouveaux individus
             genetic.generateNewGeneration();
         }
+
+        System.out.println("------ Last génération ---------------------");
         genetic.fitness();
         genetic.displayBestGenome();
 
