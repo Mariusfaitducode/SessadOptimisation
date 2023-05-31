@@ -48,16 +48,16 @@ public class Genetic {
 
     public void generateNewGeneration(){
 
-        Population newPopulation = new Population(popSize);
+        Population newPopulation = new Population(popSize * 2);
 
         Genome bestGenome = population.getBestGenome();
 
         bestGenome.fitness = 0;
 
-        newPopulation.population[0] = bestGenome;
+        //newPopulation.population[0] = bestGenome;
         //newPopulation.population[1] = bestGenome;
 
-        int index = 1;
+        int index = 0;
 
         while (index < popSize){
 
@@ -91,7 +91,9 @@ public class Genetic {
                 index++;
             }
         }
-        this.population = newPopulation;
+
+        System.arraycopy(population.population, 0, newPopulation.population, index, population.population.length);
+        this.population = newPopulation.selectBestElements();
     }
 
     public void displayBestGenome(){

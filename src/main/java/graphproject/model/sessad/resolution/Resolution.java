@@ -29,7 +29,7 @@ public class Resolution {
 
 
 
-        for (int i = 0; i < 500; i++){
+        for (int i = 0; i < 100; i++){
             System.out.println("------ Génération "+ i + " ---------------------");
 
             //fitness
