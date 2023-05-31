@@ -34,6 +34,15 @@ public class Graph {
 //        return nodes.get(0);
 //    }
 
+    public Node getNodeFromId(int id) {
+        for (Node node : nodes) {
+            if (node.getId()==id)
+                return node;
+        }
+        // By default, return the first node
+        return nodes.get(0);
+    }
+
     public void setName(String name){this.name = name;}
 
     public String getName(){return this.name;}
@@ -87,15 +96,21 @@ public class Graph {
     }
 
     public void addLink(Node node, Node linkedNode) {
-        node.links.add(new Link(linkedNode));
-        //linkedNode.links.add()
-        linkedNode.linkedNodeList.add(node);
+        Node correspondingNode = getNodeFromId(node.getId());
+        Node correspondingLinkedNode = getNodeFromId(linkedNode.getId());
+
+        correspondingNode.links.add(new Link(correspondingLinkedNode));
+        correspondingLinkedNode.linkedNodeList.add(correspondingNode);
     }
 
     public void addLink(Node node, Node linkedNode, Color color) {
-        node.links.add(new Link(linkedNode, color));
-        //linkedNode.links.add()
-        linkedNode.linkedNodeList.add(node);
+        //Récupère les nodes du graph actuel correspondant aux nodes du graph par défault (graph0)
+        //Pas la même adresse mémoire
+        Node correspondingNode = getNodeFromId(node.getId());
+        Node correspondingLinkedNode = getNodeFromId(linkedNode.getId());
+
+        correspondingNode.links.add(new Link(correspondingLinkedNode, color));
+        correspondingLinkedNode.linkedNodeList.add(correspondingNode);
     }
 
 //    public Link getLinkFromIds(Node node, Node linkedNode) {

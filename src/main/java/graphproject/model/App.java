@@ -81,9 +81,10 @@ public class App {
 
         for (Employee employee : listEmployee){
 
-            Color colorEmployee = findColorForEmployee(employee.getId(), sizeList);
-
             for (int day = 1; day < 6; day++ ){
+
+//                Color colorEmployee = createColorGradientDependingOnDay(employee.getId(), day, sizeList);
+                Color colorEmployee = findColorForEmployee(employee.getId(), sizeList);
 
                 Node firstNode = employee.getCentre().getNode();
 
@@ -108,33 +109,6 @@ public class App {
                 }
             }
         }
-
-//        System.out.println("updateLinks");
-        for (Node node: graphs.get(0).getNodes()) {
-
-            for (Link link : node.getLinks()) {
-
-//                System.out.println("node: " + node.getName() + " link: " + link.getNode().getName());
-            }
-        }
-
-        System.out.println("updateLinks from employee");
-        for (Employee employee : listEmployee){
-
-            for (int day = 1; day < 6; day++ ) {
-
-                for (Mission mission : employee.getListMission(day)) {
-                    System.out.println("Centre : " + employee.getCentre().getId() + ",Employee : " + employee.getId() + ",day " + mission.getDay() + ",mission : " + mission.getName());
-                }
-            }
-        }
-
-        System.out.println("updateLinks from mission");
-        for (Mission mission : listMission){
-            if (mission.getEmployee() != null) {
-                System.out.println("Mission : " + mission.getName() + ",day " + mission.getDay() + ",employee : " + mission.getEmployee().getId());
-            }
-        }
     }
 
     public Color findColorForEmployee(int idEmployee, int sizeList) {
@@ -153,6 +127,31 @@ public class App {
         } else {
             return Color.rgb(255 - (idColor - 255 * 5), 0, 255);
         }
+    }
+
+    public Color createColorGradientDependingOnDay(int idEmployee, int day, int sizeList) {
+        day -= 1;
+        int totalColor = (255 * 6 + 1);
+        double deltaColor = totalColor / (sizeList + 0.4);
+        double modifiedDeltaColor =  0.1 * deltaColor;
+
+        int idColor = (int)(deltaColor * idEmployee) + (int)(day * modifiedDeltaColor);
+        if (idColor < 0) {
+            return Color.rgb(0, 0, 255);
+        } else if (idColor < 255) {
+            return Color.rgb(0, idColor, 255);
+        } else if (idColor < 255 * 2) {
+            return Color.rgb(0, 255, 255 - (idColor - 255));
+        } else if (idColor < 255 * 3) {
+            return Color.rgb(idColor - 255 * 2, 255, 0);
+        } else if (idColor < 255 * 4) {
+            return Color.rgb(255, 255 - (idColor - 255 * 3), 0);
+        } else if (idColor < 255 * 5) {
+            return Color.rgb(255, 0, idColor - 255 * 4);
+        } else {
+            return Color.rgb(255 - (idColor - 255 * 5), 0, 255);
+        }
+
     }
 
     public void createNewInstance(int idInstance) {
