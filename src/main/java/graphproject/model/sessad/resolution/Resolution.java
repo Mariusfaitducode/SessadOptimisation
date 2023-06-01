@@ -20,7 +20,7 @@ public class Resolution {
         genetic = new Genetic(listMission, listCentre, listEmployee, 500);
     }
 
-    public void startGeneticAlgo() {
+    public void startGeneticAlgo(int popSize, int generationNbr, double crossOverRate, double mutationRate) {
 
 //        //création population initiale
 //        genetic.generatePopulation();
@@ -43,7 +43,7 @@ public class Resolution {
 //        genetic.fitness();
 //        genetic.displayBestGenome();
 
-        genetic.geneticAlgo(200, 500000, 0.9f, 0.9f);
+        genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
 
     }
 }

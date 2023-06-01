@@ -2,60 +2,60 @@ package graphproject.controller;
 
 import graphproject.model.App;
 import graphproject.model.Graph;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 
 public class PopupController {
 
     // Graphic attributes of the pop-up
-    private Pane popupPane;
+    private Pane popupPane, popupPaneParent;
 
-    private RadioButton rbutton1, rbutton2, rbutton3;
+    private Button start;
 
-    private TextField nameGraph, nodesNumber;
+    private TextField popSize, generationNbr, crossOverRate, MutationRate;
 
+    public PopupController(Pane popupPaneParent){
+        this.popupPaneParent = popupPaneParent;
+        this.popupPane = (Pane) popupPaneParent.lookup("#id-popup-pane");
 
-    // App Attribute
-    private App app;
-
-    PopupController(Pane popupPane, RadioButton rbutton1, RadioButton rbutton2, RadioButton rbutton3, TextField nameGraph, TextField nodesNumber, App app){
-        this.popupPane = popupPane;
-        this.rbutton1 = rbutton1;
-        this.rbutton2 = rbutton2;
-        this.rbutton3 = rbutton3;
-        this.nameGraph = nameGraph;
-        this.nodesNumber = nodesNumber;
-        this.app = app;
+        this.popSize = (TextField) popupPane.lookup("id-popup-popSize");
+        this.generationNbr = (TextField) popupPane.lookup("id-popup-generationNbr");
+        this.crossOverRate = (TextField) popupPane.lookup("id-popup-crossOverRate");
+        this.MutationRate = (TextField) popupPane.lookup("id-popup-MutationRate");
+        this.start = (Button) popupPane.lookup("id-popup-start");
     }
 
-//    public void setVisible(boolean statut) {
-//        popupPane.setVisible(statut);
-//    }
+    public void setVisible(boolean statut) {
+        popupPaneParent.setVisible(statut);
+    }
 
-//    public Graph generateGraph(Pane centerPane){
-//
-//        // Create new Graph
-//        app.createNewGraph(nameGraph.getText());
-//
-//        // Update Graph depending on Radio Button:
-//        // Empty / Random / import existing one
-//        if (rbutton1.isSelected()) {
-//
-//            // Empty
-//
-//        } else if (rbutton2.isSelected()) {
-//
-//            app.getLastGraph().setRandomNodesAndLinks(Integer.parseInt(nodesNumber.getText()), centerPane);
-//
-//        } else if (rbutton3.isSelected()) {
-//
-//            //
-//        }
-//
-//        // Hide Creating Graph Pop-up
-//        popupPane.setVisible(false);
-//
-//        return app.getLastGraph();
-//    }
+    public void setParameters(int popSize, int generationNbr, double crossOverRate, double MutationRate){
+        this.popSize.setText(String.valueOf(popSize));
+        this.generationNbr.setText(String.valueOf(generationNbr));
+        this.crossOverRate.setText(String.valueOf(crossOverRate));
+        this.MutationRate.setText(String.valueOf(MutationRate));
+    }
+
+    public Button getStart() {
+        return start;
+    }
+
+    public int getPopSize() {
+        return Integer.parseInt(popSize.getText());
+    }
+
+    public int getGenerationNbr() {
+        return Integer.parseInt(generationNbr.getText());
+    }
+
+    public double getCrossOverRate() {
+        return Double.parseDouble(crossOverRate.getText());
+    }
+
+    public double getMutationRate() {
+        return Double.parseDouble(MutationRate.getText());
+    }
 }

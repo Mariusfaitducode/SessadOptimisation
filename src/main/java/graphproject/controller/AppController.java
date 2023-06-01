@@ -46,10 +46,7 @@ public class AppController implements Initializable {
     //id des objets de la popup
     @FXML
     private Pane popupPane;
-    @FXML
-    private RadioButton rbutton1, rbutton2, rbutton3;
-    @FXML
-    private TextField nameGraph, nodesNumber;
+
 
     // attribut app qui stocke toutes les données de l'application
 
@@ -58,8 +55,6 @@ public class AppController implements Initializable {
     //Tout ce qui contient les actions
 
     private GraphController graphController;
-
-//    private PopupController popupController;
 
 
 
@@ -72,7 +67,7 @@ public class AppController implements Initializable {
 
         graphController = new GraphController(centerPane, missionRightPane, itineraryRightPane, graphTitle, centreRightPane, toolsBar, parentCenterPane, zoomText);
 
-        app = new App(graphController, parentCenterPane, toolsBar);
+        app = new App(graphController, parentCenterPane, toolsBar, popupPane);
         createInstances();
     }
 
@@ -100,60 +95,4 @@ public class AppController implements Initializable {
 
         }
     }
-
-//    public void testSessad(){
-//
-//        List<Node> listNode = new ArrayList<>();
-//
-//
-//        SessadGestion sessadGestion = new SessadGestion(1, listNode);
-//
-//        //sessadGestion.generatePosition(listNode);
-//
-//
-//        Graph graph = new Graph("Graph Sessad", 1);
-//
-//
-//        for (Employee employee : sessadGestion.getListEmployee()){
-//
-//            Color color;
-//
-//            if (employee.getCentre().getId() == 1){
-//                float nuance = (float)employee.getId() * 1 / sessadGestion.getListEmployee().size();
-//
-//                color = new Color(0,0, nuance, 1);
-//            }
-//            else{
-//                float nuance = (float)employee.getId() * 1 / sessadGestion.getListEmployee().size();
-//                color = new Color(0, nuance, 0, 1);
-//            }
-//
-//            for (int day = 1; day < 6; day++ ){
-//
-//                Node firstNode = employee.getCentre().getNode();
-//
-//                for (Mission mission : employee.getListMission(day)){
-//
-//                    graph.addLink(firstNode, mission.getNode());
-//                    firstNode = mission.getNode();
-//                }
-//                graph.addLink(firstNode, employee.getCentre().getNode());
-//            }
-//        }
-//
-//
-//        int i = 0;
-//
-//        for (Node node : listNode){
-//            graph.addNode(node);
-//        }
-//
-//        graphController.openGraph(graph);
-//
-//        /*for (Centre centre : sessadGestion.getListCentre()){
-//            centre.getCircle().setFill(Color.ORANGE);
-//        }*/
-//
-//    }
-
 }
