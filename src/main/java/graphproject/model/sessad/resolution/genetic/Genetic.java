@@ -113,8 +113,8 @@ public class Genetic {
         bestGenome = population.getBestGenome();
         bestGenome.instantiateGenome(listMission, listEmployee);
         System.out.println("Best genome found : "+ bestGenome.fitness);
-        bestGenome.displayGenome();
-        bestGenome.checkValidity(listMission, listEmployee);
+//        bestGenome.displayGenome();
+//        bestGenome.checkValidity(listMission, listEmployee);
 
     }
 

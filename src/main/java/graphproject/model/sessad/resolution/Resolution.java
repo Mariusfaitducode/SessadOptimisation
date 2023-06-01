@@ -43,7 +43,7 @@ public class Resolution {
 //        genetic.fitness();
 //        genetic.displayBestGenome();
 
-        genetic.geneticAlgo(200, 5000, 0.9f, 0.9f);
+        genetic.geneticAlgo(200, 500000, 0.9f, 0.9f);
 
     }
 }
