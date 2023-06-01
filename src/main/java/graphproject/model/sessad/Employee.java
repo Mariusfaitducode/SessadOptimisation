@@ -10,7 +10,7 @@ import static graphproject.model.sessad.SessadGestion.distMissionMission;
 
 public class Employee {
 
-    private final int MAX_HOURS = 480; //7h
+    private final int MAX_HOURS = 780; //7h 480. Marche mieux avec 600
     private final int MAX_TIME_SLOTS = 780; //13h
 
     private final double SPEED = 0.83333333; //50km/h = 50 / 60 = 0.83333333 km/min
