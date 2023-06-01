@@ -15,17 +15,17 @@ public class PopupController {
 
     private Button start;
 
-    private TextField popSize, generationNbr, crossOverRate, MutationRate;
+    private TextField popSize, generationNbr, crossOverRate, mutationRate;
 
     public PopupController(Pane popupPaneParent){
         this.popupPaneParent = popupPaneParent;
         this.popupPane = (Pane) popupPaneParent.lookup("#id-popup-pane");
 
-        this.popSize = (TextField) popupPane.lookup("id-popup-popSize");
-        this.generationNbr = (TextField) popupPane.lookup("id-popup-generationNbr");
-        this.crossOverRate = (TextField) popupPane.lookup("id-popup-crossOverRate");
-        this.MutationRate = (TextField) popupPane.lookup("id-popup-MutationRate");
-        this.start = (Button) popupPane.lookup("id-popup-start");
+        this.popSize = (TextField) popupPane.lookup("#id-popup-popSize");
+        this.generationNbr = (TextField) popupPane.lookup("#id-popup-generationNbr");
+        this.crossOverRate = (TextField) popupPane.lookup("#id-popup-crossOverRate");
+        this.mutationRate = (TextField) popupPane.lookup("#id-popup-mutationRate");
+        this.start = (Button) popupPane.lookup("#id-popup-buttonStart");
     }
 
     public void setVisible(boolean statut) {
@@ -36,7 +36,7 @@ public class PopupController {
         this.popSize.setText(String.valueOf(popSize));
         this.generationNbr.setText(String.valueOf(generationNbr));
         this.crossOverRate.setText(String.valueOf(crossOverRate));
-        this.MutationRate.setText(String.valueOf(MutationRate));
+        this.mutationRate.setText(String.valueOf(MutationRate));
     }
 
     public Button getStart() {
@@ -56,6 +56,6 @@ public class PopupController {
     }
 
     public double getMutationRate() {
-        return Double.parseDouble(MutationRate.getText());
+        return Double.parseDouble(mutationRate.getText());
     }
 }

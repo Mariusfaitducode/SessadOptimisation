@@ -42,7 +42,9 @@ public class App {
 
         choiceBoxDay = (ChoiceBox<String>) parentCenterPane.lookup("#graph-day-selection");
 
-        listenerTest(toolsController);
+        listenerTest();
+        listenerStart();
+
 
         if (choiceBoxDay == null) {
             System.out.println("ChoiceBox not found");
@@ -58,7 +60,7 @@ public class App {
         };
     }
 
-    public void listenerTest(ToolsController toolsController){
+    public void listenerTest(){
 
         toolsController.getTest().setOnMouseClicked(event->{
             if (!graphController.graphIsNull()) {
