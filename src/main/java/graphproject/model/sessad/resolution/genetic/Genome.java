@@ -171,32 +171,5 @@ public class Genome{
         }
         return true;
     }
-
-    public void checkValidity(List<Mission> listMission, List<Employee> listEmployee) {
-        for (int i = 0; i < genome.length; i++) {
-            if (genome[i] == 0) {
-                Mission mission = listMission.get(i);
-                System.out.println("-------------- Mission " + listMission.get(i).getId() + "-------------");
-
-                if (mission.getDay() == 1) {
-                    for (Employee employee : listEmployee) {
-                        if (employee.canTakeMission(mission)) {
-                            System.out.println("Employee " + employee.getId() + " can take mission " + mission.getId() + " but is not assigned to it.");
-                        } else {
-                            System.out.println(employee.getId() + " can't take mission ");
-                        }
-                    }
-                }
-            }
-        }
-        System.out.println("-------------- Employee -------------");
-        for (Employee employee : listEmployee) {
-            for (Mission mission : employee.getListMission()) {
-
-                System.out.println("Employee " + employee.getId() + " is assigned to mission " + mission.getId());
-
-            }
-        }
-    }
 }
 

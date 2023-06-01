@@ -216,28 +216,28 @@ public class Population {
         return bestGenome;
     }
 
-    public Population selectBestElements(){
+    public Population selectBestElements() {
 
         Population newPopulation = new Population(this.population.length / 2);
 
-        for (Genome genome : this.population){
+        for (Genome genome : this.population) {
 
-            for (int i = 0; i < newPopulation.population.length; i++){
+            for (int i = 0; i < newPopulation.population.length; i++) {
 
-                if (newPopulation.population[i] == null){
+                if (newPopulation.population[i] == null) {
                     newPopulation.population[i] = genome;
                     break;
-                }
-                else if(genome.fitness > newPopulation.population[i].fitness){
+                } else if (genome.fitness > newPopulation.population[i].fitness) {
                     newPopulation.population[i] = genome;
                     break;
                 }
             }
         }
-        for (Genome genome : newPopulation.population){
+        for (Genome genome : newPopulation.population) {
             genome.fitness = 0;
         }
-        return newPopulation;}
+        return newPopulation;
+    }
     //------------------------------------------------------------------------------------------------------------------
 
     public Genome selectionRoulette() {
