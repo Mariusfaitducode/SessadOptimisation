@@ -4,6 +4,7 @@ import graphproject.model.sessad.Centre;
 import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.resolution.genetic.Genetic;
+import graphproject.model.sessad.resolution.genetic.Genome;
 
 import java.util.List;
 
@@ -43,7 +44,8 @@ public class Resolution {
 //        genetic.fitness();
 //        genetic.displayBestGenome();
 
-        genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
+        List<Genome> bestGenome = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
+
 
     }
 }
