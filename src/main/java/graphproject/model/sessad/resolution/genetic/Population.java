@@ -123,14 +123,14 @@ public class Population {
 
     public double getSimilarityRate() {
         double similarityRate = 0;
-        for (Genome genome1 : population) {
-            for (Genome genome2 : population) {
-                if (genome1.getSimilarity(genome2)) {
+        for (int i = 0; i < population.length - 1; i++) {
+            for (int j = i + 1; j < population.length; j++) {
+                if (population[i].getSimilarity(population[j])) {
                     similarityRate++;
                 }
             }
         }
-        return similarityRate / (population.length * population.length - 1);
+        return similarityRate;
     }
 
     public void displayPopulation(){
@@ -237,7 +237,7 @@ public class Population {
         for (Genome genome : newPopulation.population){
             genome.fitness = 0;
         }
-        return newPopulation;
+        return newPopulation;}
     //------------------------------------------------------------------------------------------------------------------
 
     public Genome selectionRoulette() {
@@ -313,5 +313,36 @@ public class Population {
                 break;
             }
         }
+    }
+
+    public List<Genome> getFitnessPopulation(double fitness){
+
+        List<Genome> listGenome = new ArrayList<>(0);
+
+        int size = 0;
+
+        for (Genome genome : population){
+            if (genome.fitness == fitness){
+                size++;
+
+                if (listGenome.size() == 0){
+                    listGenome.add(genome);
+                }
+                else{
+                    boolean canAdd = true;
+                    for (int i = 0; i < listGenome.size(); i++){
+
+                        if (listGenome.get(i).getSimilarity(genome)){
+                            canAdd = false;
+                        }
+                    }
+                    if (canAdd){
+                        listGenome.add(genome);
+                    }
+                }
+            }
+        }
+        System.out.println("Best size : "+ size);
+        return listGenome;
     }
 }

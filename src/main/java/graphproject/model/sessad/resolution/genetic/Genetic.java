@@ -36,7 +36,7 @@ public class Genetic {
         return this.population;
     }
 
-    public void geneticAlgo(int popSize, int generationNbr, double crossOverRateInit, double mutationRateInit) {
+    public List<Genome> geneticAlgo(int popSize, int generationNbr, double crossOverRateInit, double mutationRateInit) {
 
         double crossOverRate = crossOverRateInit;
         double mutationRate = mutationRateInit;
@@ -113,6 +113,12 @@ public class Genetic {
         bestGenome = population.getBestGenome();
         bestGenome.instantiateGenome(listMission, listEmployee);
         System.out.println("Best genome found : "+ bestGenome.fitness);
+
+        List<Genome> bestPopulation = population.getFitnessPopulation(bestGenome.fitness);
+        System.out.println("Similitude : " + population.getSimilarityRate());
+        System.out.println("Taille population finale : "+ bestPopulation.size());
+
+        return bestPopulation;
 //        bestGenome.displayGenome();
 //        bestGenome.checkValidity(listMission, listEmployee);
 
