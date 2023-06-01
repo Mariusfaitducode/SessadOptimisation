@@ -12,7 +12,7 @@ import static graphproject.model.sessad.resolution.genetic.Genetic.mutationRate;
 
 public class Genome{
     int[] genome;
-    double fitness;
+    int fitness;
 
     public Genome(int sizeGenome){
         this.genome = new int[sizeGenome];
@@ -32,6 +32,9 @@ public class Genome{
         return this.genome[index];
     }
 
+    public int getSizeGenome(){
+        return this.genome.length;
+    }
 
     public void addChromosome(Mission mission, Centre centre){
 
@@ -59,7 +62,7 @@ public class Genome{
         //displayGenome();
 
         //System.out.println();
-
+        this.fitness = 0;
         for (int i = 0; i < genome.length; i++){
 
             Mission mission = listMission.get(i);
@@ -137,6 +140,62 @@ public class Genome{
         }
         for (Employee employee : listEmployee){
             employee.setListMission(new ArrayList<>(0));
+        }
+    }
+
+    public void mutation() {
+        int index1 = (int)(Math.random() * genome.length);
+        int index2 = (int)(Math.random() * genome.length);
+
+        while (index1 == index2){
+            index2 = (int)(Math.random() * genome.length);
+        }
+
+        int temp = genome[index1];
+        genome[index1] = genome[index2];
+        genome[index2] = temp;
+    }
+
+    public void evaluate(List<Mission> listMission, List<Employee> listEmployee){
+
+        clearInstance(listMission, listEmployee);
+        determineFitness(listMission, listEmployee);
+
+    }
+
+    public boolean getSimilarity(Genome genome2) {
+        for (int i = 0; i < genome.length; i++) {
+            if (genome[i] != genome2.getGene(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void checkValidity(List<Mission> listMission, List<Employee> listEmployee) {
+        for (int i = 0; i < genome.length; i++) {
+            if (genome[i] == 0) {
+                Mission mission = listMission.get(i);
+                System.out.println("-------------- Mission " + listMission.get(i).getId() + "-------------");
+
+                if (mission.getDay() == 1) {
+                    for (Employee employee : listEmployee) {
+                        if (employee.canTakeMission(mission)) {
+                            System.out.println("Employee " + employee.getId() + " can take mission " + mission.getId() + " but is not assigned to it.");
+                        } else {
+                            System.out.println(employee.getId() + " can't take mission ");
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("-------------- Employee -------------");
+        for (Employee employee : listEmployee) {
+            for (Mission mission : employee.getListMission()) {
+
+                System.out.println("Employee " + employee.getId() + " is assigned to mission " + mission.getId());
+
+            }
         }
     }
 }
