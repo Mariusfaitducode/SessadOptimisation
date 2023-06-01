@@ -20,29 +20,30 @@ public class Resolution {
         genetic = new Genetic(listMission, listCentre, listEmployee, 500);
     }
 
-    public void startGeneticAlgo() {
+    public void startGeneticAlgo(int popSize, int generationNbr, double crossOverRate, double mutationRate) {
 
-        //création population initiale
-        genetic.generatePopulation();
+//        //création population initiale
+//        genetic.generatePopulation();
+//
+//        //genetic.getPopulation().displayPopulation();
+//
+//
+//
+//        for (int i = 0; i < 500; i++){
+//            System.out.println("------ Génération "+ i + " ---------------------");
+//
+//            //fitness
+//            genetic.fitness();
+//
+//            //création de nouveaux individus
+//            genetic.generateNewGeneration();
+//        }
+//
+//        System.out.println("------ Last génération ---------------------");
+//        genetic.fitness();
+//        genetic.displayBestGenome();
 
-        //genetic.getPopulation().displayPopulation();
-
-
-
-        for (int i = 0; i < 100; i++){
-            System.out.println("------ Génération "+ i + " ---------------------");
-
-            //fitness
-            genetic.fitness();
-
-            //création de nouveaux individus
-            genetic.generateNewGeneration();
-        }
-
-        System.out.println("------ Last génération ---------------------");
-        genetic.fitness();
-        genetic.displayBestGenome();
-
+        genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
 
     }
 }

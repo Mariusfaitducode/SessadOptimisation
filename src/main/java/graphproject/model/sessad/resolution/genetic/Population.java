@@ -7,6 +7,7 @@ import graphproject.model.sessad.Mission;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 import static graphproject.model.sessad.SessadGestion.distCentreCentre;
 import static graphproject.model.sessad.SessadGestion.distMissionCentre;
@@ -91,8 +92,45 @@ public class Population {
 
             genome.determineFitness(listMission, listEmployee);
 
-            System.out.println("Fitness : " + genome.fitness);
+//            System.out.println("Fitness : " + genome.fitness);
         }
+    }
+
+    public int getTotalFitness(){
+        int totalFitness = 0;
+        for (Genome genome : population){
+            totalFitness += genome.fitness;
+        }
+        return totalFitness;
+    }
+
+    public int getMeanFitness(){
+        int totalFitness = 0;
+        for (Genome genome : population){
+            totalFitness += genome.fitness;
+        }
+        return totalFitness / population.length;
+    }
+
+    public double getStandardDeviationFitness(){
+        double meanFitness = getMeanFitness();
+        double sum = 0;
+        for (Genome genome : population){
+            sum += Math.pow(genome.fitness - meanFitness, 2);
+        }
+        return Math.sqrt(sum / population.length);
+    }
+
+    public double getSimilarityRate() {
+        double similarityRate = 0;
+        for (Genome genome1 : population) {
+            for (Genome genome2 : population) {
+                if (genome1.getSimilarity(genome2)) {
+                    similarityRate++;
+                }
+            }
+        }
+        return similarityRate / (population.length * population.length - 1);
     }
 
     public void displayPopulation(){
@@ -166,7 +204,7 @@ public class Population {
     public Genome getBestGenome(){
 
         double max = 0;
-        Genome bestGenome = new Genome(population[0].genome.length);
+        Genome bestGenome = null;
 
         for (int i = 0; i < population.length; i++){
 
@@ -200,5 +238,80 @@ public class Population {
             genome.fitness = 0;
         }
         return newPopulation;
+    //------------------------------------------------------------------------------------------------------------------
+
+    public Genome selectionRoulette() {
+        // Calculer la somme des fitness de la population
+        int totalFitness = 0;
+        for (Genome genome : population) {
+            totalFitness += genome.fitness;
+        }
+
+        // Retourne
+        int randomNbr = (int)(Math.random() * totalFitness);
+        int cumulativeFitness = 0;
+
+        for (Genome genome : population) {
+            cumulativeFitness += genome.fitness;
+            if (cumulativeFitness >= randomNbr) {
+                return genome;
+            }
+        }
+        return null;
+    }
+
+    public void crossOver(Genome parent1, Genome parent2, Genome child1, Genome child2) {
+
+        int genomeLength = parent1.genome.length;
+
+        int crossoverPoint = (int) (Math.random() * genomeLength); // genomeLength est la longueur du génome
+
+
+
+        for (int i = 0; i < genomeLength; i++) {
+            if (i < crossoverPoint) {
+                child1.setGene(i, parent1.getGene(i));
+                child2.setGene(i, parent2.getGene(i));
+            } else {
+                child1.setGene(i, parent2.getGene(i));
+                child2.setGene(i, parent1.getGene(i));
+            }
+        }
+    }
+    public void remplacementStrict(Genome child) {
+        int worstFitness = Integer.MAX_VALUE;
+        int worstFitnessIndex = 0;
+        for (int i = 0; i < population.length; i++) {
+            if (population[i].fitness < worstFitness) {
+                worstFitness = population[i].fitness;
+                worstFitnessIndex = i;
+            }
+        }
+        population[worstFitnessIndex] = child;
+    }
+
+    public void remplacementRoulette(Genome child) {
+        // Calculer la somme des fitness de la population
+        int totalFitness = 0;
+        int bestFitness = 0;
+        for (Genome genome : population) {
+            bestFitness = Math.max(bestFitness, genome.fitness);
+        }
+
+        for (Genome genome : population) {
+            totalFitness += (bestFitness - genome.fitness);
+        }
+
+        // Retourne
+        int randomNbr = (int)(Math.random() * totalFitness);
+        int cumulativeFitness = 0;
+
+        for (int i = 0; i < population.length; i++) {
+            cumulativeFitness += (bestFitness - population[i].fitness);
+            if (cumulativeFitness >= randomNbr) {
+                population[i] = child;
+                break;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package graphproject.model;
 
 import graphproject.controller.GraphController;
+import graphproject.controller.PopupController;
 import graphproject.controller.ToolsController;
 import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
@@ -29,18 +30,21 @@ public class App {
     private ChangeListener<Number> choiceBoxDayListener;
 
     private ToolsController toolsController;
+    private PopupController popupController;
 
-    public App(GraphController graphController, Pane parentCenterPane, HBox toolsBar) {
+    public App(GraphController graphController, Pane parentCenterPane, HBox toolsBar, Pane popupPane) {
 
         this.graphController = graphController;
-
         this.toolsController = new ToolsController(toolsBar);
+        this.popupController = new PopupController(popupPane);
 
         graphs = new ArrayList<>(0);
 
         choiceBoxDay = (ChoiceBox<String>) parentCenterPane.lookup("#graph-day-selection");
 
-        listenerTest(toolsController);
+        listenerTest();
+        listenerStart();
+
 
         if (choiceBoxDay == null) {
             System.out.println("ChoiceBox not found");
@@ -56,20 +60,23 @@ public class App {
         };
     }
 
-    public void listenerTest(ToolsController toolsController){
+    public void listenerTest(){
 
         toolsController.getTest().setOnMouseClicked(event->{
             if (!graphController.graphIsNull()) {
-                sessadGestion.getResolution().startGeneticAlgo();
+                popupController.setVisible(true);
+                popupController.setParameters(200, 50000, 0.9, 0.9);
+            }
+        });
+    }
+
+    public void listenerStart() {
+        popupController.getStart().setOnMouseClicked(event -> {
+            if (!graphController.graphIsNull()) {
+                sessadGestion.getResolution().startGeneticAlgo(popupController.getPopSize(), popupController.getGenerationNbr(), popupController.getCrossOverRate(), popupController.getMutationRate());
                 setLinks(sessadGestion.getListEmployee(), sessadGestion.getListMission());
                 graphController.displayGraph();
-//                List<Employee> employees = sessadGestion.getListEmployee();
-//                for (Employee employee : employees) {
-//                    List<Mission> missions = employee.getListMission();
-//                    for (Mission mission : missions) {
-//                        System.out.println("Centre : " + employee.getCentre().getId() + ",Employee : " + employee.getId() + ",day " + mission.getDay() + ",mission : " + mission.getName());
-//                    }
-//                }
+                popupController.setVisible(false);
             }
         });
     }
@@ -262,16 +269,4 @@ public class App {
 
         choiceBoxDay.getSelectionModel().selectedIndexProperty().addListener(choiceBoxDayListener);
     }
-
-
-//    private void generateAllGraphsFromInstances() {
-//        System.out.println("7 instances loaded from files : ");
-//        for (int idInstance = 1; idInstance < 7 ; idInstance++) {
-//
-//            String instanceName = mapInstance.get(idInstance);
-//            System.out.println(" - " + instanceName);
-//            Graph graph = new Graph(instanceName, idInstance);
-//            graphs.add(graph);
-//        }
-//    }
 }

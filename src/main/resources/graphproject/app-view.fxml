@@ -8,10 +8,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -189,33 +187,38 @@
       </BorderPane>
       <StackPane fx:id="popupPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="200.0">
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="popupWindow" stylesheets="@style.css">
+            <Pane id="id-popup-pane" prefHeight="200.0" prefWidth="200.0" styleClass="popupWindow" stylesheets="@style.css">
                <children>
-                  <Label alignment="CENTER" layoutX="123.0" layoutY="14.0" prefHeight="39.0" prefWidth="154.0" text="Create New Graph" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="80.0" layoutY="14.0" prefHeight="39.0" prefWidth="240.0" text="Start Genetic Algorithm" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="72.0" layoutY="53.0" prefHeight="31.0" prefWidth="74.0" text="Nom :" />
-                  <TextField fx:id="nameGraph" layoutX="146.0" layoutY="54.0" text="untitled">
+                  <Label alignment="CENTER" layoutX="8.0" layoutY="66.0" prefHeight="31.0" prefWidth="147.0" text="PopSize :" />
+                  <TextField id="id-popup-popSize" layoutX="155.0" layoutY="66.0" prefHeight="30.0" prefWidth="90.0" text="200">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <RadioButton fx:id="rbutton1" layoutX="72.0" layoutY="94.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="131.0" text="Vide">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="rbuttongroup" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbutton2" layoutX="72.0" layoutY="136.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="131.0" text="Aléatoire" toggleGroup="$rbuttongroup" />
-                  <RadioButton fx:id="rbutton3" layoutX="72.0" layoutY="206.0" mnemonicParsing="false" text="Importer d'un dataset (.csv)" toggleGroup="$rbuttongroup" />
-                  <Label alignment="CENTER" layoutX="100.0" layoutY="163.0" prefHeight="31.0" prefWidth="131.0" text="Nbr de nodes :" />
-                  <TextField fx:id="nodesNumber" layoutX="232.0" layoutY="164.0" prefHeight="30.0" prefWidth="42.0" text="1">
+                  <Button id="id-popup-buttonStart" layoutX="253.0" layoutY="246.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Start" />
+                  <TextField id="id-popup-generationNbr" layoutX="155.0" layoutY="112.0" prefHeight="30.0" prefWidth="90.0" text="50000">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <Button layoutX="253.0" layoutY="246.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Générer" />
+                  <TextField id="id-popup-crossOverRate" layoutX="155.0" layoutY="157.0" prefHeight="30.0" prefWidth="90.0" text="0.9">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField id="id-popup-mutationRate" layoutX="155.0" layoutY="201.0" prefHeight="30.0" prefWidth="90.0" text="0.9">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label alignment="CENTER" layoutX="8.0" layoutY="112.0" prefHeight="31.0" prefWidth="147.0" text="GenerationNbr :" />
+                  <Label alignment="CENTER" layoutX="8.0" layoutY="157.0" prefHeight="31.0" prefWidth="147.0" text="CrossOverRate :" />
+                  <Label alignment="CENTER" layoutX="7.0" layoutY="201.0" prefHeight="31.0" prefWidth="147.0" text="MutationRate :" />
                </children>
             </Pane>
          </children>

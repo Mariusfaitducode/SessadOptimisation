@@ -44,6 +44,9 @@ public class SessadGestion {
 
         //gère affichage
         generatePosition(listNodes);
+//        for (int i = 0; i < listEmployee.size(); i++){
+//            System.out.println("id : " + listEmployee.get(i).getId() + " , " + i);
+//        }
 
         //Algo de résolution
         resolution = new Resolution(listMission, listCentre, listEmployee);

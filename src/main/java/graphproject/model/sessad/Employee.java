@@ -13,7 +13,7 @@ public class Employee {
     private final int MAX_HOURS = 480; //7h
     private final int MAX_TIME_SLOTS = 780; //13h
 
-    private final double SPEED = 50f / 60f; //50km/h
+    private final double SPEED = 0.83333333; //50km/h = 50 / 60 = 0.83333333 km/min
 
     private int id;
 
@@ -117,7 +117,7 @@ public class Employee {
         List<Mission> listMissionDay = insertMission(mission);
         //Si la liste est null, la mission n'est pas valide
         if (listMissionDay == null){
-//            listMission.remove(mission);
+//            System.out.println("cantakemission : Liste null");
             return false;
         }
         //Si l'employée n'a que une mission, la mission est valide
@@ -141,7 +141,7 @@ public class Employee {
             double timeSlots = listMissionDay.get(listMissionDay.size() - 1).getEnd() - listMissionDay.get(0).getStart() + startHours + endHours;
 
             if (timeSlots > MAX_TIME_SLOTS){
-//                listMission.remove(mission);
+//                System.out.println("cantakemission : max time slots : " + timeSlots);
                 return false;
             }
 
@@ -166,7 +166,7 @@ public class Employee {
             //System.out.println("Taux horaire : "+totalDayHours);
             //Verification taux horaire
             if (totalDayHours > MAX_HOURS){
-//                listMission.remove(mission);
+//                System.out.println("cantakemission : max hours : " + totalDayHours);
                 return false;
             }
             //System.out.println("Mission valide");
@@ -179,100 +179,114 @@ public class Employee {
 
         if (skill != mission.getSkill()){
 
-            //System.out.println("Skill différent");
+//            System.out.println("insertMission : skill");
             return null;
         }
 
         List<Mission> listMissionDay = new ArrayList<>(0);
         listMissionDay.addAll(getListMission(mission.getDay()));
 
-        Mission lastMission;
-
         if (listMissionDay.isEmpty()){
-//            listMissionDay.add(mission);
-
             listMissionDay = addMission(listMissionDay, mission);
-
-            //listMission.add(index[0] + 1, mission);
             return listMissionDay;
         }
         else{
-            lastMission = listMissionDay.get(0);
-        }
+            Mission firstMission = listMissionDay.get(0);
+            Mission lastMissionDay = listMissionDay.get(listMissionDay.size() - 1);
+            Mission previousMission = null;
 
-        int index;
+            //Si la mission est au début de la journée
+            if (mission.getStart() < firstMission.getStart()){
 
-        for (Mission missionEmployee : listMissionDay){
-
-            //Trouve le bon placement dans la liste
-            if (mission.getStart() < missionEmployee.getStart()){
-
-                //Verification placement valide
-
-                //Si la mission est la première de la journée
-                if (lastMission == missionEmployee && mission.getEnd() < missionEmployee.getStart()){
-
-                    double nextDistance = distMissionMission[mission.getId() - 1][missionEmployee.getId() - 1];
-                    double nextRoadHours = nextDistance / SPEED;
-
-                    if (nextRoadHours < missionEmployee.getStart() - mission.getEnd()){
-                        listMissionDay.add(listMissionDay.indexOf(missionEmployee), mission);
-
-                        index = listMissionDay.indexOf(missionEmployee);
-                        listMissionDay.add(index, mission);
-
-                        return listMissionDay;
-                    }
-                    //Si la mission n'est pas plaçable
-                    else{
-                        //System.out.println("Mission non plaçable");
-                        return null;
-                    }
+                //Si il y a un problème de chevauchement
+                if(mission.getEnd() >= firstMission.getStart()) {
+//                    System.out.println("insertMission : mission non placable : before : chevauchement");
+                    return null;
                 }
-                //Si la mission est entre 2 autres missions
-                else if (mission.getStart() > lastMission.getEnd() && mission.getEnd() < missionEmployee.getStart()){
 
-                    double previousDistance = distMissionMission[lastMission.getId() - 1][mission.getId() - 1];
-                    double nextDistance = distMissionMission[mission.getId() - 1][missionEmployee.getId() - 1];
+                double nextDistance = distMissionMission[mission.getId() - 1][firstMission.getId() - 1];
+                double nextRoadHours = nextDistance / SPEED;
 
-                    double previousRoadHours = previousDistance / SPEED;
-                    double nextRoadHours = nextDistance / SPEED;
-
-                    if (previousRoadHours < mission.getStart() - lastMission.getEnd() && nextRoadHours < missionEmployee.getStart() - mission.getEnd()){
-                        listMissionDay.add(listMissionDay.indexOf(missionEmployee), mission);
-
-                        index = listMissionDay.indexOf(missionEmployee);
-                        listMissionDay.add(index, mission);
-
-                        return listMissionDay;
-                    }
+                if (nextRoadHours < firstMission.getStart() - mission.getEnd()){
+                    listMissionDay.add(listMissionDay.indexOf(firstMission), mission);
+                    return listMissionDay;
                 }
                 //Si la mission n'est pas plaçable
                 else{
                     //System.out.println("Mission non plaçable");
+//                    System.out.println("insertMission : mission non placable : before : distance : " + nextRoadHours + " : " + (firstMission.getStart() - mission.getEnd()));
                     return null;
                 }
+
             }
-            //Si la mission est la dernière de la journée + verification placement valide
-            else if (missionEmployee == listMissionDay.get(listMissionDay.size() - 1) && mission.getStart() > missionEmployee.getEnd()){
+            // Si la mission est à la fin de la journée
+            else if (mission.getStart() > lastMissionDay.getStart()){
 
-                double previousDistance = distMissionMission[missionEmployee.getId() - 1][mission.getId() - 1];
+                if(lastMissionDay.getEnd() >= mission.getStart()) {
+//                    System.out.println("insertMission : mission non placable : after : chevauchement");
+                    return null;
+                }
 
+                double previousDistance = distMissionMission[lastMissionDay.getId() - 1][mission.getId() - 1];
                 double previousRoadHours = previousDistance / SPEED;
 
-                if (previousRoadHours < mission.getStart() - missionEmployee.getEnd()){
+                if (previousRoadHours < mission.getStart() - lastMissionDay.getEnd()){
                     listMissionDay.add(mission);
-
-                    index = listMissionDay.indexOf(missionEmployee) + 1;
-                    listMissionDay.add(index, mission);
 
                     return listMissionDay;
                 }
-            }
-            lastMission = missionEmployee;
-        }
+                //Si la mission n'est pas plaçable
+                else{
+                    //System.out.println("Mission non plaçable");
+//                    System.out.println("insertMission : mission non placable : after : ditance : " + previousRoadHours + " : " + (mission.getStart() - lastMissionDay.getEnd()));
+                    return null;
+                }
 
+            }
+            //Si la mission est entre 2 autres missions
+            else {
+                previousMission = firstMission;
+
+                for (Mission missionEmployee : listMissionDay) {
+
+                    // On ignore la première mission car commence entre 1ère et 2nd mission
+                    if (missionEmployee != firstMission) {
+
+                        //Trouve le bon placement dans la liste entre 2 missions
+                        if (mission.getStart() < missionEmployee.getStart()) {
+
+                            //Verification placement valide
+
+                            if (mission.getEnd() >= missionEmployee.getStart() || mission.getStart() <= previousMission.getEnd()) {
+//                                System.out.println("insertMission : mission non placable : between : chevauchement");
+                                return null;
+                            }
+
+                            double previousDistance = distMissionMission[previousMission.getId() - 1][mission.getId() - 1];
+                            double nextDistance = distMissionMission[mission.getId() - 1][missionEmployee.getId() - 1];
+
+                            double previousRoadHours = previousDistance / SPEED;
+                            double nextRoadHours = nextDistance / SPEED;
+
+                            if (previousRoadHours < mission.getStart() - previousMission.getEnd() && nextRoadHours < missionEmployee.getStart() - mission.getEnd()) {
+                                listMissionDay.add(listMissionDay.indexOf(missionEmployee), mission);
+                                return listMissionDay;
+                            }
+                            //Si la mission n'est pas plaçable
+                            else {
+                                //System.out.println("Mission non plaçable");
+//                                System.out.println("insertMission : mission non placable : between : distance : " + previousRoadHours + " : " + (mission.getStart() - previousMission.getEnd()) + " : " + nextRoadHours + " : " + (missionEmployee.getStart() - mission.getEnd()));
+                                return null;
+                            }
+                        } else {
+                            previousMission = missionEmployee;
+                        }
+                    }
+                }
+            }
+        }
         //System.out.println("Mission non plaçable");
+//        System.out.println("insertMission : mission non placable : possède les même horaire qu'une autre mission");
         return null;
     }
 
