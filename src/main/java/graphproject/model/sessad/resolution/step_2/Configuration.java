@@ -25,16 +25,29 @@ public class Configuration {
         genome.clearInstance(listMission, listEmployee);
         genome.instantiateGenome(listMission, listEmployee);
 
+        // On ajoute les employees aux LittleGenome
+        addEmployeeToLittleGenome(listEmployee);
+
         // On split le genome en LittleGenome
         splitGenomeIntoLittleGenome(genome, listMission, listEmployee, listCentre);
 
-        for (LittleGenome littleGenome : listLittleGenome){
-            List<List<Integer>> combinations = littleGenome.generateCombinations();
+        double totalCost = 0;
 
-            littleGenome.evaluateAllCombinations(combinations);
+        for (LittleGenome littleGenome : listLittleGenome){
+            if (!littleGenome.getListMission().isEmpty()){
+                List<List<Integer>> combinations = littleGenome.generateCombinations();
+
+                List<Genome> bestCombinations = new ArrayList<>(0);
+                bestCombinations = littleGenome.evaluateAllCombinations(combinations);
+
+                //TODO récupérer meilleures des bestCombinations (step 3)
+
+                System.out.println("Same solutions = "+ bestCombinations.size());
+
+                totalCost += littleGenome.getBestCost();
+            }
         }
-        // On ajoute les employees aux LittleGenome
-        addEmployeeToLittleGenome(listEmployee);
+        System.out.println("Total cost = " + (float)totalCost);
     }
 
     private void initializeLittleGenome(List<Centre> listCentre){

@@ -140,7 +140,7 @@ public class Employee {
 
             lastMission = missionEmployee;
         }
-        return totalDayDistance;
+        return 0.2 * totalDayDistance;
     }
 
     public boolean canTakeMission(Mission mission){

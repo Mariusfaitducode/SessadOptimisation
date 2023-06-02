@@ -62,8 +62,8 @@ public class Resolution {
         Genome firstGenome = listBestGenomes.get(0);
         Configuration configuration = new Configuration(firstGenome, listMission, listEmployee, listCentre);
 
-//        firstGenome.clearInstance(listMission, listEmployee);
-//        firstGenome.instantiateGenome(listMission, listEmployee);
+        Genome.clearInstance(listMission, listEmployee);
+        firstGenome.instantiateGenome(listMission, listEmployee);
 //
 //        for (int i = 0 ; i < listMission.size() ; i++) {
 //            if (listMission.get(i).getEmployee() != null) {
