@@ -50,6 +50,12 @@ public class LittleGenome {
         this.listMission.add(mission);
     }
 
+    public void addEmployee(Employee employee){
+        this.listEmployee.add(employee);
+    }
+
+    public void testAllPossibility(){}
+
 
     public void evaluateAllCombinations(List<List<Integer>> combinations){
 
