@@ -114,28 +114,28 @@ public class Employee {
     }
 
     public double findCost(){
-        List<Mission> listMissionDay = getListMission();
-        //Verification taux horaire + plage horaire
 
+        //Récupère la liste de missions du jour car l'employé a été set dans le little génome qui est split entre les jours
+        List<Mission> listMissionDay = getListMission();
+
+        // Si l'employé n'a pas de mission ce jour là alors le cout est nul
         if (listMissionDay.isEmpty()){
             return 0;
         }
 
+        // On calule le cout le matin entre le centre et la première mission et le soir entre la dernière mission et le centre
         double startDistance = distMissionCentre[listMissionDay.get(0).getId() - 1][centre.getId() - 1];
         double endDistance = distMissionCentre[listMissionDay.get(listMissionDay.size() - 1).getId() - 1][centre.getId() - 1];
 
-        //Verification taux horaire
 
         double totalDayDistance = startDistance + endDistance;
-
         Mission lastMission = listMissionDay.get(0);
 
+        // On parcourt la liste de mission pour calculer le cout entre chaque mission
         for (Mission missionEmployee : listMissionDay){
 
-            //Détermination taux horaire
-
+            // On ajoute le cout entre la mission précédente et la mission actuelle
             double distance = distMissionMission[lastMission.getId() - 1][missionEmployee.getId() - 1];
-
             totalDayDistance += distance;
 
             lastMission = missionEmployee;
