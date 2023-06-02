@@ -89,6 +89,15 @@ public class Genome{
         }
     }
 
+    public void deternimeFitnessWithoutChecking() {
+        this.fitness = 0;
+        for (int j : genome) {
+            if (j != 0) {
+                this.fitness++;
+            }
+        }
+    }
+
     public void mutation(List<Mission> listMission, List<Employee> listEmployee){
         for (int i = 0; i < genome.length; i++) {
             if (Math.random() < mutationRate) { // mutationRate est une valeur entre 0 et 1, représentant la probabilité de mutation
@@ -112,8 +121,8 @@ public class Genome{
 
     public void displayGenome(){
         System.out.println("Genome : ");
-        for (int i = 0; i < genome.length; i++){
-            System.out.print(genome[i] + " ");
+        for (int j : genome) {
+            System.out.print(j + " ");
         }
         System.out.println();
     }
@@ -173,6 +182,20 @@ public class Genome{
             }
         }
         return true;
+    }
+
+    public void convertEmployeeToCentre(List<Employee> listEmployee){
+        for (int i = 0; i < genome.length; i++){
+            if (genome[i] != 0){
+                int employeeId = genome[i];
+                for (Employee employee : listEmployee){
+                    if (employee.getId() == employeeId){
+                        genome[i] = employee.getCentre().getId();
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 

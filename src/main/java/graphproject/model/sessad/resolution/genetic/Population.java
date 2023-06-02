@@ -315,34 +315,67 @@ public class Population {
         }
     }
 
-    public List<Genome> getFitnessPopulation(double fitness){
-
+    public List<Genome> getFitnessPopulation(List<Employee> listEmployee){
         List<Genome> listGenome = new ArrayList<>(0);
+        List<Genome> listGenome2 = new ArrayList<>(0);
 
         int size = 0;
+        int bestFitness = getBestFitness();
 
         for (Genome genome : population){
-            if (genome.fitness == fitness){
+            Genome genome2 = new Genome(genome.getSizeGenome());
+            for (int i = 0; i<genome.getSizeGenome(); i++) {
+                genome2.setGene(i, genome.getGene(i));
+            }
+            genome2.convertEmployeeToCentre(listEmployee);
+
+            if (genome.fitness == bestFitness){
                 size++;
 
                 if (listGenome.size() == 0){
                     listGenome.add(genome);
+                    listGenome2.add(genome2);
+
                 }
                 else{
                     boolean canAdd = true;
                     for (int i = 0; i < listGenome.size(); i++){
 
                         if (listGenome.get(i).getSimilarity(genome)){
+                            System.out.println("same employees : first version from Marius");
                             canAdd = false;
                         }
                     }
+                    for (int i = 0; i < listGenome2.size(); i++){
+
+                        if (listGenome2.get(i).getSimilarity(genome2)){
+                            System.out.println("same centres : Added by Victor");
+                            canAdd = false;
+                        }
+                    }
+
                     if (canAdd){
                         listGenome.add(genome);
+                        listGenome2.add(genome2);
+
                     }
                 }
             }
         }
-        System.out.println("Best size : "+ size);
+        System.out.println("Number of genome of the population with the same size : "+ size);
+
         return listGenome;
+    }
+
+    public int getBestFitness() {
+        int bestFitness = 0;
+        for (Genome genome : population) {
+            bestFitness = Math.max(bestFitness, genome.fitness);
+        }
+        return bestFitness;
+    }
+
+    public void getListBestGenomes(List<Mission> listMission) {
+
     }
 }
