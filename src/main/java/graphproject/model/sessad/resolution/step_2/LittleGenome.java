@@ -123,11 +123,11 @@ public class LittleGenome {
 
         List<Integer> initialGenome = new ArrayList<>();
 
-        System.out.println("Centre : "+ centre.getId());
-        System.out.println("Skill : " + skill.toString());
-        System.out.println("Day : "+ day);
+        //System.out.println("Centre : "+ centre.getId());
+        //System.out.println("Skill : " + skill.toString());
+        //System.out.println("Day : "+ day);
         for (Mission mission : listMission){
-            System.out.println("Mission : "+ mission.getId());
+            //System.out.println("Mission : "+ mission.getId());
             for (int i = 0; i < listEmployee.size(); i++){
 
                 if (mission.getEmployee().getId() == listEmployee.get(i).getId()){

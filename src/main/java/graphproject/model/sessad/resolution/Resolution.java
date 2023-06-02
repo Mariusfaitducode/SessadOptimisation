@@ -57,14 +57,19 @@ public class Resolution {
         List<Genome> listBestGenomes = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
 
         for (Genome genome : listBestGenomes) {
+            genome.displayGenome();
+            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
         }
 
         Genome firstGenome = listBestGenomes.get(0);
-        Configuration configuration = new Configuration(firstGenome, listMission, listEmployee, listCentre);
+
 
         Genome.clearInstance(listMission, listEmployee);
         //firstGenome.instantiateGenome(listMission, listEmployee);
-        configuration.getGenome().instantiateGenome(listMission, listEmployee);
+        //configuration.getGenome().instantiateGenome(listMission, listEmployee);
+
+        System.out.println("Final genome !!");
+        //configuration.getGenome().displayGenome();
 //
 //        for (int i = 0 ; i < listMission.size() ; i++) {
 //            if (listMission.get(i).getEmployee() != null) {

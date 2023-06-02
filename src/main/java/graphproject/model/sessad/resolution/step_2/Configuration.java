@@ -64,7 +64,7 @@ public class Configuration {
             Mission mission = littleGenome.getListMission().get(i);
             Employee employee = littleGenome.getListEmployee().get(miniGenome.getGene(i) - 1);
 
-            this.genome.setGene(mission.getId() - 1, employee.getId() - 1);
+            this.genome.setGene(mission.getId() - 1, employee.getId());
         }
     }
 
