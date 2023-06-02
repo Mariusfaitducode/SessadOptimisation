@@ -113,6 +113,16 @@ public class Employee {
         System.out.println("Employee specialty : "+specialty);
     }
 
+    public int nbrMissionWithGoodSpecialty() {
+        int nbrMission = 0;
+        for (Mission mission : listMission) {
+            if (mission.getSpecialty() == specialty) {
+                nbrMission++;
+            }
+        }
+        return nbrMission;
+    }
+
     public double findCost(){
 
         //Récupère la liste de missions du jour car l'employé a été set dans le little génome qui est split entre les jours
