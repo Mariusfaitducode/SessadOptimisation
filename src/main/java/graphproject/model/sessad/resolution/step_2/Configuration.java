@@ -17,7 +17,7 @@ public class Configuration {
 
         listCentreMission = new ArrayList<>(3);
 
-        genome.clearInstance(listMission, listEmployee);
+        Genome.clearInstance(listMission, listEmployee);
         for (int i = 0; i < genome.getSizeGenome(); i++){
 
             Mission mission = listMission.get(i);
