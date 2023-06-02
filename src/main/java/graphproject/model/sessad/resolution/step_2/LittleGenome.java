@@ -21,6 +21,9 @@ public class LittleGenome {
         this.centre = centre;
         this.skill = skill;
         this.day = day;
+
+        this.listMission = new ArrayList<>(0);
+        this.listEmployee = new ArrayList<>(0);
     }
 
     public Centre getCentre(){
@@ -46,8 +49,6 @@ public class LittleGenome {
     public void addMission(Mission mission){
         this.listMission.add(mission);
     }
-
-    public void testAllPossibility(){
 
 
     public void evaluateAllCombinations(List<List<Integer>> combinations){
@@ -89,8 +90,9 @@ public class LittleGenome {
         List<Integer> initialGenome = new ArrayList<>();
 
         for (Mission mission : listMission){
-
+            System.out.println("Mission : "+ mission.getId());
             for (int i = 0; i < listEmployee.size(); i++){
+
                 if (mission.getEmployee().getId() == listEmployee.get(i).getId()){
                     initialGenome.add(i);
                 }
@@ -99,6 +101,11 @@ public class LittleGenome {
         List<List<Integer>> combinations = new ArrayList<>();
 
         generateCombinationsRecursive(initialGenome, new ArrayList<>(), combinations);
+
+        for (List<Integer> combination : combinations) {
+            System.out.println(combination);
+        }
+
         return combinations;
     }
 

@@ -27,6 +27,12 @@ public class Configuration {
 
         // On split le genome en LittleGenome
         splitGenomeIntoLittleGenome(genome, listMission, listEmployee, listCentre);
+
+        for (LittleGenome littleGenome : listLittleGenome){
+            List<List<Integer>> combinations = littleGenome.generateCombinations();
+
+            littleGenome.evaluateAllCombinations(combinations);
+        }
     }
 
     private void initializeLittleGenome(List<Centre> listCentre){
