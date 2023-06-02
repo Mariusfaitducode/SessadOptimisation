@@ -41,6 +41,8 @@ public class Employee {
     public Centre getCentre(){return centre;}
     public int getId(){return id;}
 
+    public Skill getSkill(){return skill;}
+
     public List<Mission> getListMission(){return listMission;}
 
     public void setListMission(List<Mission> listMission){this.listMission = listMission;}
