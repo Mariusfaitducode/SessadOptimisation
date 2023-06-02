@@ -12,46 +12,62 @@ import java.util.List;
 public class Configuration {
 
     Genome genome;
-    List<littleGenome> listLittleGenome;
+    List<LittleGenome> listLittleGenome;
 
-    public Configuration(Genome genome, List<Mission> listMission, List<Employee> listEmployee, int nbrCentre){
+    public Configuration(Genome genome, List<Mission> listMission, List<Employee> listEmployee, List<Centre> listCentre){
 
         this.genome = genome;
         this.listLittleGenome = new ArrayList<>(0);
 
-
+        // Creation des LittleGenome, il y en a : n centres X 2 skills X 5 days
+        initializeLittleGenome(listCentre);
 
         genome.clearInstance(listMission, listEmployee);
         genome.instantiateGenome(listMission, listEmployee);
 
-        for (int i = 0; i < genome.getSizeGenome(); i++){
+        // On split le genome en LittleGenome
+        splitGenomeIntoLittleGenome(genome, listMission, listEmployee, listCentre);
+    }
 
-            Mission mission = listMission.get(i);
+    private void initializeLittleGenome(List<Centre> listCentre){
 
-            if (genome.getGene(i) != 0){
+        for (Centre centre : listCentre) {
 
-                int centreId = mission.getEmployee().getCentre().getId();
-                int day = mission.getDay();
-                Skill skill = mission.getSkill();
+            for (Skill skill : Skill.values()) {
 
+                for (int day = 1; day <= 5; day++) {
 
-            }
-        }
+                    LittleGenome littleGenome = new LittleGenome(centre, skill, day);
 
-        for (int i = 0 ; i < listMission.size() ; i++) {
-            if (listMission.get(i).getEmployee() != null) {
-                if (listMission.get(i).getEmployee().getCentre().getId() == 1) {
-                    if (listMission.get(i).getSkill() == Skill.LPC) {
-                        if (listMission.get(i).getDay() == 1) {
-                            System.out.println("Mission " + i + " : " + listMission.get(i).getEmployee().getId() + ", Employee " + listMission.get(i).getEmployee().getId() + ", Centre " + listMission.get(i).getEmployee().getCentre().getId() + ", Skill " + listMission.get(i).getSkill() + ", Day " + listMission.get(i).getDay());
-                        }
-                    }
+                    listLittleGenome.add(littleGenome);
                 }
             }
         }
     }
 
-    private void initializeLittleGenome() {
-    	
+    private void splitGenomeIntoLittleGenome(Genome genome, List<Mission> listMission, List<Employee> listEmployee, List<Centre> listCentre){
+        for (int i = 0; i < genome.getSizeGenome(); i++){
+
+            if (genome.getGene(i) != 0){
+
+                Mission mission = listMission.get(i);
+
+                Centre centre = mission.getEmployee().getCentre();
+                Skill skill = mission.getSkill();
+                int day = mission.getDay();
+
+                LittleGenome littleGenome = getLittleGenome(centre, skill, day);
+                littleGenome.addMission(mission);
+            }
+        }
+    }
+
+    public LittleGenome getLittleGenome(Centre centre, Skill skill, int day){
+        for (LittleGenome littleGenome : listLittleGenome){
+            if (littleGenome.getCentre().equals(centre) && littleGenome.getSkill().equals(skill) && littleGenome.getDay() == day){
+                return littleGenome;
+            }
+        }
+        return null;
     }
 }
