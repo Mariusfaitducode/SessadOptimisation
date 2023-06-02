@@ -6,13 +6,14 @@ import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.resolution.genetic.Genome;
 import graphproject.model.sessad.resolution.step_2.Configuration;
-import graphproject.model.sessad.skill.Skill;
 
 import java.util.List;
 
 public class Resolution {
 
-    int nbrCentre;
+    int centreAffected = 0;
+    double travelCost = 0;
+    int matchingSpecialty = 0;
     private List<Mission> listMission;
     private List<Centre> listCentre;
     private List<Employee> listEmployee;
@@ -27,7 +28,7 @@ public class Resolution {
         this.listCentre = listCentre;
         this.listEmployee = listEmployee;
 
-        this.nbrCentre = listCentre.size();
+        //this.nbrCentre = listCentre.size();
         genetic = new Genetic(listMission, listCentre, listEmployee, 500);
     }
 
@@ -58,18 +59,26 @@ public class Resolution {
 
         for (Genome genome : listBestGenomes) {
             genome.displayGenome();
-            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
+
         }
+
 
         Genome firstGenome = listBestGenomes.get(0);
 
+        Configuration configuration = new Configuration(firstGenome, listMission, listEmployee, listCentre);
+
+        centreAffected = (int)firstGenome.getFitness();
+        travelCost = configuration.getBestCost();
+        matchingSpecialty = configuration.getBestSpecialtyMatch();
 
         Genome.clearInstance(listMission, listEmployee);
-        //firstGenome.instantiateGenome(listMission, listEmployee);
-        //configuration.getGenome().instantiateGenome(listMission, listEmployee);
+
+        //Instantiation de Sessad Gestion
+        firstGenome.instantiateGenome(listMission, listEmployee);
+        configuration.getGenome().instantiateGenome(listMission, listEmployee);
 
         System.out.println("Final genome !!");
-        //configuration.getGenome().displayGenome();
+//        configuration.getGenome().displayGenome();
 //
 //        for (int i = 0 ; i < listMission.size() ; i++) {
 //            if (listMission.get(i).getEmployee() != null) {
@@ -82,5 +91,17 @@ public class Resolution {
 //                }
 //            }
 //        }
+    }
+
+    public int getCentreAffected() {
+        return centreAffected;
+    }
+
+    public double getTravelCost() {
+        return travelCost;
+    }
+
+    public int getMatchingSpecialty() {
+        return matchingSpecialty;
     }
 }

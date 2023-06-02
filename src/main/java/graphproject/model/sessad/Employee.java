@@ -153,6 +153,38 @@ public class Employee {
         return 0.2 * totalDayDistance;
     }
 
+    public double findAllDayCost(){
+
+        double totalDayDistance = 0;
+
+        for (int day = 0; day < 5; day++){
+
+            //Récupère la liste de missions du jour car l'employé a été set dans le little génome qui est split entre les jours
+            List<Mission> listMissionDay = getListMission(day);
+
+            if (!listMissionDay.isEmpty()){
+
+                // On calule le cout le matin entre le centre et la première mission et le soir entre la dernière mission et le centre
+                double startDistance = distMissionCentre[listMissionDay.get(0).getId() - 1][centre.getId() - 1];
+                double endDistance = distMissionCentre[listMissionDay.get(listMissionDay.size() - 1).getId() - 1][centre.getId() - 1];
+
+                totalDayDistance += startDistance + endDistance;
+                Mission lastMission = listMissionDay.get(0);
+
+                // On parcourt la liste de mission pour calculer le cout entre chaque mission
+                for (Mission missionEmployee : listMissionDay){
+
+                    // On ajoute le cout entre la mission précédente et la mission actuelle
+                    double distance = distMissionMission[lastMission.getId() - 1][missionEmployee.getId() - 1];
+                    totalDayDistance += distance;
+
+                    lastMission = missionEmployee;
+                }
+            }
+        }
+        return 0.2 * totalDayDistance;
+    }
+
     public boolean canTakeMission(Mission mission){
 
         //Récupère la liste de missions du jour avec nouvelle mission

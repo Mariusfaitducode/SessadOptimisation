@@ -3,13 +3,12 @@ package graphproject.model;
 import graphproject.controller.GraphController;
 import graphproject.controller.PopupController;
 import graphproject.controller.ToolsController;
+import graphproject.controller.selection_pane.CentralPane;
 import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.Place;
 import graphproject.model.sessad.SessadGestion;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -26,8 +25,9 @@ public class App {
     private GraphController graphController;
     private List<Graph> graphs;
 
-    private ChoiceBox<String> choiceBoxDay;
-    private ChangeListener<Number> choiceBoxDayListener;
+
+
+    private CentralPane centralPane;
 
     private ToolsController toolsController;
     private PopupController popupController;
@@ -40,24 +40,12 @@ public class App {
 
         graphs = new ArrayList<>(0);
 
-        choiceBoxDay = (ChoiceBox<String>) parentCenterPane.lookup("#graph-day-selection");
+        //choiceBoxDay = (ChoiceBox<String>) parentCenterPane.lookup("#graph-day-selection");
 
         listenerTest();
         listenerStart();
 
-
-        if (choiceBoxDay == null) {
-            System.out.println("ChoiceBox not found");
-        } else {
-            System.out.println("ChoiceBox found");
-        }
-
-        this.choiceBoxDayListener = new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-
-            }
-        };
+        centralPane = new CentralPane(parentCenterPane);
     }
 
     public void listenerTest(){
@@ -70,10 +58,15 @@ public class App {
         });
     }
 
+    //Lance l'algorithme génétique
     public void listenerStart() {
         popupController.getStart().setOnMouseClicked(event -> {
             if (!graphController.graphIsNull()) {
+
                 sessadGestion.getResolution().startGeneticAlgo(popupController.getPopSize(), popupController.getGenerationNbr(), popupController.getCrossOverRate(), popupController.getMutationRate());
+
+                centralPane.setLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty());
+
                 setLinks(sessadGestion.getListEmployee(), sessadGestion.getListMission());
                 graphController.displayGraph();
                 popupController.setVisible(false);
@@ -85,8 +78,6 @@ public class App {
 
 
         int sizeList = listEmployee.size();
-
-
 
         /*for (Employee employee : listEmployee){
             Color colorEmployee = findColorForEmployee(employee.getId(), sizeList);
@@ -199,9 +190,7 @@ public class App {
 
     public void generateGraphsFromSessadGestion(List<Node> listNode){
 
-        //Nettoyage choiceBox
-        this.choiceBoxDay.getItems().clear();
-        choiceBoxDay.getSelectionModel().selectedIndexProperty().removeListener(choiceBoxDayListener);
+
 
         //Création graph global contenant toutes les nodes
         Graph initialGraph = new Graph("Global", 0);
@@ -209,7 +198,13 @@ public class App {
             initialGraph.addNode(node);
         }
         graphs.add(initialGraph);
-        this.choiceBoxDay.getItems().add("global");
+
+
+        //Nettoyage choiceBox
+        centralPane.choiceBoxDay.getItems().clear();
+        centralPane.choiceBoxDay.getSelectionModel().selectedIndexProperty().removeListener(centralPane.choiceBoxDayListener);
+
+        centralPane.choiceBoxDay.getItems().add("global");
 
         int max_day = 6;
 
@@ -218,7 +213,7 @@ public class App {
         for (int i = 1; i < max_day; i++){
             Graph graph = new Graph("day"+i, i );
             graphs.add(graph);
-            this.choiceBoxDay.getItems().add("day"+i);
+            centralPane.choiceBoxDay.getItems().add("day"+i);
         }
 
 
@@ -257,7 +252,7 @@ public class App {
         }
 
         //Change de graph en fonction du jour sélectionné
-        choiceBoxDayListener = (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+        centralPane.choiceBoxDayListener = (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
 
             if (new_val.intValue() >= 0 && new_val.intValue() < graphs.size()) {
 
@@ -267,6 +262,6 @@ public class App {
             }
         };
 
-        choiceBoxDay.getSelectionModel().selectedIndexProperty().addListener(choiceBoxDayListener);
+        centralPane.choiceBoxDay.getSelectionModel().selectedIndexProperty().addListener(centralPane.choiceBoxDayListener);
     }
 }

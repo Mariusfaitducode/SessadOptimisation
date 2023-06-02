@@ -7,9 +7,7 @@ import graphproject.model.sessad.Mission;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.GZIPInputStream;
 
-import static graphproject.model.sessad.SessadGestion.distCentreCentre;
 import static graphproject.model.sessad.SessadGestion.distMissionCentre;
 
 public class Population {
@@ -24,10 +22,8 @@ public class Population {
         population = new Genome[sizePopulation];
     }
 
-    public void initializePopulation( List<Mission> listMission, List<Centre> listCentre){
+    public void initializePopulation(List<Mission> listMission, List<Centre> listCentre){
         int sizeGenome = listMission.size();
-
-
 
         List<Integer> listRef = new ArrayList<>(0);
 
@@ -35,9 +31,7 @@ public class Population {
             listRef.add(i);
         }
 
-
-
-        int sizeCentre = distCentreCentre.length;
+        int sizeCentre = listCentre.size();
 
         //Parcours de la population
         for (int i = 0; i < sizePopulation; i++){
@@ -85,6 +79,21 @@ public class Population {
         System.out.println("Population initialized : " + sizePopulation);
     }
 
+    public void initializeLittlePopulation(List<List<Integer>> combinations, List<Mission> listMission, List<Centre> listEmployee){
+
+        int sizeGenome = listMission.size();
+
+        //Parcours de la population
+        for (int i = 0; i < sizePopulation; i++){
+            //On définit un génome de taille sizeGenome
+            population[i] = new Genome(sizeGenome);
+
+            for (int j = 0; j < sizeGenome; j++){
+                population[i].setGene(j, combinations.get(i).get(j));
+            }
+        }
+    }
+
     public void evaluatePopulation(List<Mission> listMission, List<Employee> listEmployee){
         for (Genome genome : population){
 
@@ -95,6 +104,20 @@ public class Population {
 //            System.out.println("Fitness : " + genome.fitness);
         }
     }
+
+    public void evaluateCostPopulation(List<Mission> listMission, List<Employee> listEmployee){
+        for (Genome genome : population){
+
+            Genome.clearInstance(listMission, listEmployee);
+
+            genome.determineFitness(listMission, listEmployee);
+            genome.determineCostFitness(listMission, listEmployee);
+
+//            System.out.println("Fitness : " + genome.fitness);
+        }
+    }
+
+
 
     public int getTotalFitness(){
         int totalFitness = 0;
@@ -315,6 +338,7 @@ public class Population {
         }
     }
 
+    //Retourne la liste des génomes ayant la même fitness
     public List<Genome> getFitnessPopulation(double fitness){
 
         List<Genome> listGenome = new ArrayList<>(0);

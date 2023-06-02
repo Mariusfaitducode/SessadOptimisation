@@ -126,6 +126,100 @@ public class Genetic {
 
     }
 
+    public void littleGeneticAlgo(List<List<Integer>> combinations, int popSize, int generationNbr, double crossOverRateInit, double mutationRateInit){
+
+        double crossOverRate = crossOverRateInit;
+        double mutationRate = mutationRateInit;
+
+        //création population initiale
+        this.population = new Population(popSize);
+        population.initializeLittlePopulation(combinations, listMission, listCentre);
+
+        //Evaluation de la population
+        population.evaluateCostPopulation(listMission, listEmployee);
+
+        for (Genome genome : population.population) {
+        	genome.displayGenome();
+            System.out.println("Fitness : " + genome.fitness);
+            System.out.println("Cost : " + genome.costFitness);
+
+        }
+/*
+        //Affichage de la meilleure solution
+        Genome bestGenome = getBestGenome();
+        int bestFitness = bestGenome.fitness;
+
+        for (int iter = 0 ; iter < generationNbr ; iter++) {
+            if (iter % (generationNbr/10) == 0) {
+                System.out.println("-----------------------------");
+                System.out.println("Generation : " + iter);
+                System.out.println("Moyenne fitness : " + population.getMeanFitness());
+                System.out.println("Ecart type : " + population.getStandardDeviationFitness());
+                System.out.println("Best fitness : " + bestFitness);
+                System.out.println("Similitude : " + population.getSimilarityRate());
+                System.out.println("-----------------------------");
+            }
+
+//            crossOverRate = crossOverRateInit - (iter * crossOverRateInit / generationNbr);
+//            mutationRate = mutationRateInit - (iter * mutationRateInit / generationNbr);
+
+
+            //Selection
+            Genome parent1 = population.selectionRoulette();
+            Genome parent2 = population.selectionRoulette();
+
+            //Croisement avec taux de crossOver
+            Genome child1 = new Genome(parent1.getSizeGenome());
+            Genome child2 = new Genome(parent2.getSizeGenome());
+            if (Math.random() < crossOverRate) {
+                population.crossOver(parent1, parent2, child1, child2);
+            } else {
+                child1 = parent1;
+                child2 = parent2;
+            }
+
+            //Mutation 1 avec taux de mutation
+            if (Math.random() < mutationRate) {
+                child1.mutation();
+            }
+
+            //Mutation 2 avec taux de mutation
+            if (Math.random() < mutationRate) {
+                child2.mutation();
+            }
+
+            //Evaluation des 2 enfants
+            child1.evaluate(listMission, listEmployee);
+            child2.evaluate(listMission, listEmployee);
+
+            //Remplacement
+            population.remplacementRoulette(child1);
+            population.remplacementRoulette(child2);
+
+            // Check if better
+            if (child1.fitness > bestFitness) {
+                bestFitness = child1.fitness;
+                System.out.println("Better genome found : "+ bestFitness);
+            }
+            if (child2.fitness > bestFitness) {
+                bestFitness = child2.fitness;
+                System.out.println("Better genome found : "+ bestFitness);
+            }
+
+        }
+        bestGenome = population.getBestGenome();
+        Genome.clearInstance(listMission, listEmployee);
+        bestGenome.instantiateGenome(listMission, listEmployee);
+
+        System.out.println("Best genome found : "+ bestGenome.fitness);
+
+        List<Genome> bestPopulation = population.getFitnessPopulation(bestGenome.fitness);
+        System.out.println("Similitude : " + population.getSimilarityRate());
+        System.out.println("Taille population finale : "+ bestPopulation.size());
+
+        //return bestPopulation;*/
+    }
+
     public void generatePopulation(){
         this.population = new Population(popSize);
         population.initializePopulation(listMission, listCentre);

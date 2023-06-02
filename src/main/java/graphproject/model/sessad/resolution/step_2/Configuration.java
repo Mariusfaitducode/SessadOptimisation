@@ -14,6 +14,10 @@ public class Configuration {
     Genome genome;
     List<LittleGenome> listLittleGenome;
 
+    double bestCost;
+
+    int bestSpecialtyMatch;
+
     public Configuration(Genome genome, List<Mission> listMission, List<Employee> listEmployee, List<Centre> listCentre){
 
         this.genome = genome;
@@ -32,35 +36,59 @@ public class Configuration {
         splitGenomeIntoLittleGenome(genome, listMission, listEmployee, listCentre);
 
         double totalCost = 0;
+        int totalSpecialtyMatch = 0;
 
+        //Resolution du génome
         for (LittleGenome littleGenome : listLittleGenome){
             if (!littleGenome.getListMission().isEmpty()){
-                List<List<Integer>> combinations = littleGenome.generateCombinations();
 
-                Genome bestGenome = new Genome(littleGenome.getListMission().size());
-                bestGenome = littleGenome.evaluateAllCombinations(combinations);
+                if (littleGenome.getListMission().size() > 10){
+                    System.out.println("LittleGenome size = " + littleGenome.getListMission().size());
 
-                bestGenome.displayGenome();
+                    List<Centre> littleGenomeCentre = new ArrayList<>(0);
+                    littleGenomeCentre.add(littleGenome.getCentre());
 
-                adaptGenome(bestGenome, littleGenome);
+                    List<List<Integer>> combinations = littleGenome.generateCombinations(true);
 
-                //System.out.println("Same solutions = "+ bestCombinations.size());
+                    //Genetic genetic = new Genetic(littleGenome.getListMission(), littleGenomeCentre, littleGenome.getListEmployee(), 200);
+                    //genetic.littleGeneticAlgo(combinations, 200, 1000, 0.9, 0.9);
+                }
+                else{
+                    List<List<Integer>> combinations = littleGenome.generateCombinations(false);
 
-                totalCost += littleGenome.getBestCost();
+                    Genome bestGenome = new Genome(littleGenome.getListMission().size());
+
+                    bestGenome = littleGenome.evaluateAllCombinations(combinations);
+
+                    bestGenome.displayGenome();
+
+                    adaptGenome(bestGenome, littleGenome);
+
+                    //System.out.println("Same solutions = "+ bestCombinations.size());
+
+                    totalCost += littleGenome.getBestCost();
+                    totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
+                }
+
             }
         }
 
         System.out.println("Total cost = " + (float)totalCost);
+        this.bestCost = totalCost;
+        this.bestSpecialtyMatch = totalSpecialtyMatch;
 
 
     }
 
+    public double getBestCost(){return bestCost;}
+    public int getBestSpecialtyMatch(){return bestSpecialtyMatch;}
     public Genome getGenome(){return genome;}
 
     public void adaptGenome(Genome miniGenome, LittleGenome littleGenome){
 
         for (int i = 0; i < miniGenome.getGenome().length; i++){
 
+            //TODO : Erreur qui arrive parfois, à corriger
             Mission mission = littleGenome.getListMission().get(i);
             Employee employee = littleGenome.getListEmployee().get(miniGenome.getGene(i) - 1);
 
