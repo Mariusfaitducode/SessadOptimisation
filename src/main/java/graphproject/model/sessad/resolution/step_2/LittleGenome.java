@@ -65,6 +65,7 @@ public class LittleGenome {
 
         double bestCost = 1000000000;
         Genome bestGenome = new Genome(listMission.size());
+        int bestSpecialtyMatch = 0;
 
         for(List<Integer> combination : combinations){
 
@@ -86,24 +87,31 @@ public class LittleGenome {
             //genome.instantiateGenome(listMission, listEmployee);
 
             double totalCost = 0;
+            int specialtyMatch = 0;
 
             if (genome.getFitness() > 0){
 
                 for (Employee employee : listEmployee){
                     totalCost += employee.findCost();
+                    specialtyMatch += employee.nbrMissionWithGoodSpecialty();
                 }
 
                 if (totalCost < bestCost && totalCost != 0){
                     bestCost = totalCost;
                     bestGenome = genome;
+                    bestSpecialtyMatch = specialtyMatch;
                     //listBestGenome.clear();
                     //listBestGenome.add(genome);
                 }
                 else if (totalCost == bestCost){
+
                     //Compare le match des spécialités entre genome et bestGenome
 
+                    if (bestSpecialtyMatch < specialtyMatch){
+                        bestGenome = genome;
+                    }
                 }
-                System.out.println("Cost = "+ totalCost);
+                //System.out.println("Cost = "+ totalCost);
             }
         }
         this.bestCost = bestCost;
