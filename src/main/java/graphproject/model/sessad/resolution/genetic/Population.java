@@ -88,7 +88,7 @@ public class Population {
     public void evaluatePopulation(List<Mission> listMission, List<Employee> listEmployee){
         for (Genome genome : population){
 
-            genome.clearInstance(listMission, listEmployee);
+            Genome.clearInstance(listMission, listEmployee);
 
             genome.determineFitness(listMission, listEmployee);
 

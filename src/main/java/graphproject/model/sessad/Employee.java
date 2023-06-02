@@ -111,6 +111,36 @@ public class Employee {
         System.out.println("Employee specialty : "+specialty);
     }
 
+    public double findCost(){
+        List<Mission> listMissionDay = getListMission();
+        //Verification taux horaire + plage horaire
+
+        if (listMissionDay.isEmpty()){
+            return 0;
+        }
+
+        double startDistance = distMissionCentre[listMissionDay.get(0).getId() - 1][centre.getId() - 1];
+        double endDistance = distMissionCentre[listMissionDay.get(listMissionDay.size() - 1).getId() - 1][centre.getId() - 1];
+
+        //Verification taux horaire
+
+        double totalDayDistance = startDistance + endDistance;
+
+        Mission lastMission = listMissionDay.get(0);
+
+        for (Mission missionEmployee : listMissionDay){
+
+            //Détermination taux horaire
+
+            double distance = distMissionMission[lastMission.getId() - 1][missionEmployee.getId() - 1];
+
+            totalDayDistance += distance;
+
+            lastMission = missionEmployee;
+        }
+        return totalDayDistance;
+    }
+
     public boolean canTakeMission(Mission mission){
 
         //Récupère la liste de missions du jour avec nouvelle mission

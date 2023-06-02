@@ -111,7 +111,7 @@ public class Genetic {
 
         }
         bestGenome = population.getBestGenome();
-        bestGenome.clearInstance(listMission, listEmployee);
+        Genome.clearInstance(listMission, listEmployee);
         bestGenome.instantiateGenome(listMission, listEmployee);
 
         System.out.println("Best genome found : "+ bestGenome.fitness);
@@ -191,7 +191,7 @@ public class Genetic {
 
         Genome bestGenome = population.getBestGenome();
 
-        bestGenome.clearInstance(listMission, listEmployee);
+        Genome.clearInstance(listMission, listEmployee);
         bestGenome.instantiateGenome(listMission, listEmployee);
 
         System.out.println("Best Genome :");

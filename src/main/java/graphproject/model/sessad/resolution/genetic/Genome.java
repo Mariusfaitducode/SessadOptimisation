@@ -24,6 +24,9 @@ public class Genome{
         this.fitness = genome.fitness;
     }
 
+    public double getFitness(){return fitness;}
+    public int[] getGenome(){return genome;}
+
     public void setGene(int index, int gene){
         this.genome[index] = gene;
     }
@@ -134,7 +137,7 @@ public class Genome{
         }
     }
 
-    public void clearInstance(List<Mission> listMission, List<Employee> listEmployee){
+    public static void clearInstance(List<Mission> listMission, List<Employee> listEmployee){
         for (Mission mission : listMission){
             mission.setEmployee(null);
         }
