@@ -444,14 +444,14 @@ public class Population {
                     for (int i = 0; i < listGenome.size(); i++){
 
                         if (listGenome.get(i).getSimilarity(genome)){
-                            System.out.println("same employees : first version from Marius");
+//                            System.out.println("same employees : first version from Marius");
                             canAdd = false;
                         }
                     }
                     for (int i = 0; i < listGenome2.size(); i++){
 
                         if (listGenome2.get(i).getSimilarity(genome2)){
-                            System.out.println("same centres : Added by Victor");
+//                            System.out.println("same centres : Added by Victor");
                             canAdd = false;
                         }
                     }

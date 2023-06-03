@@ -228,5 +228,13 @@ public class Genome{
             }
         }
     }
+
+    public Genome clone() {
+        Genome newGenome = new Genome(genome.length);
+        for (int i = 0 ; i < genome.length ; i++) {
+            newGenome.setGene(i, genome[i]);
+        }
+        return newGenome;
+    }
 }
 

@@ -128,7 +128,7 @@ public class LittleGenome {
         this.bestSpecialtyMatch = bestSpecialtyMatch;
         //return listBestGenome;
 
-        bestGenome.displayGenome();
+//        bestGenome.displayGenome();
 
         return bestGenome;
     }
@@ -137,11 +137,11 @@ public class LittleGenome {
 
         List<Integer> initialGenome = new ArrayList<>();
 
-        System.out.println("Centre : "+ centre.getId());
-        System.out.println("Skill : " + skill.toString());
-        System.out.println("Day : "+ day);
+//        System.out.println("Centre : "+ centre.getId());
+//        System.out.println("Skill : " + skill.toString());
+//        System.out.println("Day : "+ day);
         for (Mission mission : listMission){
-            System.out.println("Mission : "+ mission.getId() + " Employee : "+ mission.getEmployee().getId());
+//            System.out.println("Mission : "+ mission.getId() + " Employee : "+ mission.getEmployee().getId());
             for (int i = 0; i < listEmployee.size(); i++){
 
                 if (mission.getEmployee().getId() == listEmployee.get(i).getId()){
@@ -158,13 +158,6 @@ public class LittleGenome {
         else {
             generateCombinationsRecursive(initialGenome, new ArrayList<>(), combinations);
         }
-
-//        for (List<Integer> combination : combinations){
-//            for (Integer integer : combination){
-//                System.out.print(integer + " ");
-//            }
-//            System.out.println();
-//        }
 
         return combinations;
     }
@@ -323,10 +316,20 @@ public class LittleGenome {
         }
     }
 
-    //main
-    public static void main(String[] args) {
+    public void generateCombinationsStep3() {
 
-        generatePermutations(Arrays.asList(1, 1, 2, 2, 3, 1, 3));
+        List<Integer> initialGenome = new ArrayList<>();
+
+        for (Mission mission : listMission){
+
+            for (int i = 0; i < listEmployee.size(); i++){
+
+                if (mission.getEmployee().getId() == listEmployee.get(i).getId()){
+                    initialGenome.add(i);
+                }
+            }
+        }
+        List<List<Integer>> combinations = new ArrayList<>();
 
     }
 

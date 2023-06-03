@@ -6,6 +6,7 @@ import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.resolution.genetic.Genome;
 import graphproject.model.sessad.resolution.genetic.Population;
+import graphproject.model.sessad.resolution.step_2.Configuration;
 
 import java.util.List;
 
@@ -75,37 +76,15 @@ public class Resolution {
         Genome.clearInstance(listMission, listEmployee);
         firstGenome.instantiateGenome(listMission, listEmployee);
 
-        /*List<Genome> listBestGenomes = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
-
-        int randomGenome = (int)(Math.random() * (listBestGenomes.size()));
-        Genome genome = listBestGenomes.get(randomGenome);
-        Genome.clearInstance(listMission, listEmployee);
-        genome.instantiateGenome(listMission, listEmployee);*/
-
-
+//        List<Genome> listBestGenomes = genetic.getListBestGenomeFirstAlgo();
+//        double bestCost = Integer.MAX_VALUE;
 //        for (Genome genome : listBestGenomes) {
-//            genome.displayGenome();
+//
+//            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
+//            configuration.brutForceStep2();
+//            bestCost = Math.min(bestCost, configuration.getBestCost());
 //        }
-//
-//        Genome firstGenome = listBestGenomes.get(0);
-//
-//        Configuration configuration = new Configuration(firstGenome, listMission, listEmployee, listCentre);
-//
-//        centreAffected = (int)firstGenome.getFitness();
-//        travelCost = configuration.getBestCost();
-//        matchingSpecialty = configuration.getBestSpecialtyMatch();
-//
-//        Genome.clearInstance(listMission, listEmployee);
-//
-//        //Instantiation de Sessad Gestion
-//        firstGenome.instantiateGenome(listMission, listEmployee);
-//        configuration.getGenome().instantiateGenome(listMission, listEmployee);
-//
-//        System.out.println("Final genome !!");
-
-        //configuration.getGenome().instantiateGenome(listMission, listEmployee);
-
-//        configuration.getGenome().displayGenome();
+//        System.out.println("Best cost from brut force algorithm after 1st algo : " + bestCost);
 
     }
 
@@ -123,6 +102,26 @@ public class Resolution {
         //Instantiation de Sessad Gestion
         Genome.clearInstance(listMission, listEmployee);
         secondGenome.instantiateGenome(listMission, listEmployee);
+
+//        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
+//        double bestCost = Integer.MAX_VALUE;
+//        for (Genome genome : listBestGenomes) {
+//
+//            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
+//            configuration.brutForceStep2();
+//            bestCost = Math.min(bestCost, configuration.getBestCost());
+//        }
+//        System.out.println("Best cost from brut force step 2 algorithm after second algo : " + bestCost);
+
+        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
+        double bestCost = Integer.MAX_VALUE;
+        for (Genome genome : listBestGenomes) {
+
+            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
+            configuration.brutForceStep3();
+            bestCost = Math.min(bestCost, configuration.getBestCost());
+        }
+        System.out.println("Best cost from brut force algorithm after second algo : " + bestCost);
     }
 
     public void calculateAttributeGenome(Genome genome, List<Mission> listMission, List<Employee> listEmployee){

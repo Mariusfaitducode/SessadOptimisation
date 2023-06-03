@@ -35,49 +35,6 @@ public class Configuration {
         // On split le genome en LittleGenome
         splitGenomeIntoLittleGenome(genome, listMission, listEmployee, listCentre);
 
-        double totalCost = 0;
-        int totalSpecialtyMatch = 0;
-
-        //Resolution du génome
-        for (LittleGenome littleGenome : listLittleGenome){
-            if (!littleGenome.getListMission().isEmpty()){
-
-                if (littleGenome.getListMission().size() > 10){
-                    System.out.println("LittleGenome size = " + littleGenome.getListMission().size());
-
-                    List<Centre> littleGenomeCentre = new ArrayList<>(0);
-                    littleGenomeCentre.add(littleGenome.getCentre());
-
-                    List<List<Integer>> combinations = littleGenome.generateCombinations(true);
-
-                    //Genetic genetic = new Genetic(littleGenome.getListMission(), littleGenomeCentre, littleGenome.getListEmployee(), 200);
-                    //genetic.littleGeneticAlgo(combinations, 200, 1000, 0.9, 0.9);
-                }
-                else{
-                    List<List<Integer>> combinations = littleGenome.generateCombinations(false);
-
-                    Genome bestGenome = new Genome(littleGenome.getListMission().size());
-
-                    bestGenome = littleGenome.evaluateAllCombinations(combinations);
-
-                    bestGenome.displayGenome();
-
-                    adaptGenome(bestGenome, littleGenome);
-
-                    //System.out.println("Same solutions = "+ bestCombinations.size());
-
-                    totalCost += littleGenome.getBestCost();
-                    totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
-                }
-
-            }
-        }
-
-        System.out.println("Total cost = " + (float)totalCost);
-        this.bestCost = totalCost;
-        this.bestSpecialtyMatch = totalSpecialtyMatch;
-
-
     }
 
     public double getBestCost(){return bestCost;}
@@ -146,5 +103,58 @@ public class Configuration {
             }
         }
         return null;
+    }
+
+    public void brutForceStep2() {
+        double totalCost = 0;
+        int totalSpecialtyMatch = 0;
+
+        //Resolution du génome
+        for (LittleGenome littleGenome : listLittleGenome){
+            if (!littleGenome.getListMission().isEmpty()){
+
+                if (littleGenome.getListMission().size() > 10){
+//                    System.out.println("LittleGenome size = " + littleGenome.getListMission().size());
+
+                    List<Centre> littleGenomeCentre = new ArrayList<>(0);
+                    littleGenomeCentre.add(littleGenome.getCentre());
+
+                    List<List<Integer>> combinations = littleGenome.generateCombinations(true);
+
+                    //Genetic genetic = new Genetic(littleGenome.getListMission(), littleGenomeCentre, littleGenome.getListEmployee(), 200);
+                    //genetic.littleGeneticAlgo(combinations, 200, 1000, 0.9, 0.9);
+                }
+                else{
+                    List<List<Integer>> combinations = littleGenome.generateCombinations(false);
+
+                    Genome bestGenome;
+
+                    bestGenome = littleGenome.evaluateAllCombinations(combinations);
+
+//                    bestGenome.displayGenome();
+
+                    adaptGenome(bestGenome, littleGenome);
+
+                    //System.out.println("Same solutions = "+ bestCombinations.size());
+
+                    totalCost += littleGenome.getBestCost();
+                    totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
+                }
+
+            }
+        }
+
+//        System.out.println("Total cost = " + (float)totalCost);
+        this.bestCost = totalCost;
+        this.bestSpecialtyMatch = totalSpecialtyMatch;
+    }
+
+    public void brutForceStep3() {
+        for (LittleGenome littleGenome : listLittleGenome) {
+            System.out.println("----------------------");
+            if (!littleGenome.getListMission().isEmpty()) {
+                littleGenome.generateCombinationsStep3();
+            }
+        }
     }
 }

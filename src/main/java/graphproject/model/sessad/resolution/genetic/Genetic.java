@@ -21,6 +21,10 @@ public class Genetic {
 
     Population population;
 
+    private List<Genome> listBestGenomeFirstAlgo;
+
+    private List<Genome> listBestGenomeSecondAlgo;
+
     public Genetic(List<Mission> listMission, List<Centre> listCentre, List<Employee> listEmployee, int popSize){
         this.listMission = listMission;
         this.listCentre = listCentre;
@@ -34,6 +38,14 @@ public class Genetic {
 
     public Population getPopulation(){
         return this.population;
+    }
+
+    public List<Genome> getListBestGenomeFirstAlgo() {
+        return listBestGenomeFirstAlgo;
+    }
+
+    public List<Genome> getListBestGenomeSecondAlgo() {
+        return listBestGenomeSecondAlgo;
     }
 
     public Genome geneticAlgo(int popSize, int generationNbr, double crossOverRateInit, double mutationRateInit) {
@@ -118,7 +130,7 @@ public class Genetic {
 
         System.out.println("Best genome found : "+ bestGenome.fitness);
 
-        //List<Genome> bestPopulation = population.getFitnessPopulation(listEmployee);
+        listBestGenomeFirstAlgo = population.getFitnessPopulation(listEmployee);
         //System.out.println("Similitude : " + population.getSimilarityRate());
         //System.out.println("Taille population finale : "+ bestPopulation.size());
 
@@ -146,7 +158,16 @@ public class Genetic {
         //Genome bestGenome = getBestGenome();
         double bestCost = 1000;
 
+
         Genome bestGenomeFound = new Genome(listMission.size());
+
+//        System.out.println("Max cost : "+ maxCost);
+
+//        for (Genome genome : population.population) {
+//            System.out.println("Fitness : " + genome.fitness);
+//        	System.out.println("Cost : " + genome.costFitness);
+//        }
+
 
         for (int iter = 0 ; iter < generationNbr ; iter++) {
             if (iter % (generationNbr/10) == 0) {
