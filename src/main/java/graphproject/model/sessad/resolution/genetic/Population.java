@@ -105,16 +105,26 @@ public class Population {
         }
     }
 
-    public void evaluateCostPopulation(List<Mission> listMission, List<Employee> listEmployee){
+    public double evaluateCostPopulation(List<Mission> listMission, List<Employee> listEmployee, double bestFitness){
+
+        double maxCost = 0;
         for (Genome genome : population){
 
             Genome.clearInstance(listMission, listEmployee);
 
             genome.determineFitness(listMission, listEmployee);
+
+            if (genome.fitness < bestFitness){
+                genome.fitness = 0;
+            }
+
             genome.determineCostFitness(listMission, listEmployee);
 
-//            System.out.println("Fitness : " + genome.fitness);
+            if (genome.costFitness > maxCost){
+                maxCost = genome.costFitness;
+            }
         }
+        return maxCost;
     }
 
 
@@ -133,6 +143,14 @@ public class Population {
             totalFitness += genome.fitness;
         }
         return totalFitness / population.length;
+    }
+
+    public double getMeanCostFitness(){
+        double totalCostFitness = 0;
+        for (Genome genome : population){
+            totalCostFitness += genome.costFitness;
+        }
+        return totalCostFitness / population.length;
     }
 
     public double getStandardDeviationFitness(){
@@ -226,16 +244,24 @@ public class Population {
 
     public Genome getBestGenome(){
 
-        double max = 0;
+        int maxFitness = 0;
+        double minCost = 1000;
         Genome bestGenome = null;
 
         for (int i = 0; i < population.length; i++){
 
-            if ( population[i].fitness > max){
-                max = population[i].fitness;
-                bestGenome = new Genome(population[i]);
+            if ( population[i].fitness > maxFitness){
+                maxFitness = population[i].fitness;
+
+                if (population[i].costFitness < minCost){
+                    minCost = population[i].costFitness;
+                    bestGenome = new Genome(population[i]);
+                }
+
             }
         }
+        bestGenome.fitness = maxFitness;
+        bestGenome.costFitness = minCost;
         return bestGenome;
     }
 
@@ -282,6 +308,36 @@ public class Population {
         }
         return null;
     }
+
+    public Genome selectionCostRoulette(double maxCost) {
+
+        List<Genome> listGenome = new ArrayList<Genome>();
+
+        // Calculer la somme des fitness de la population
+        int totalCostFitness = 0;
+        for (Genome genome : population) {
+
+            if (genome.fitness != 0){
+                totalCostFitness += (maxCost - genome.costFitness);
+
+                listGenome.add(genome);
+            }
+        }
+
+        // Retourne
+        int randomNbr = (int)(Math.random() * totalCostFitness);
+        int cumulativeFitness = 0;
+
+        for (Genome genome : listGenome) {
+            cumulativeFitness += (maxCost - genome.costFitness);
+            if (cumulativeFitness >= randomNbr) {
+                return genome;
+            }
+        }
+        return null;
+    }
+
+
 
     public void crossOver(Genome parent1, Genome parent2, Genome child1, Genome child2) {
 
@@ -332,6 +388,27 @@ public class Population {
         for (int i = 0; i < population.length; i++) {
             cumulativeFitness += (bestFitness - population[i].fitness);
             if (cumulativeFitness >= randomNbr) {
+                population[i] = child;
+                break;
+            }
+        }
+    }
+
+    public void remplacementCostRoulette(Genome child, double maxCost) {
+        // Calculer la somme des fitness de la population
+        int totalFitness = 0;
+
+        for (Genome genome : population) {
+            totalFitness += (maxCost - genome.costFitness);
+        }
+
+        // Retourne
+        int randomNbr = (int)(Math.random() * totalFitness);
+        int cumulativeFitness = 0;
+
+        for (int i = 0; i < population.length; i++) {
+            cumulativeFitness += (maxCost - population[i].costFitness);
+            if (population[i].fitness == 0 || cumulativeFitness >= randomNbr) {
                 population[i] = child;
                 break;
             }

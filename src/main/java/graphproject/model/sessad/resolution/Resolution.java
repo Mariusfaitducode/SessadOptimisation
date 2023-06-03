@@ -5,7 +5,6 @@ import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.resolution.genetic.Genome;
-import graphproject.model.sessad.resolution.step_2.Configuration;
 
 import java.util.List;
 
@@ -55,42 +54,28 @@ public class Resolution {
 //        genetic.fitness();
 //        genetic.displayBestGenome();
 
-        List<Genome> listBestGenomes = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
-
-        for (Genome genome : listBestGenomes) {
-            genome.displayGenome();
-
-        }
+        //List<Genome> listBestGenomes = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
 
 
-        Genome firstGenome = listBestGenomes.get(0);
 
-        Configuration configuration = new Configuration(firstGenome, listMission, listEmployee, listCentre);
 
-        centreAffected = (int)firstGenome.getFitness();
-        travelCost = configuration.getBestCost();
-        matchingSpecialty = configuration.getBestSpecialtyMatch();
+        Genome firstGenome = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
+
+        //Configuration configuration = new Configuration(firstGenome, listMission, listEmployee, listCentre);
+
+        centreAffected = firstGenome.getFitness();
+        travelCost = firstGenome.getCostFitness();
+        //matchingSpecialty = configuration.getBestSpecialtyMatch();
 
         Genome.clearInstance(listMission, listEmployee);
 
         //Instantiation de Sessad Gestion
         firstGenome.instantiateGenome(listMission, listEmployee);
-        configuration.getGenome().instantiateGenome(listMission, listEmployee);
+        //configuration.getGenome().instantiateGenome(listMission, listEmployee);
 
         System.out.println("Final genome !!");
 //        configuration.getGenome().displayGenome();
-//
-//        for (int i = 0 ; i < listMission.size() ; i++) {
-//            if (listMission.get(i).getEmployee() != null) {
-//                if (listMission.get(i).getEmployee().getCentre().getId() == 1) {
-//                    if (listMission.get(i).getSkill() == Skill.LPC) {
-//                        if (listMission.get(i).getDay() == 1) {
-//                            System.out.println("Mission " + i + " : " + listMission.get(i).getEmployee().getId() + ", Employee " + listMission.get(i).getEmployee().getId() + ", Centre " + listMission.get(i).getEmployee().getCentre().getId() + ", Skill " + listMission.get(i).getSkill() + ", Day " + listMission.get(i).getDay());
-//                        }
-//                    }
-//                }
-//            }
-//        }
+
     }
 
     public int getCentreAffected() {

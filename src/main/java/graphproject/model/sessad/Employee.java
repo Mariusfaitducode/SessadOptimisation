@@ -157,7 +157,7 @@ public class Employee {
 
         double totalDayDistance = 0;
 
-        for (int day = 0; day < 5; day++){
+        for (int day = 1; day < 6; day++){
 
             //Récupère la liste de missions du jour car l'employé a été set dans le little génome qui est split entre les jours
             List<Mission> listMissionDay = getListMission(day);

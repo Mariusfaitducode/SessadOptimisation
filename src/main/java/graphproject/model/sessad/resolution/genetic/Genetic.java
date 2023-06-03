@@ -4,6 +4,7 @@ import graphproject.model.sessad.Centre;
 import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Genetic {
@@ -36,7 +37,7 @@ public class Genetic {
         return this.population;
     }
 
-    public List<Genome> geneticAlgo(int popSize, int generationNbr, double crossOverRateInit, double mutationRateInit) {
+    public Genome geneticAlgo(int popSize, int generationNbr, double crossOverRateInit, double mutationRateInit) {
 
         double crossOverRate = crossOverRateInit;
         double mutationRate = mutationRateInit;
@@ -110,9 +111,18 @@ public class Genetic {
             }
 
         }
-        bestGenome = population.getBestGenome();
+
+        Genome finalBestGenome = secondPartGeneticAlgo(generationNbr, crossOverRateInit, mutationRateInit, bestGenome.fitness);
+
+        //population.evaluateCostPopulation(listMission, listEmployee, bestFitness);
+
+
+
+
+        //bestGenome = population.getBestGenome();
         Genome.clearInstance(listMission, listEmployee);
-        bestGenome.instantiateGenome(listMission, listEmployee);
+        finalBestGenome.instantiateGenome(listMission, listEmployee);
+
 
         System.out.println("Best genome found : "+ bestGenome.fitness);
 
@@ -120,10 +130,136 @@ public class Genetic {
         System.out.println("Similitude : " + population.getSimilarityRate());
         System.out.println("Taille population finale : "+ bestPopulation.size());
 
-        return bestPopulation;
+        return finalBestGenome;
 //        bestGenome.displayGenome();
 //        bestGenome.checkValidity(listMission, listEmployee);
 
+    }
+
+    public Genome secondPartGeneticAlgo(int generationNbr, double crossOverRateInit, double mutationRateInit, double bestFitness) {
+
+        double crossOverRate = crossOverRateInit;
+        double mutationRate = mutationRateInit;
+
+        //Une fois que notre meilleure fitness en terme d'affectation on cherche à optimiser le coût
+
+        //Evaluation de la population
+        double maxCost = population.evaluateCostPopulation(listMission, listEmployee, bestFitness);
+
+        //Affichage de la meilleure solution
+        Genome bestGenome = getBestGenome();
+        double bestCost = 1000;
+
+        System.out.println("Max cost : "+ maxCost);
+
+        for (Genome genome : population.population) {
+            System.out.println("Fitness : " + genome.fitness);
+        	System.out.println("Cost : " + genome.costFitness);
+        }
+
+        List<Genome> bestGenomeFound = new ArrayList<>();
+
+        for (int iter = 0 ; iter < generationNbr ; iter++) {
+            if (iter % (generationNbr/10) == 0) {
+                System.out.println("-----------------------------");
+                System.out.println("Generation : " + iter);
+                System.out.println("Moyenne fitness : " + population.getMeanFitness());
+                System.out.println("Ecart type : " + population.getStandardDeviationFitness());
+                System.out.println("Best fitness : " + bestFitness);
+                System.out.println("Moyenne cost : " + population.getMeanCostFitness());
+                System.out.println("Best cost : " + bestCost);
+                System.out.println("Similitude : " + population.getSimilarityRate());
+                System.out.println("-----------------------------");
+            }
+
+            Genome bestGenomeTemp1 = population.population[0];
+            Genome bestGenomeTemp2 = population.population[1];
+
+
+            //System.out.println("Best genome : " + bestGenomeTemp.costFitness);
+
+//            crossOverRate = crossOverRateInit - (iter * crossOverRateInit / generationNbr);
+//            mutationRate = mutationRateInit - (iter * mutationRateInit / generationNbr);
+
+
+            //Selection
+            Genome parent1 = population.selectionCostRoulette(maxCost);
+            Genome parent2 = population.selectionCostRoulette(maxCost);
+
+            //System.out.println("Cost parent1 : " + parent1.costFitness);
+            //System.out.println("Cost parent2 : " + parent2.costFitness);
+
+            //Croisement avec taux de crossOver
+            Genome child1 = new Genome(parent1.getSizeGenome());
+            Genome child2 = new Genome(parent2.getSizeGenome());
+            if (Math.random() < crossOverRate) {
+                population.crossOver(parent1, parent2, child1, child2);
+            } else {
+                child1 = parent1;
+                child2 = parent2;
+            }
+
+            //Mutation 1 avec taux de mutation
+            if (Math.random() < mutationRate) {
+                child1.mutation();
+            }
+
+            //Mutation 2 avec taux de mutation
+            if (Math.random() < mutationRate) {
+                child2.mutation();
+            }
+
+            //Evaluation des 2 enfants
+            maxCost = child1.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
+            maxCost = child2.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
+
+            //System.out.println("Cost child1 : " + child1.costFitness);
+            //System.out.println("Cost child2 : " + child2.costFitness);
+
+            //Remplacement
+            population.remplacementCostRoulette(child1, maxCost);
+            population.remplacementCostRoulette(child2, maxCost);
+
+            // Check if better
+            if (child1.fitness > bestFitness) {
+                bestFitness = child1.fitness;
+                System.out.println("Better genome found : "+ bestFitness);
+            }
+            if (child2.fitness > bestFitness) {
+                bestFitness = child2.fitness;
+                System.out.println("Better genome found : "+ bestFitness);
+            }
+            if (child1.costFitness < bestCost) {
+                if (child1.fitness != 0){
+                    bestCost = child1.costFitness;
+                    System.out.println("Better cost genome found : "+ bestCost);
+                    population.population[0] = child1;
+                    bestGenomeFound.add(child1);
+                }
+                else{
+                    population.population[0] = bestGenomeTemp1;
+                }
+            }
+            if (child2.costFitness < bestCost) {
+                if (child2.fitness != 0){
+                    bestCost = child2.costFitness;
+                    System.out.println("Better cost genome found : "+ bestCost);
+                    population.population[1] = child2;
+                    bestGenomeFound.add(child2);
+                }
+                else{
+                    population.population[1] = bestGenomeTemp2;
+                }
+            }
+
+
+        }
+
+        for (Genome genome : bestGenomeFound) {
+            System.out.println("Fitness : " + genome.fitness);
+            System.out.println("Cost : " + genome.costFitness);
+        }
+        return bestGenomeFound.get(bestGenomeFound.size()-1);
     }
 
     public void littleGeneticAlgo(List<List<Integer>> combinations, int popSize, int generationNbr, double crossOverRateInit, double mutationRateInit){
@@ -136,7 +272,7 @@ public class Genetic {
         population.initializeLittlePopulation(combinations, listMission, listCentre);
 
         //Evaluation de la population
-        population.evaluateCostPopulation(listMission, listEmployee);
+        //population.evaluateCostPopulation(listMission, listEmployee);
 
         for (Genome genome : population.population) {
         	genome.displayGenome();

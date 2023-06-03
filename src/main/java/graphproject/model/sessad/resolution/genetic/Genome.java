@@ -26,7 +26,9 @@ public class Genome{
         this.fitness = genome.fitness;
     }
 
-    public double getFitness(){return fitness;}
+    public int getFitness(){return fitness;}
+
+    public double getCostFitness(){return costFitness;}
     public int[] getGenome(){return genome;}
 
     public void setGene(int index, int gene){
@@ -98,7 +100,7 @@ public class Genome{
         instantiateGenome(listMission, listEmployee);
 
         for (Employee employee : listEmployee){
-            this.costFitness += employee.findCost();
+            this.costFitness += employee.findAllDayCost();
         }
     }
 
@@ -177,6 +179,23 @@ public class Genome{
         clearInstance(listMission, listEmployee);
         determineFitness(listMission, listEmployee);
 
+    }
+
+    public double evaluateCost(List<Mission> listMission, List<Employee> listEmployee, double bestFitness, double maxCost){
+
+        clearInstance(listMission, listEmployee);
+        determineFitness(listMission, listEmployee);
+
+        if (fitness < bestFitness){
+            fitness = 0;
+        }
+
+        determineCostFitness(listMission, listEmployee);
+
+        if (costFitness > maxCost){
+            maxCost = costFitness;
+        }
+        return maxCost;
     }
 
     public boolean getSimilarity(Genome genome2) {
