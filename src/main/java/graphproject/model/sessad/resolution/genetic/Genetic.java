@@ -126,7 +126,7 @@ public class Genetic {
 
         System.out.println("Best genome found : "+ bestGenome.fitness);
 
-        List<Genome> bestPopulation = population.getFitnessPopulation(bestGenome.fitness);
+        List<Genome> bestPopulation = population.getFitnessPopulation(listEmployee);
         System.out.println("Similitude : " + population.getSimilarityRate());
         System.out.println("Taille population finale : "+ bestPopulation.size());
 
