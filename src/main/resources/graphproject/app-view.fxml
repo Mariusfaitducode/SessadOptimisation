@@ -25,6 +25,9 @@
                <children>
                   <Pane fx:id="centerPane" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #111;" />
                   <ChoiceBox id="graph-day-selection" layoutX="630.0" layoutY="21.0" prefWidth="150.0" />
+                  <Label id="graph-affectation" layoutX="23.0" layoutY="583.0" styleClass="labelled" text="Affectation : " />
+                  <Label id="graph-cost" layoutX="333.0" layoutY="583.0" styleClass="labelled" text="Coût : " />
+                  <Label id="graph-specialty" layoutX="584.0" layoutY="583.0" styleClass="labelled" text="Spécialités :" />
                </children></Pane>
          </center>
          <bottom>

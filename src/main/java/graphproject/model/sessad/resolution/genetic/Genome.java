@@ -14,6 +14,8 @@ public class Genome{
     int[] genome;
     int fitness;
 
+    double costFitness;
+
     public Genome(int sizeGenome){
         this.genome = new int[sizeGenome];
         this.fitness = 0;
@@ -95,6 +97,14 @@ public class Genome{
             if (j != 0) {
                 this.fitness++;
             }
+    public void determineCostFitness(List<Mission> listMission, List<Employee> listEmployee){
+        this.costFitness = 0;
+
+        clearInstance(listMission, listEmployee);
+        instantiateGenome(listMission, listEmployee);
+
+        for (Employee employee : listEmployee){
+            this.costFitness += employee.findCost();
         }
     }
 

@@ -3,11 +3,14 @@ package graphproject.model.sessad.resolution.step_2;
 import graphproject.model.sessad.Centre;
 import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
+import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.resolution.genetic.Genome;
 import graphproject.model.sessad.skill.Skill;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LittleGenome {
 
@@ -19,6 +22,8 @@ public class LittleGenome {
 
     private double bestCost;
 
+    private double bestSpecialtyMatch;
+
     public LittleGenome(Centre centre, Skill skill, int day){
         this.centre = centre;
         this.skill = skill;
@@ -28,6 +33,7 @@ public class LittleGenome {
         this.listEmployee = new ArrayList<>(0);
     }
 
+    public double getBestSpecialtyMatch(){return bestSpecialtyMatch;}
     public double getBestCost(){return bestCost;}
 
     public Centre getCentre(){
@@ -58,7 +64,13 @@ public class LittleGenome {
         this.listEmployee.add(employee);
     }
 
-    public void testAllPossibility(){}
+    public void determineWithGenetic(){
+
+        List<Centre> listCentre = new ArrayList<>(0);
+        listCentre.add(centre);
+
+        Genetic genetic = new Genetic(listMission, listCentre, listEmployee, 200);
+    }
 
 
     public Genome evaluateAllCombinations(List<List<Integer>> combinations){
@@ -91,12 +103,14 @@ public class LittleGenome {
 
             if (genome.getFitness() > 0){
 
+                //Genome.clearInstance(listMission, listEmployee);
+                //genome.instantiateGenome(listMission, listEmployee);
+
                 for (Employee employee : listEmployee){
                     totalCost += employee.findCost();
                     specialtyMatch += employee.nbrMissionWithGoodSpecialty();
                 }
-
-                if (totalCost < bestCost && totalCost != 0){
+                if (totalCost < bestCost){
                     bestCost = totalCost;
                     bestGenome = genome;
                     bestSpecialtyMatch = specialtyMatch;
@@ -106,7 +120,6 @@ public class LittleGenome {
                 else if (totalCost == bestCost){
 
                     //Compare le match des spécialités entre genome et bestGenome
-
                     if (bestSpecialtyMatch < specialtyMatch){
                         bestGenome = genome;
                     }
@@ -115,19 +128,23 @@ public class LittleGenome {
             }
         }
         this.bestCost = bestCost;
+        this.bestSpecialtyMatch = bestSpecialtyMatch;
         //return listBestGenome;
+
+        bestGenome.displayGenome();
+
         return bestGenome;
     }
 
-    public List<List<Integer>> generateCombinations() {
+    public List<List<Integer>> generateCombinations(boolean withGenetic) {
 
         List<Integer> initialGenome = new ArrayList<>();
 
-        //System.out.println("Centre : "+ centre.getId());
-        //System.out.println("Skill : " + skill.toString());
-        //System.out.println("Day : "+ day);
+        System.out.println("Centre : "+ centre.getId());
+        System.out.println("Skill : " + skill.toString());
+        System.out.println("Day : "+ day);
         for (Mission mission : listMission){
-            //System.out.println("Mission : "+ mission.getId());
+            System.out.println("Mission : "+ mission.getId() + " Employee : "+ mission.getEmployee().getId());
             for (int i = 0; i < listEmployee.size(); i++){
 
                 if (mission.getEmployee().getId() == listEmployee.get(i).getId()){
@@ -137,7 +154,20 @@ public class LittleGenome {
         }
         List<List<Integer>> combinations = new ArrayList<>();
 
-        generateCombinationsRecursive(initialGenome, new ArrayList<>(), combinations);
+        if (withGenetic){
+            generateUniqueCombinationsRecursive(initialGenome, new ArrayList<>(), combinations, new HashSet<>());
+            //generateUniqueCombinationsRecursive(initialGenome, 0, new ArrayList<>(), combinations);
+        }
+        else {
+            generateCombinationsRecursive(initialGenome, new ArrayList<>(), combinations);
+        }
+
+//        for (List<Integer> combination : combinations){
+//            for (Integer integer : combination){
+//                System.out.print(integer + " ");
+//            }
+//            System.out.println();
+//        }
 
         return combinations;
     }
@@ -161,6 +191,73 @@ public class LittleGenome {
                     i++;
                 }
             }
+        }
+    }
+
+    private static void generateCombinationsRecursive(List<Integer> remaining, List<Integer> currentCombination, List<List<Integer>> combinations, int maxCombinations) {
+
+        if (combinations.size() >= maxCombinations || currentCombination.size() >= remaining.size()) {
+            if (currentCombination.size() >= remaining.size()) {
+                combinations.add(new ArrayList<>(currentCombination));
+            }
+            return; // Sortir de la récursion si le nombre maximum de combinaisons est atteint ou si tous les éléments ont été utilisés
+        }
+
+
+        for (int i = 0; i < remaining.size(); i++) {
+            int currentNumber = remaining.get(i);
+            currentCombination.add(currentNumber);
+
+            List<Integer> remainingNumbers = new ArrayList<>(remaining);
+            remainingNumbers.remove(i);
+
+            generateCombinationsRecursive(remainingNumbers, currentCombination, combinations);
+
+            currentCombination.remove(currentCombination.size() - 1);
+
+            while (i + 1 < remaining.size() && remaining.get(i + 1) == currentNumber) {
+                i++;
+            }
+        }
+    }
+
+    private static void generateUniqueCombinationsRecursive(List<Integer> numbers, List<Integer> currentCombination, List<List<Integer>> combinations, Set<Integer> usedIndices) {
+        if (currentCombination.size() == numbers.size()) {
+            combinations.add(new ArrayList<>(currentCombination));
+            return;
+        }
+
+        for (int i = 0; i < numbers.size(); i++) {
+            if (usedIndices.contains(i) || (i > 0 && numbers.get(i) == numbers.get(i - 1) && !usedIndices.contains(i - 1))) {
+                continue; // Skip duplicate values or values that have already been used
+            }
+
+            currentCombination.add(numbers.get(i));
+            usedIndices.add(i);
+
+            generateUniqueCombinationsRecursive(numbers, currentCombination, combinations, usedIndices);
+
+            currentCombination.remove(currentCombination.size() - 1);
+            usedIndices.remove(i);
+        }
+    }
+
+    private static void generateUniqueCombinationsRecursive(List<Integer> numbers, int mask, List<Integer> currentCombination, List<List<Integer>> combinations) {
+        if (currentCombination.size() == numbers.size()) {
+            combinations.add(new ArrayList<>(currentCombination));
+            return;
+        }
+
+        for (int i = 0; i < numbers.size(); i++) {
+            if ((mask & (1 << i)) != 0 || (i > 0 && numbers.get(i) == numbers.get(i - 1) && (mask & (1 << (i - 1))) == 0)) {
+                continue; // Skip duplicate values or values that have already been used
+            }
+
+            currentCombination.add(numbers.get(i));
+
+            generateUniqueCombinationsRecursive(numbers, mask | (1 << i), currentCombination, combinations);
+
+            currentCombination.remove(currentCombination.size() - 1);
         }
     }
 

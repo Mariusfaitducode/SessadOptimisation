@@ -3,7 +3,6 @@ package graphproject.controller;
 import graphproject.controller.selection_pane.CentrePane;
 import graphproject.controller.selection_pane.ItineraryPane;
 import graphproject.controller.selection_pane.MissionPane;
-import graphproject.controller.selection_pane.SearchPane;
 import graphproject.model.Link;
 import graphproject.model.Node;
 import graphproject.model.sessad.Centre;
@@ -23,8 +22,6 @@ public class SelectionPaneController {
     private MissionPane missionPane;
 
     private CentrePane centrePane;
-
-    private SearchPane searchPane;
 
     private ItineraryPane itineraryPane;
 
@@ -81,10 +78,6 @@ public class SelectionPaneController {
     }*/
 
     //Search function
-
-    public void setSearchNode(Node node){
-        searchPane.setSearchNode(node);
-    }
 
 
     //Link Pane
