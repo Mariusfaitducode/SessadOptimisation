@@ -251,7 +251,7 @@ public class LittleGenome {
         }
     }
 
-    public static void generatePermutations(List<Integer> numbers, List<int[]> permutList){
+    public static List<int[]>  generatePermutations(List<Integer> numbers){
 
         List<Integer> listValues = new ArrayList<>();
 
@@ -314,6 +314,7 @@ public class LittleGenome {
             }
             System.out.println();
         }
+        return permutations;
     }
 
     public void generateCombinationsStep3() {
@@ -329,8 +330,71 @@ public class LittleGenome {
                 }
             }
         }
-        List<List<Integer>> combinations = new ArrayList<>();
+        List<int[]> combinations = generatePermutations(initialGenome);
 
+    }
+
+    public Genome evaluateAllCombinationsStep3(List<int[]> combinations){
+
+        double bestCost = 1000000000;
+        Genome bestGenome = new Genome(listMission.size());
+        int bestSpecialtyMatch = 0;
+
+        for(int[] combination : combinations){
+
+            Genome.clearInstance(listMission, listEmployee);
+            Genome genome = new Genome(listMission.size());
+
+            for (int i = 0; i < combination.length; i++){
+6
+
+                genome.setGene(i, combination[i]);
+
+                //Mission mission = listMission.get(i);
+                //Employee employee = listEmployee.get(combination.get(i));
+
+                //mission.setEmployee(employee);
+                //employee.addMission(mission);
+            }
+            genome.determineCostFitness(listMission, listEmployee);
+            //genome.instantiateGenome(listMission, listEmployee);
+
+            double totalCost = 0;
+            int specialtyMatch = 0;
+
+            if (genome.getFitness() > 0){
+
+                //Genome.clearInstance(listMission, listEmployee);
+                //genome.instantiateGenome(listMission, listEmployee);
+
+                for (Employee employee : listEmployee){
+                    totalCost += employee.findCost();
+                    specialtyMatch += employee.nbrMissionWithGoodSpecialty();
+                }
+                if (totalCost < bestCost){
+                    bestCost = totalCost;
+                    bestGenome = genome;
+                    bestSpecialtyMatch = specialtyMatch;
+                    //listBestGenome.clear();
+                    //listBestGenome.add(genome);
+                }
+                else if (totalCost == bestCost){
+
+                    //Compare le match des spécialités entre genome et bestGenome
+                    if (bestSpecialtyMatch < specialtyMatch){
+                        bestGenome = genome;
+                    }
+                }
+                //System.out.println("Cost = "+ totalCost);
+            }
+        }
+        this.bestCost = bestCost;
+        this.bestSpecialtyMatch = bestSpecialtyMatch;
+        //return listBestGenome;
+
+//        bestGenome.displayGenome();
+
+        return bestGenome;
     }
 
 }
