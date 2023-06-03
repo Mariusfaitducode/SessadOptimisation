@@ -399,7 +399,7 @@ public class Population {
         int totalFitness = 0;
 
         for (Genome genome : population) {
-            totalFitness += (maxCost - genome.costFitness);
+            totalFitness += genome.costFitness;
         }
 
         // Retourne
@@ -407,7 +407,7 @@ public class Population {
         int cumulativeFitness = 0;
 
         for (int i = 0; i < population.length; i++) {
-            cumulativeFitness += (maxCost - population[i].costFitness);
+            cumulativeFitness += population[i].costFitness;
             if (population[i].fitness == 0 || cumulativeFitness >= randomNbr) {
                 population[i] = child;
                 break;

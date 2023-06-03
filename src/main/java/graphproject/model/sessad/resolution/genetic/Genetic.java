@@ -112,25 +112,25 @@ public class Genetic {
 
         }
 
-        Genome finalBestGenome = secondPartGeneticAlgo(generationNbr, crossOverRateInit, mutationRateInit, bestGenome.fitness);
+        //Genome finalBestGenome = secondPartGeneticAlgo(generationNbr, crossOverRateInit, mutationRateInit, bestGenome.fitness);
 
         //population.evaluateCostPopulation(listMission, listEmployee, bestFitness);
 
 
 
 
-        //bestGenome = population.getBestGenome();
-        Genome.clearInstance(listMission, listEmployee);
-        finalBestGenome.instantiateGenome(listMission, listEmployee);
+        bestGenome = population.getBestGenome();
+        //Genome.clearInstance(listMission, listEmployee);
+        //finalBestGenome.instantiateGenome(listMission, listEmployee);
 
 
         System.out.println("Best genome found : "+ bestGenome.fitness);
 
-        List<Genome> bestPopulation = population.getFitnessPopulation(listEmployee);
-        System.out.println("Similitude : " + population.getSimilarityRate());
-        System.out.println("Taille population finale : "+ bestPopulation.size());
+        //List<Genome> bestPopulation = population.getFitnessPopulation(listEmployee);
+        //System.out.println("Similitude : " + population.getSimilarityRate());
+        //System.out.println("Taille population finale : "+ bestPopulation.size());
 
-        return finalBestGenome;
+        return bestGenome;
 //        bestGenome.displayGenome();
 //        bestGenome.checkValidity(listMission, listEmployee);
 
@@ -172,8 +172,8 @@ public class Genetic {
                 System.out.println("-----------------------------");
             }
 
-            Genome bestGenomeTemp1 = population.population[0];
-            Genome bestGenomeTemp2 = population.population[1];
+            //Genome bestGenomeTemp1 = population.population[0];
+            //Genome bestGenomeTemp2 = population.population[1];
 
 
             //System.out.println("Best genome : " + bestGenomeTemp.costFitness);
@@ -237,7 +237,7 @@ public class Genetic {
                     bestGenomeFound.add(child1);
                 }
                 else{
-                    population.population[0] = bestGenomeTemp1;
+                    //population.population[0] = bestGenomeTemp1;
                 }
             }
             if (child2.costFitness < bestCost) {
@@ -248,7 +248,7 @@ public class Genetic {
                     bestGenomeFound.add(child2);
                 }
                 else{
-                    population.population[1] = bestGenomeTemp2;
+                    //population.population[1] = bestGenomeTemp2;
                 }
             }
 

@@ -16,8 +16,6 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import static graphproject.model.sessad.utils.Dictionary.mapInstance;
-
 public class App {
 
     private SessadGestion sessadGestion;
@@ -69,17 +67,25 @@ public class App {
                 sessadGestion.getResolution().startInitiatingGeneticAlgo(popupController.getPopSize());
                 centralPane.setLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty());
                 // display the first step
-                System.out.println("Display first step");
+                System.out.println("Display initial step");
                 setLinks(0, sessadGestion.getListEmployee());
                 graphController.displayGraph();
 
 
-                // Step 1 : compute the first genetic algorithm
+                // Step 2 : compute the first genetic algorithm
                 sessadGestion.getResolution().startGeneticAlgo(popupController.getPopSize(), popupController.getGenerationNbr(), popupController.getCrossOverRate(), popupController.getMutationRate());
                 centralPane.setLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty());
                 // display after the first genetic algorithm
-                System.out.println("Display second step");
+                System.out.println("Display first step");
                 setLinks(1, sessadGestion.getListEmployee());
+                graphController.displayGraph();
+
+                // Step 3 : compute the first genetic algorithm
+                sessadGestion.getResolution().secondPartGenetic(popupController.getPopSize(), popupController.getGenerationNbr(), popupController.getCrossOverRate(), popupController.getMutationRate());
+                centralPane.setLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty());
+                // display after the first genetic algorithm
+                System.out.println("Display second step");
+                setLinks(2, sessadGestion.getListEmployee());
                 graphController.displayGraph();
 
             }
@@ -165,13 +171,13 @@ public class App {
         }
 
         // When initialising, it opens the global graph of the first step
-        graphController.openGraph(graphs.get(0).get(0));
+        //graphController.openGraph(graphs.get(0).get(0));
     }
 
     public void generateGraphsFromSessadGestion(List<Node> listNode, int step){
 
         //Création graph global contenant toutes les nodes
-        Graph initialGraph = new Graph("Global", 0);
+        Graph initialGraph = new Graph("Global");
         for (Node node : listNode){
             initialGraph.addNode(node);
         }
@@ -189,7 +195,7 @@ public class App {
         //Initialisation des graphs de chaque jours
 
         for (int i = 1; i < max_day; i++){
-            Graph graph = new Graph("day"+i, i );
+            Graph graph = new Graph("day"+i);
             graphs.get(step).add(graph);
             centralPane.choiceBoxDay.getItems().add("day"+i);
         }
@@ -237,6 +243,8 @@ public class App {
                 System.out.println("Graph changed to : " + graphs.get(selectedStep).get(new_val.intValue()).getName());
                 selectedDay = new_val.intValue();
                 graphController.openGraph(graphs.get(selectedStep).get(selectedDay));
+
+
                 //selectionPaneController.setNodePane(selectedNode);
             }
         };

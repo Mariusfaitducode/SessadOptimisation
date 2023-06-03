@@ -6,7 +6,6 @@ import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.resolution.genetic.Genome;
 import graphproject.model.sessad.resolution.genetic.Population;
-import graphproject.model.sessad.resolution.step_2.Configuration;
 
 import java.util.List;
 
@@ -19,6 +18,9 @@ public class Resolution {
     private List<Centre> listCentre;
     private List<Employee> listEmployee;
     private Genetic genetic;
+
+    public Genome firstGenome;
+    public Genome secondGenome;
 
 //    private Tabou tabou;
 
@@ -43,33 +45,9 @@ public class Resolution {
 
     public void startGeneticAlgo(int popSize, int generationNbr, double crossOverRate, double mutationRate) {
 
-//        //création population initiale
-//        genetic.generatePopulation();
-//
-//        //genetic.getPopulation().displayPopulation();
-//
-//
-//
-//        for (int i = 0; i < 500; i++){
-//            System.out.println("------ Génération "+ i + " ---------------------");
-//
-//            //fitness
-//            genetic.fitness();
-//
-//            //création de nouveaux individus
-//            genetic.generateNewGeneration();
-//        }
-//
-//        System.out.println("------ Last génération ---------------------");
-//        genetic.fitness();
-//        genetic.displayBestGenome();
 
-        //List<Genome> listBestGenomes = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
-
-
-
-
-        Genome firstGenome = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
+        //Première étape de l'algorithme génétique pour l'affectation des missions
+        firstGenome = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
 
         //Configuration configuration = new Configuration(firstGenome, listMission, listEmployee, listCentre);
 
@@ -77,12 +55,16 @@ public class Resolution {
         travelCost = firstGenome.getCostFitness();
         //matchingSpecialty = configuration.getBestSpecialtyMatch();
 
-        List<Genome> listBestGenomes = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
+        //Instantiation de Sessad Gestion
+        Genome.clearInstance(listMission, listEmployee);
+        firstGenome.instantiateGenome(listMission, listEmployee);
+
+        /*List<Genome> listBestGenomes = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
 
         int randomGenome = (int)(Math.random() * (listBestGenomes.size()));
         Genome genome = listBestGenomes.get(randomGenome);
         Genome.clearInstance(listMission, listEmployee);
-        genome.instantiateGenome(listMission, listEmployee);
+        genome.instantiateGenome(listMission, listEmployee);*/
 
 
 //        for (Genome genome : listBestGenomes) {
@@ -110,12 +92,24 @@ public class Resolution {
 
 
 
-        //Instantiation de Sessad Gestion
-        firstGenome.instantiateGenome(listMission, listEmployee);
+
         //configuration.getGenome().instantiateGenome(listMission, listEmployee);
 
 //        configuration.getGenome().displayGenome();
 
+    }
+
+    public void secondPartGenetic(int popSize, int generationNbr, double crossOverRate, double mutationRate){
+
+        //Deuxième étape de l'algorithme génétique pour la minimisation des coûts de déplacement
+        secondGenome = genetic.secondPartGeneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
+
+        centreAffected = secondGenome.getFitness();
+        travelCost = secondGenome.getCostFitness();
+
+        //Instantiation de Sessad Gestion
+        Genome.clearInstance(listMission, listEmployee);
+        secondGenome.instantiateGenome(listMission, listEmployee);
     }
 
     public int getCentreAffected() {

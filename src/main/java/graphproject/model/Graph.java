@@ -1,6 +1,5 @@
 package graphproject.model;
 
-import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -15,7 +14,7 @@ public class Graph {
 
     //private SessadGestion sessadGestion;
 
-    public Graph(String name, int idInstance){
+    public Graph(String name){
         this.name = name;
         this.nodes = new ArrayList<>(0);
         //this.sessadGestion = new SessadGestion(idInstance, nodes);
