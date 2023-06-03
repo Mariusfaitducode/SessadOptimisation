@@ -317,7 +317,7 @@ public class LittleGenome {
         return permutations;
     }
 
-    public void generateCombinationsStep3() {
+    public List<int[]> generateCombinationsStep3() {
 
         List<Integer> initialGenome = new ArrayList<>();
 
@@ -332,6 +332,7 @@ public class LittleGenome {
         }
         List<int[]> combinations = generatePermutations(initialGenome);
 
+        return combinations;
     }
 
     public Genome evaluateAllCombinationsStep3(List<int[]> combinations){
@@ -349,7 +350,7 @@ public class LittleGenome {
                 genome.setGene(i, combination[i]);
 
             }
-            genome.determineCostFitness(listMission, listEmployee);
+            //genome.determineCostFitness(listMission, listEmployee);
             //genome.instantiateGenome(listMission, listEmployee);
 
             int specialtyMatch = 0;

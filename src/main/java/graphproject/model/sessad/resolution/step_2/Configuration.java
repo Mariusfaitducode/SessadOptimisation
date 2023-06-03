@@ -47,9 +47,9 @@ public class Configuration {
 
             //TODO : Erreur qui arrive parfois, à corriger
             Mission mission = littleGenome.getListMission().get(i);
-            Employee employee = littleGenome.getListEmployee().get(miniGenome.getGene(i) - 1);
+            Employee employee = littleGenome.getListEmployee().get(miniGenome.getGene(i));
 
-            this.genome.setGene(mission.getId() - 1, employee.getId());
+            this.genome.setGene(mission.getId()-1, employee.getId());
         }
     }
 
@@ -152,8 +152,17 @@ public class Configuration {
     public void brutForceStep3() {
         for (LittleGenome littleGenome : listLittleGenome) {
             System.out.println("----------------------");
-            if (!littleGenome.getListMission().isEmpty()) {
-                littleGenome.generateCombinationsStep3();
+            if (!littleGenome.getListMission().isEmpty() && !littleGenome.getListEmployee().isEmpty()) {
+
+                List<int[]> permutations = littleGenome.generateCombinationsStep3();
+                Genome bestGenome = littleGenome.evaluateAllCombinationsStep3(permutations);
+
+                bestGenome.displayGenome();
+                for (int i = 0; i < littleGenome.getListEmployee().size(); i++) {
+                    System.out.println("Employee " + i + " : " + littleGenome.getListEmployee().get(i).getId());
+                }
+
+                adaptGenome(bestGenome, littleGenome);
             }
         }
     }

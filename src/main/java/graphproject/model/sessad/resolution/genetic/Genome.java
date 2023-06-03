@@ -14,6 +14,8 @@ public class Genome{
     int[] genome;
     int fitness;
 
+    int specialtyMatch;
+
     double costFitness;
 
     public Genome(int sizeGenome){
@@ -27,6 +29,7 @@ public class Genome{
         this.costFitness = genome.costFitness;
     }
 
+    public int getSpecialtyMatch(){return specialtyMatch;}
     public int getFitness(){return fitness;}
 
     public double getCostFitness(){return costFitness;}
@@ -91,6 +94,17 @@ public class Genome{
                     break;
                 }
             }
+        }
+    }
+
+    public void determineSpecialtyMatch(List<Mission> listMission, List<Employee> listEmployee){
+        this.specialtyMatch = 0;
+
+        clearInstance(listMission, listEmployee);
+        instantiateGenome(listMission, listEmployee);
+
+        for (Employee employee : listEmployee){
+            this.specialtyMatch += employee.nbrMissionWithGoodSpecialty();
         }
     }
 
