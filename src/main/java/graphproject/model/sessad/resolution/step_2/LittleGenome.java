@@ -7,10 +7,7 @@ import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.resolution.genetic.Genome;
 import graphproject.model.sessad.skill.Skill;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class LittleGenome {
 
@@ -259,6 +256,78 @@ public class LittleGenome {
 
             currentCombination.remove(currentCombination.size() - 1);
         }
+    }
+
+    public static void generatePermutations(List<Integer> numbers){
+
+        List<Integer> listValues = new ArrayList<>();
+
+        List<List<Integer>> listListIndices = new ArrayList<>();
+
+        //prépare la liste des valeurs différentes
+        for (int i = 0; i < numbers.size(); i++){
+            if (!listValues.contains(numbers.get(i))){
+                listValues.add(numbers.get(i));
+            }
+        }
+
+
+        //prépare la liste des indices pour chaque valeur
+        for (int i = 0; i < listValues.size(); i++){
+
+            List<Integer> listIndices = new ArrayList<>();
+            for (int j = 0; j < numbers.size(); j++){
+
+                if (Objects.equals(listValues.get(i), numbers.get(j))){
+                    listIndices.add(j);
+                }
+            }
+            listListIndices.add(listIndices);
+        }
+
+        //affiche la liste des valeurs
+        System.out.println("Liste des valeurs : "+ listValues);
+
+        //affiche la liste des indices pour chaque valeur
+        System.out.println("Liste des indices pour chaque valeur : "+ listListIndices);
+
+        List<List<Integer>> combinations = new ArrayList<>();
+
+        generateCombinationsRecursive(listValues, new ArrayList<>(), combinations);
+
+        //affiche la liste des combinaisons
+        System.out.println("Liste des combinaisons : "+ combinations);
+
+        List<int[]> permutations = new ArrayList<>();
+
+        for (List<Integer> combination : combinations){
+
+            int[] permutation = new int[numbers.size()];
+
+            for (int i = 0; i < combination.size(); i++){
+
+                for (Integer indices : listListIndices.get(i)){
+                    permutation[indices] = combination.get(i);
+                }
+            }
+            permutations.add(permutation);
+        }
+
+        System.out.println("Liste des permutations : "+ permutations);
+
+        for (int[] permutation : permutations){
+            for (int i : permutation){
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    //main
+    public static void main(String[] args) {
+
+        generatePermutations(Arrays.asList(1, 1, 2, 2, 3, 1, 3));
+
     }
 
 }

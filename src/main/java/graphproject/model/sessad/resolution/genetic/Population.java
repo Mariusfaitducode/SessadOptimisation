@@ -250,10 +250,10 @@ public class Population {
 
         for (int i = 0; i < population.length; i++){
 
-            if ( population[i].fitness > maxFitness){
+            if ( population[i].fitness >= maxFitness){
                 maxFitness = population[i].fitness;
 
-                if (population[i].costFitness < minCost){
+                if (population[i].costFitness <= minCost){
                     minCost = population[i].costFitness;
                     bestGenome = new Genome(population[i]);
                 }

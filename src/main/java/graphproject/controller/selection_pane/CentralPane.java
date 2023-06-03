@@ -1,7 +1,6 @@
 package graphproject.controller.selection_pane;
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -13,8 +12,17 @@ public class CentralPane {
     public ChangeListener<Number> choiceBoxDayListener;
     public ChangeListener<Number> choiceBoxStepListener;
     public Label textAffectation;
+
+    public int[] affectation = new int[3];
+
     public Label textCost;
+
+    public float[] cost = new float[3];
+
     public Label textSpecialty;
+
+    public int[] specialty = new int[3];
+
     public CentralPane(Pane parentCenterPane){
         choiceBoxDay = (ChoiceBox<String>) parentCenterPane.lookup("#graph-day-selection");
         choiceBoxStep = (ChoiceBox<String>) parentCenterPane.lookup("#graph-step-selection");
@@ -26,10 +34,16 @@ public class CentralPane {
         this.choiceBoxStepListener = ((observableValue, number, t1) -> {});
     }
 
-    public void setLabel(int affectation, float cost, int specialty){
-        textAffectation.setText("Affectation : "+affectation);
-        textCost.setText("Cout : "+ cost);
-        textSpecialty.setText("Spécialités :"+ specialty);
+    public void setValueLabel(int affectation, float cost, int specialty, int step){
+        this.affectation[step] = affectation;
+        this.cost[step] = cost;
+        this.specialty[step] = specialty;
+    }
+
+    public void setLabel(int step){
+        textAffectation.setText("Affectation : "+affectation[step]);
+        textCost.setText("Cout : "+ cost[step]);
+        textSpecialty.setText("Spécialités :"+ specialty[step]);
     }
 
     public void setChoiceBoxStep() {
