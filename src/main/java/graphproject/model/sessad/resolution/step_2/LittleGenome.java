@@ -258,7 +258,7 @@ public class LittleGenome {
         }
     }
 
-    public static void generatePermutations(List<Integer> numbers){
+    public static void generatePermutations(List<Integer> numbers, List<int[]> permutList){
 
         List<Integer> listValues = new ArrayList<>();
 
