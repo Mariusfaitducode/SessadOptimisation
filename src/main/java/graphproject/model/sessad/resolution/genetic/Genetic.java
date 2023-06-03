@@ -141,7 +141,6 @@ public class Genetic {
 
         System.out.println("-------------------------------------------------------------------");
         System.out.println("Second part of genetic algo");
-
         System.out.println("-------------------------------------------------------------------");
 
         System.out.println("Best fitness : " + bestFitness);
@@ -160,13 +159,6 @@ public class Genetic {
 
 
         Genome bestGenomeFound = new Genome(listMission.size());
-
-//        System.out.println("Max cost : "+ maxCost);
-
-//        for (Genome genome : population.population) {
-//            System.out.println("Fitness : " + genome.fitness);
-//        	System.out.println("Cost : " + genome.costFitness);
-//        }
 
 
         for (int iter = 0 ; iter < generationNbr ; iter++) {
@@ -191,7 +183,7 @@ public class Genetic {
             //System.out.println("Cost parent1 : " + parent1.costFitness);
             //System.out.println("Cost parent2 : " + parent2.costFitness);
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 8; i++)
             {
                 //System.out.println("Mission " + i + " : " + parent1.getGene(i) + " - " + parent2.getGene(i));
 
@@ -233,7 +225,7 @@ public class Genetic {
                         bestCost = child1.costFitness;
                         System.out.println("Better cost genome found : " + bestCost);
                         //population.population[0] = child1;
-                        bestGenomeFound = child1;
+                        bestGenomeFound = new Genome(child1);
                     }
                 }
                 if (child2.costFitness < bestCost) {
@@ -241,7 +233,7 @@ public class Genetic {
                         bestCost = child2.costFitness;
                         System.out.println("Better cost genome found : " + bestCost);
                         //population.population[1] = child2;
-                        bestGenomeFound = child2;
+                        bestGenomeFound = new Genome(child2);
                     }
                 }
             }

@@ -24,6 +24,7 @@ public class Genome{
     public Genome(Genome genome){
         this.genome = genome.genome;
         this.fitness = genome.fitness;
+        this.costFitness = genome.costFitness;
     }
 
     public int getFitness(){return fitness;}
