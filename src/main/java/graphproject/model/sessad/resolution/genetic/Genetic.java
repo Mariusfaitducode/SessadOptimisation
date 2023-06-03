@@ -259,12 +259,12 @@ public class Genetic {
 
         Genome bestGenome = getBestGenome();
 
-        System.out.println("Fitness : " + bestGenome.fitness);
-        System.out.println("Cost : " + bestGenome.costFitness);
+        System.out.println("Fitness : " + bestGenomeFound.fitness);
+        System.out.println("Cost : " + bestGenomeFound.costFitness);
 
 
 
-        return bestGenome;
+        return bestGenomeFound;
     }
 
     public void littleGeneticAlgo(List<List<Integer>> combinations, int popSize, int generationNbr, double crossOverRateInit, double mutationRateInit){

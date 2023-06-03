@@ -6,7 +6,6 @@ import graphproject.model.sessad.Mission;
 import graphproject.model.sessad.resolution.genetic.Genetic;
 import graphproject.model.sessad.resolution.genetic.Genome;
 import graphproject.model.sessad.resolution.genetic.Population;
-import graphproject.model.sessad.resolution.step_2.Configuration;
 
 import java.util.List;
 
@@ -113,7 +112,7 @@ public class Resolution {
 //        }
 //        System.out.println("Best cost from brut force step 2 algorithm after second algo : " + bestCost);
 
-        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
+        /*List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
         double bestCost = Integer.MAX_VALUE;
         for (Genome genome : listBestGenomes) {
 
@@ -121,7 +120,7 @@ public class Resolution {
             configuration.brutForceStep3();
             bestCost = Math.min(bestCost, configuration.getBestCost());
         }
-        System.out.println("Best cost from brut force algorithm after second algo : " + bestCost);
+        System.out.println("Best cost from brut force algorithm after second algo : " + bestCost);*/
     }
 
     public void calculateAttributeGenome(Genome genome, List<Mission> listMission, List<Employee> listEmployee){

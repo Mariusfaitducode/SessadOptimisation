@@ -336,7 +336,6 @@ public class LittleGenome {
 
     public Genome evaluateAllCombinationsStep3(List<int[]> combinations){
 
-        double bestCost = 1000000000;
         Genome bestGenome = new Genome(listMission.size());
         int bestSpecialtyMatch = 0;
 
@@ -346,53 +345,31 @@ public class LittleGenome {
             Genome genome = new Genome(listMission.size());
 
             for (int i = 0; i < combination.length; i++){
-6
 
                 genome.setGene(i, combination[i]);
 
-                //Mission mission = listMission.get(i);
-                //Employee employee = listEmployee.get(combination.get(i));
-
-                //mission.setEmployee(employee);
-                //employee.addMission(mission);
             }
             genome.determineCostFitness(listMission, listEmployee);
             //genome.instantiateGenome(listMission, listEmployee);
 
-            double totalCost = 0;
             int specialtyMatch = 0;
 
-            if (genome.getFitness() > 0){
+            //Genome.clearInstance(listMission, listEmployee);
+            //genome.instantiateGenome(listMission, listEmployee);
 
-                //Genome.clearInstance(listMission, listEmployee);
-                //genome.instantiateGenome(listMission, listEmployee);
-
-                for (Employee employee : listEmployee){
-                    totalCost += employee.findCost();
-                    specialtyMatch += employee.nbrMissionWithGoodSpecialty();
-                }
-                if (totalCost < bestCost){
-                    bestCost = totalCost;
-                    bestGenome = genome;
-                    bestSpecialtyMatch = specialtyMatch;
-                    //listBestGenome.clear();
-                    //listBestGenome.add(genome);
-                }
-                else if (totalCost == bestCost){
-
-                    //Compare le match des spécialités entre genome et bestGenome
-                    if (bestSpecialtyMatch < specialtyMatch){
-                        bestGenome = genome;
-                    }
-                }
-                //System.out.println("Cost = "+ totalCost);
+            for (Employee employee : listEmployee){
+                specialtyMatch += employee.nbrMissionWithGoodSpecialty();
             }
-        }
-        this.bestCost = bestCost;
-        this.bestSpecialtyMatch = bestSpecialtyMatch;
-        //return listBestGenome;
 
-//        bestGenome.displayGenome();
+            if (bestSpecialtyMatch < specialtyMatch){
+                bestSpecialtyMatch = specialtyMatch;
+                bestGenome = genome;
+            }
+
+            //System.out.println("Cost = "+ totalCost);
+
+        }
+        this.bestSpecialtyMatch = bestSpecialtyMatch;
 
         return bestGenome;
     }
