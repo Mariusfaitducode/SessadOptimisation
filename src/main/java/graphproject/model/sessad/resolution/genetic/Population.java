@@ -401,4 +401,9 @@ public class Population {
     public void getListBestGenomes(List<Mission> listMission) {
 
     }
+
+    public Genome getRandomGenome() {
+        int randomIndex = (int)(Math.random() * (sizePopulation));
+        return population[randomIndex];
+    }
 }

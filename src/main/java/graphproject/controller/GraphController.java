@@ -33,7 +33,6 @@ public class GraphController {
 //    private MenuItem buttonSaveGraph;
 
     //tools
-    private SessadGestionController sessadGestionController;
     private SelectionPaneController selectionPaneController;
     private NodeController nodeController;
 
