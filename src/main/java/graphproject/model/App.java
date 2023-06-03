@@ -171,7 +171,7 @@ public class App {
         }
 
         // When initialising, it opens the global graph of the first step
-        //graphController.openGraph(graphs.get(0).get(0));
+        graphController.openGraph(graphs.get(2).get(0));
     }
 
     public void generateGraphsFromSessadGestion(List<Node> listNode, int step){
@@ -179,7 +179,18 @@ public class App {
         //Création graph global contenant toutes les nodes
         Graph initialGraph = new Graph("Global");
         for (Node node : listNode){
-            initialGraph.addNode(node);
+
+            Node newNode = new Node(node.id, node.name, node.x, node.y);
+            for (Place place : node.getListPlace()){
+                if (place.getType() == Place.Type.CENTRE){
+                    newNode.listPlace.add(place);
+                    newNode.setCentre(true);
+                }
+                else{
+                    newNode.listPlace.add(place);
+                }
+            }
+            initialGraph.addNode(newNode);
         }
         graphs.get(step).add(initialGraph);
 
