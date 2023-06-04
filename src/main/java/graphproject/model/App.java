@@ -49,8 +49,8 @@ public class App {
 
         toolsController.getTest().setOnMouseClicked(event->{
             if (!graphController.graphIsNull()) {
+                popupController.setParameters(200, 50000, 0.9, 0.9,200, 20000, 0.9, 0.9);
                 popupController.setVisible(true);
-                popupController.setParameters(200, 50000, 0.9, 0.9);
             }
         });
     }
@@ -64,28 +64,25 @@ public class App {
                 popupController.setVisible(false);
 
                 //Step 0 : compute the first step
-                sessadGestion.getResolution().startInitiatingGeneticAlgo(popupController.getPopSize());
+                sessadGestion.getResolution().startInitiatingGeneticAlgo(popupController.getGen1PopSize());
                 centralPane.setValueLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty(), 0);
                 // display the first step
-                System.out.println("Display initial step");
                 setLinks(0, sessadGestion.getListEmployee());
                 graphController.displayGraph();
 
 
                 // Step 1 : compute the first genetic algorithm
-                sessadGestion.getResolution().startGeneticAlgo(popupController.getPopSize(), popupController.getGenerationNbr(), popupController.getCrossOverRate(), popupController.getMutationRate());
+                sessadGestion.getResolution().startGeneticAlgo(popupController.getGen1PopSize(), popupController.getGen1GenerationNbr(), popupController.getGen1CrossOverRate(), popupController.getGen1MutationRate());
                 centralPane.setValueLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty(), 1);
                 // display after the first genetic algorithm
-                System.out.println("Display first step");
                 setLinks(1, sessadGestion.getListEmployee());
                 graphController.displayGraph();
 
                 // Step 2 : compute the first genetic algorithm
-                sessadGestion.getResolution().secondPartGenetic(popupController.getGenerationNbr(), popupController.getCrossOverRate(), popupController.getMutationRate());
+                sessadGestion.getResolution().secondPartGenetic(popupController.getGen2GenerationNbr(), popupController.getGen2CrossOverRate(), popupController.getGen2MutationRate());
                 centralPane.setValueLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty(), 2);
                 centralPane.setLabel(2);
                 // display after the first genetic algorithm
-                System.out.println("Display second step");
                 setLinks(2, sessadGestion.getListEmployee());
                 graphController.displayGraph();
 
@@ -94,7 +91,6 @@ public class App {
                 centralPane.setValueLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty(), 3);
                 centralPane.setLabel(3);
                 // display after the first genetic algorithm
-                System.out.println("Display last step");
                 setLinks(3, sessadGestion.getListEmployee());
                 graphController.displayGraph();
 

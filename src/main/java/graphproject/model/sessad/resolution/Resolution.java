@@ -24,10 +24,6 @@ public class Resolution {
     public Genome firstGenome;
     public Genome secondGenome;
 
-//    private Tabou tabou;
-
-//    private Permutation permutation;
-
     public Resolution(List<Mission> listMission, List<Centre> listCentre, List<Employee> listEmployee){
         this.listMission = listMission;
         this.listCentre = listCentre;
@@ -42,10 +38,12 @@ public class Resolution {
         population.initializePopulation(listMission, listCentre);
         Genome randomGenome = population.getRandomGenome();
 
-        //calculateAttributeGenome(randomGenome, listMission, listEmployee);
-
-        this.centreAffected = (int)randomGenome.getFitness();
+        randomGenome.deternimeFitnessWithoutChecking();
+        this.centreAffected = randomGenome.getFitness();
+        randomGenome.determineCostFitness(listMission, listEmployee);
         this.travelCost = randomGenome.getCostFitness();
+        randomGenome.determineSpecialtyMatch(listMission, listEmployee);
+        this.matchingSpecialty = randomGenome.getSpecialtyMatch();
 
 
         Genome.clearInstance(listMission, listEmployee);
@@ -57,20 +55,16 @@ public class Resolution {
         //Première étape de l'algorithme génétique pour l'affectation des missions
         firstGenome = genetic.geneticAlgo(popSize, generationNbr, crossOverRate, mutationRate);
 
-        //Configuration configuration = new Configuration(firstGenome, listMission, listEmployee, listCentre);
-
-        //calculateAttributeGenome(firstGenome, listMission, listEmployee);
-        //matchingSpecialty = configuration.getBestSpecialtyMatch();
-
-        System.out.println("Final genome !! fitnes :: " + firstGenome.getFitness());
-
-        firstGenome.evaluateCost(listMission, listEmployee, 0, 0);
-        this.centreAffected = (int)firstGenome.getFitness();
+        // Get stats of the best genome
+        this.centreAffected = firstGenome.getFitness();
         this.travelCost = firstGenome.getCostFitness();
-        firstGenome.determineSpecialtyMatch(listMission, listEmployee);
         this.matchingSpecialty = firstGenome.getSpecialtyMatch();
 
-        //this.travelCost = firstGenome.getCostFitness();
+//        firstGenome.evaluateCost(listMission, listEmployee, 0, 0);
+//        this.centreAffected = (int)firstGenome.getFitness();
+//        this.travelCost = firstGenome.getCostFitness();
+//        firstGenome.determineSpecialtyMatch(listMission, listEmployee);
+//        this.matchingSpecialty = firstGenome.getSpecialtyMatch();
 
         //calculateAttributeGenome(firstGenome, listMission, listEmployee);
 
@@ -98,9 +92,9 @@ public class Resolution {
         secondGenome = genetic.secondPartGeneticAlgo(generationNbr, crossOverRate, mutationRate, this.centreAffected);
 
         //calculateAttributeGenome(secondGenome, listMission, listEmployee);
-        this.centreAffected = (int)secondGenome.getFitness();
+
+        this.centreAffected = secondGenome.getFitness();
         this.travelCost = secondGenome.getCostFitness();
-        secondGenome.determineSpecialtyMatch(listMission, listEmployee);
         this.matchingSpecialty = secondGenome.getSpecialtyMatch();
 
         //Instantiation de Sessad Gestion
@@ -142,11 +136,13 @@ public class Resolution {
         //Récupération du résultat
         Genome bestGenome = configuration.getGenome();
 
-        //Affichage des résultats
-        bestGenome.evaluateCost(listMission, listEmployee, 0, 0);
-        this.centreAffected = (int)bestGenome.getFitness();
-        this.travelCost = bestGenome.getCostFitness();
+        bestGenome.displayGenome();
 
+//        bestGenome.evaluateCost(listMission, listEmployee, 0, 0);
+        bestGenome.deternimeFitnessWithoutChecking();
+        this.centreAffected = bestGenome.getFitness();
+        bestGenome.determineCostFitness(listMission, listEmployee);
+        this.travelCost = bestGenome.getCostFitness();
         bestGenome.determineSpecialtyMatch(listMission, listEmployee);
         this.matchingSpecialty = bestGenome.getSpecialtyMatch();
 
@@ -178,7 +174,5 @@ public class Resolution {
         return travelCost;
     }
 
-    public int getMatchingSpecialty() {
-        return matchingSpecialty;
-    }
+    public int getMatchingSpecialty() {return matchingSpecialty;}
 }

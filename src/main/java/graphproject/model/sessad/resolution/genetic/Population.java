@@ -162,6 +162,15 @@ public class Population {
         return Math.sqrt(sum / population.length);
     }
 
+    public double getStandardDeviationCostFitness() {
+        double meanCostFitness = getMeanCostFitness();
+        double sum = 0;
+        for (Genome genome : population){
+            sum += Math.pow(genome.costFitness - meanCostFitness, 2);
+        }
+        return Math.sqrt(sum / population.length);
+    }
+
     public double getSimilarityRate() {
         double similarityRate = 0;
         for (int i = 0; i < population.length - 1; i++) {
