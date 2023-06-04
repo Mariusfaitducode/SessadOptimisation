@@ -26,7 +26,7 @@ public class Configuration {
         // Creation des LittleGenome, il y en a : n centres X 2 skills X 5 days
         initializeLittleGenome(listCentre);
 
-        genome.clearInstance(listMission, listEmployee);
+        Genome.clearInstance(listMission, listEmployee);
         genome.instantiateGenome(listMission, listEmployee);
 
         // On ajoute les employees aux LittleGenome
@@ -113,33 +113,12 @@ public class Configuration {
         for (LittleGenome littleGenome : listLittleGenome){
             if (!littleGenome.getListMission().isEmpty()){
 
-                if (littleGenome.getListMission().size() > 10){
-//                    System.out.println("LittleGenome size = " + littleGenome.getListMission().size());
+                List<List<Integer>> combinations = littleGenome.generateCombinations();
+                Genome bestGenome = littleGenome.evaluateAllCombinations(combinations);
 
-                    List<Centre> littleGenomeCentre = new ArrayList<>(0);
-                    littleGenomeCentre.add(littleGenome.getCentre());
-
-                    List<List<Integer>> combinations = littleGenome.generateCombinations(true);
-
-                    //Genetic genetic = new Genetic(littleGenome.getListMission(), littleGenomeCentre, littleGenome.getListEmployee(), 200);
-                    //genetic.littleGeneticAlgo(combinations, 200, 1000, 0.9, 0.9);
-                }
-                else{
-                    List<List<Integer>> combinations = littleGenome.generateCombinations(false);
-
-                    Genome bestGenome;
-
-                    bestGenome = littleGenome.evaluateAllCombinations(combinations);
-
-//                    bestGenome.displayGenome();
-
-                    adaptGenome(bestGenome, littleGenome);
-
-                    //System.out.println("Same solutions = "+ bestCombinations.size());
-
-                    totalCost += littleGenome.getBestCost();
-                    totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
-                }
+                adaptGenome(bestGenome, littleGenome);
+                totalCost += littleGenome.getBestCost();
+                totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
 
             }
         }
@@ -150,9 +129,13 @@ public class Configuration {
     }
 
     public void brutForceStep3() {
+        int totalSpecialtyMatch = 0;
         for (LittleGenome littleGenome : listLittleGenome) {
-            System.out.println("----------------------");
+
             if (!littleGenome.getListMission().isEmpty() && !littleGenome.getListEmployee().isEmpty()) {
+
+                System.out.println("----------------------");
+                System.out.println("Centre : " + littleGenome.getCentre().getId() + ", Specialty : " + littleGenome.getSkill() + ", Day : " + littleGenome.getDay());
 
                 List<int[]> permutations = littleGenome.generateCombinationsStep3();
                 Genome bestGenome = littleGenome.evaluateAllCombinationsStep3(permutations);
@@ -161,9 +144,33 @@ public class Configuration {
                 for (int i = 0; i < littleGenome.getListEmployee().size(); i++) {
                     System.out.println("Employee " + i + " : " + littleGenome.getListEmployee().get(i).getId());
                 }
+                for (int i = 0; i < littleGenome.getListMission().size(); i++) {
+                    System.out.println("Mission " + i + " : " + littleGenome.getListMission().get(i).getId());
+                }
 
+
+
+                Genome temp = new Genome(genome.getSizeGenome());
+//                for (int i : temp.getGenome()) {
+//                    temp.setGene(i, 0);
+//                }
+                for (int i = 0; i < bestGenome.getGenome().length; i++){
+
+                    //TODO : Erreur qui arrive parfois, à corriger
+                    Mission mission = littleGenome.getListMission().get(i);
+                    Employee employee = littleGenome.getListEmployee().get(bestGenome.getGene(i));
+
+                    temp.setGene(mission.getId()-1, employee.getId());
+                }
+                temp.displayGenome();
+
+                totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
+
+                genome.displayGenome();
                 adaptGenome(bestGenome, littleGenome);
+                genome.displayGenome();
             }
         }
+        System.out.println("total : : :: " + totalSpecialtyMatch);
     }
 }

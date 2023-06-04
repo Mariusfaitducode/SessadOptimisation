@@ -137,10 +137,13 @@ public class Resolution {
 
         Genome bestGenome = configuration.getGenome();
 
-        bestGenome.evaluateCost(listMission, listEmployee, 0, 0);
-        this.centreAffected = (int)bestGenome.getFitness();
-        this.travelCost = bestGenome.getCostFitness();
+        bestGenome.displayGenome();
 
+//        bestGenome.evaluateCost(listMission, listEmployee, 0, 0);
+        bestGenome.deternimeFitnessWithoutChecking();
+        this.centreAffected = bestGenome.getFitness();
+        bestGenome.determineCostFitness(listMission, listEmployee);
+        this.travelCost = bestGenome.getCostFitness();
         bestGenome.determineSpecialtyMatch(listMission, listEmployee);
         this.matchingSpecialty = bestGenome.getSpecialtyMatch();
 
