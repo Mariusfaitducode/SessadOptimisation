@@ -49,7 +49,7 @@ public class App {
 
         toolsController.getTest().setOnMouseClicked(event->{
             if (!graphController.graphIsNull()) {
-                popupController.setParameters(200, 50000, 0.9, 0.9,200, 20000, 0.9, 0.9);
+                popupController.setParameters(200, 50000, 0.9, 0.9,200, 500000, 0.9, 0.9);
                 popupController.setVisible(true);
             }
         });
@@ -78,7 +78,7 @@ public class App {
                 setLinks(1, sessadGestion.getListEmployee());
                 graphController.displayGraph();
 
-                // Step 2 : compute the first genetic algorithm
+                // Step 2 : compute the second genetic algorithm
                 sessadGestion.getResolution().secondPartGenetic(popupController.getGen2GenerationNbr(), popupController.getGen2CrossOverRate(), popupController.getGen2MutationRate());
                 centralPane.setValueLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty(), 2);
                 centralPane.setLabel(2);
@@ -86,7 +86,7 @@ public class App {
                 setLinks(2, sessadGestion.getListEmployee());
                 graphController.displayGraph();
 
-                // Step 3 : compute the first genetic algorithm
+                // Step 3 : compute the permutations for specialty
                 sessadGestion.getResolution().brutForceStep3();
                 centralPane.setValueLabel(sessadGestion.getResolution().getCentreAffected(), (float)sessadGestion.getResolution().getTravelCost(), sessadGestion.getResolution().getMatchingSpecialty(), 3);
                 centralPane.setLabel(3);

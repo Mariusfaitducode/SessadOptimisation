@@ -319,9 +319,15 @@ public class Population {
         return null;
     }
 
-    public Genome selectionCostRoulette(double maxCost) {
+    public Genome selectionCostRoulette() {
 
         List<Genome> listGenome = new ArrayList<Genome>();
+
+        double maxCost = 0;
+
+        for (Genome genome : population) {
+            maxCost = Math.max(maxCost, genome.costFitness);
+        }
 
         // Calculer la somme des fitness de la population
         int totalCostFitness = 0;
@@ -354,8 +360,6 @@ public class Population {
         int genomeLength = parent1.genome.length;
 
         int crossoverPoint = (int) (Math.random() * genomeLength); // genomeLength est la longueur du génome
-
-
 
         for (int i = 0; i < genomeLength; i++) {
             if (i < crossoverPoint) {
@@ -404,7 +408,7 @@ public class Population {
         }
     }
 
-    public void remplacementCostRoulette(Genome child, double maxCost) {
+    public void remplacementCostRoulette(Genome child) {
         // Calculer la somme des fitness de la population
         int totalFitness = 0;
 
@@ -418,8 +422,23 @@ public class Population {
 
         for (int i = 0; i < population.length; i++) {
             cumulativeFitness += population[i].costFitness;
-            if (population[i].fitness == 0 || cumulativeFitness >= randomNbr) {
-                population[i] = child;
+            if (cumulativeFitness >= randomNbr) {
+
+                population[i] = new Genome(child);
+
+                break;
+            }
+        }
+    }
+
+    public void replaceWithBestSolution(Genome bestChild){
+
+        for (int i = 0; i < population.length; i++) {
+
+            if (population[i].fitness == 0) {
+
+                population[i] = new Genome(bestChild);
+
                 break;
             }
         }

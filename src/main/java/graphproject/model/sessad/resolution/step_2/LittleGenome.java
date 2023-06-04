@@ -295,7 +295,6 @@ public class LittleGenome {
         List<Integer> initialGenome = new ArrayList<>();
 
         for (Mission mission : listMission){
-
             for (int i = 0; i < listEmployee.size(); i++){
 
                 if (mission.getEmployee().getId() == listEmployee.get(i).getId()){
