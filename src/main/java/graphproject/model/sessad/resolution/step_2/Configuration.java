@@ -144,21 +144,20 @@ public class Configuration {
 
                 totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
 
-                bestGenome.displayGenome();
+                //bestGenome.displayGenome();
 
-                for (int i = 0; i < littleGenome.getListEmployee().size(); i++) {
-                    System.out.println("Employee " + i + " : " + littleGenome.getListEmployee().get(i).getId());
-                }
-                for (int i = 0; i < littleGenome.getListMission().size(); i++) {
-                    System.out.println("Mission " + i + " : " + littleGenome.getListMission().get(i).getId());
-                }
+//                for (int i = 0; i < littleGenome.getListEmployee().size(); i++) {
+//                    System.out.println("Employee " + i + " : " + littleGenome.getListEmployee().get(i).getId());
+//                }
+//                for (int i = 0; i < littleGenome.getListMission().size(); i++) {
+//                    System.out.println("Mission " + i + " : " + littleGenome.getListMission().get(i).getId());
+//                }
 
 
                 //totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
 
-                genome.displayGenome();
+
                 adaptGenome(bestGenome, littleGenome);
-                genome.displayGenome();
             }
         }
         System.out.println("Total specialty match = " + totalSpecialtyMatch);

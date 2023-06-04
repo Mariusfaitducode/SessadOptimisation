@@ -180,72 +180,79 @@ public class Genetic {
                 System.out.println("Moyenne cost : " + population.getMeanCostFitness());
                 System.out.println("Ecart type cost : " + population.getStandardDeviationCostFitness());
                 System.out.println("Best cost : " + bestCost);
+                //System.out.println("Max cost" + maxCost);
                 System.out.println("Similitude : " + population.getSimilarityRate());
 
                 System.out.println("Best genome found : "+ bestGenomeFound.costFitness);
             }
 
             //Selection
-            Genome parent1 = population.selectionCostRoulette(maxCost);
-            Genome parent2 = population.selectionCostRoulette(maxCost);
+            Genome parent1 = population.selectionCostRoulette();
+            Genome parent2 = population.selectionCostRoulette();
 
             //System.out.println("Cost parent1 : " + parent1.costFitness);
             //System.out.println("Cost parent2 : " + parent2.costFitness);
 
-            for (int i = 0; i < 8; i++)
-            {
-                //System.out.println("Mission " + i + " : " + parent1.getGene(i) + " - " + parent2.getGene(i));
 
-                //Croisement avec taux de crossOver
-                Genome child1 = new Genome(parent1.getSizeGenome());
-                Genome child2 = new Genome(parent2.getSizeGenome());
-                if (Math.random() < crossOverRate) {
-                    population.crossOver(parent1, parent2, child1, child2);
-                } else {
-                    child1 = parent1;
-                    child2 = parent2;
-                }
+            //System.out.println("Mission " + i + " : " + parent1.getGene(i) + " - " + parent2.getGene(i));
 
-                //Mutation 1 avec taux de mutation
-                if (Math.random() < mutationRate) {
-                    child1.mutation();
-                }
+            //Croisement avec taux de crossOver
+            Genome child1 = new Genome(parent1.getSizeGenome());
+            Genome child2 = new Genome(parent2.getSizeGenome());
 
-                //Mutation 2 avec taux de mutation
-                if (Math.random() < mutationRate) {
-                    child2.mutation();
-                }
+            if (Math.random() < crossOverRate) {
+                population.crossOver(parent1, parent2, child1, child2);
+            } else {
+                child1 = parent1;
+                child2 = parent2;
+            }
 
-                //Evaluation des 2 enfants
-                maxCost = child1.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
-                maxCost = child2.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
+            //Mutation 1 avec taux de mutation
+            if (Math.random() < mutationRate) {
+                child1.mutation();
+            }
 
-                //System.out.println("Cost child1 : " + child1.costFitness);
-                //System.out.println("Cost child2 : " + child2.costFitness);
+            //Mutation 2 avec taux de mutation
+            if (Math.random() < mutationRate) {
+                child2.mutation();
+            }
 
-                //Remplacement
-                population.remplacementCostRoulette(child1, maxCost);
-                population.remplacementCostRoulette(child2, maxCost);
+            //Evaluation des 2 enfants
+            child1.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
+            child2.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
 
-                // Check if better
+            //System.out.println("Cost child1 : " + child1.costFitness);
+            //System.out.println("Cost child2 : " + child2.costFitness);
 
-                if (child1.costFitness < bestCost) {
-                    if (child1.fitness != 0) {
-                        bestCost = child1.costFitness;
-                        System.out.println("Better cost genome found : " + bestCost);
-                        //population.population[0] = child1;
-                        bestGenomeFound = new Genome(child1);
-                    }
-                }
-                if (child2.costFitness < bestCost) {
-                    if (child2.fitness != 0) {
-                        bestCost = child2.costFitness;
-                        System.out.println("Better cost genome found : " + bestCost);
-                        //population.population[1] = child2;
-                        bestGenomeFound = new Genome(child2);
-                    }
+            //Remplacement
+            if (child1.fitness >= bestFitness){
+                population.remplacementCostRoulette(child1);
+            }
+            if (child2.fitness >= bestFitness){
+                population.remplacementCostRoulette(child2);
+            }
+
+            // Check if better
+
+            if (child1.costFitness < bestCost) {
+                if (child1.fitness != 0) {
+                    bestCost = child1.costFitness;
+                    System.out.println("Better cost genome found : " + bestCost);
+                    //population.population[0] = child1;
+                    bestGenomeFound = new Genome(child1);
+                    population.replaceWithBestSolution(child1);
                 }
             }
+            if (child2.costFitness < bestCost) {
+                if (child2.fitness != 0) {
+                    bestCost = child2.costFitness;
+                    System.out.println("Better cost genome found : " + bestCost);
+                    //population.population[1] = child2;
+                    bestGenomeFound = new Genome(child2);
+                    population.replaceWithBestSolution(child2);
+                }
+            }
+
         }
 
 //        listBestGenomeSecondAlgo = population.getFitnessPopulation(listEmployee);
@@ -268,7 +275,7 @@ public class Genetic {
         bestGenomeFound.deternimeFitnessWithoutChecking();
         System.out.println("Fitness from algo: " + bestFitness);
         System.out.println("Fitness : " + bestGenomeFound.fitness);
-        bestGenomeFound.determineCostFitness(listMission, listEmployee);
+        //bestGenomeFound.determineCostFitness(listMission, listEmployee);
         System.out.println("Cost fitness : " + bestGenomeFound.costFitness);
         bestGenomeFound.determineSpecialtyMatch(listMission, listEmployee);
         System.out.println("Match specialty : " + bestGenomeFound.specialtyMatch);
