@@ -193,29 +193,29 @@
          <children>
             <Pane id="id-popup-pane" prefHeight="200.0" prefWidth="200.0" styleClass="popupWindow" stylesheets="@style.css">
                <children>
-                  <Label alignment="CENTER" layoutX="80.0" layoutY="14.0" prefHeight="39.0" prefWidth="240.0" text="Start Genetic Algorithm" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="80.0" prefHeight="39.0" prefWidth="240.0" text="Start Genetic Algorithm" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <Label alignment="CENTER" layoutX="8.0" layoutY="66.0" prefHeight="31.0" prefWidth="147.0" text="PopSize :" />
-                  <TextField id="id-popup-popSize" layoutX="155.0" layoutY="66.0" prefHeight="30.0" prefWidth="90.0" text="200">
+                  <TextField id="id-popup-gen1-popSize" layoutX="155.0" layoutY="66.0" prefHeight="30.0" prefWidth="90.0" text="200">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
                   <Button id="id-popup-buttonStart" layoutX="253.0" layoutY="246.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Start" />
-                  <TextField id="id-popup-generationNbr" layoutX="155.0" layoutY="112.0" prefHeight="30.0" prefWidth="90.0" text="50000">
+                  <TextField id="id-popup-gen1-generationNbr" layoutX="155.0" layoutY="112.0" prefHeight="30.0" prefWidth="90.0" text="50000">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField id="id-popup-crossOverRate" layoutX="155.0" layoutY="157.0" prefHeight="30.0" prefWidth="90.0" text="0.9">
+                  <TextField id="id-popup-gen1-crossOverRate" layoutX="155.0" layoutY="157.0" prefHeight="30.0" prefWidth="90.0" text="0.9">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField id="id-popup-mutationRate" layoutX="155.0" layoutY="201.0" prefHeight="30.0" prefWidth="90.0" text="0.9">
+                  <TextField id="id-popup-gen1-mutationRate" layoutX="155.0" layoutY="201.0" prefHeight="30.0" prefWidth="90.0" text="0.9">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -223,6 +223,28 @@
                   <Label alignment="CENTER" layoutX="8.0" layoutY="112.0" prefHeight="31.0" prefWidth="147.0" text="GenerationNbr :" />
                   <Label alignment="CENTER" layoutX="8.0" layoutY="157.0" prefHeight="31.0" prefWidth="147.0" text="CrossOverRate :" />
                   <Label alignment="CENTER" layoutX="7.0" layoutY="201.0" prefHeight="31.0" prefWidth="147.0" text="MutationRate :" />
+                  <TextField id="id-popup-gen2-popSize" layoutX="275.0" layoutY="66.0" prefHeight="30.0" prefWidth="90.0" text="200">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField id="id-popup-gen2-generationNbr" layoutX="275.0" layoutY="112.0" prefHeight="30.0" prefWidth="90.0" text="50000">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField id="id-popup-gen2-crossOverRate" layoutX="275.0" layoutY="157.0" prefHeight="30.0" prefWidth="90.0" text="0.9">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField id="id-popup-gen2-mutationRate" layoutX="275.0" layoutY="201.0" prefHeight="30.0" prefWidth="90.0" text="0.9">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label alignment="CENTER" layoutX="155.0" layoutY="35.0" prefHeight="31.0" prefWidth="90.0" text="Gen 1 :" />
+                  <Label alignment="CENTER" layoutX="275.0" layoutY="35.0" prefHeight="31.0" prefWidth="90.0" text="Gen 2 :" />
                </children>
             </Pane>
          </children>

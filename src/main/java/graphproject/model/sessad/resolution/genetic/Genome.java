@@ -13,9 +13,7 @@ import static graphproject.model.sessad.resolution.genetic.Genetic.mutationRate;
 public class Genome{
     int[] genome;
     int fitness;
-
     int specialtyMatch;
-
     double costFitness;
 
     public Genome(int sizeGenome){

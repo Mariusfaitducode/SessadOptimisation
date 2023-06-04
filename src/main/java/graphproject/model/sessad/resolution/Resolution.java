@@ -98,7 +98,7 @@ public class Resolution {
         secondGenome = genetic.secondPartGeneticAlgo(generationNbr, crossOverRate, mutationRate, this.centreAffected);
 
         //calculateAttributeGenome(secondGenome, listMission, listEmployee);
-        this.centreAffected = (int)secondGenome.getFitness();
+        this.centreAffected = secondGenome.getFitness();
         this.travelCost = secondGenome.getCostFitness();
         secondGenome.determineSpecialtyMatch(listMission, listEmployee);
         this.matchingSpecialty = secondGenome.getSpecialtyMatch();
