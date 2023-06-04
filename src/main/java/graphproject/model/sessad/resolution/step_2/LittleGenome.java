@@ -19,7 +19,7 @@ public class LittleGenome {
 
     private double bestCost;
 
-    private double bestSpecialtyMatch;
+    private int bestSpecialtyMatch;
 
     public LittleGenome(Centre centre, Skill skill, int day){
         this.centre = centre;
@@ -137,11 +137,11 @@ public class LittleGenome {
 
         List<Integer> initialGenome = new ArrayList<>();
 
-//        System.out.println("Centre : "+ centre.getId());
-//        System.out.println("Skill : " + skill.toString());
-//        System.out.println("Day : "+ day);
+        System.out.println("Centre : "+ centre.getId());
+        System.out.println("Skill : " + skill.toString());
+        System.out.println("Day : "+ day);
         for (Mission mission : listMission){
-//            System.out.println("Mission : "+ mission.getId() + " Employee : "+ mission.getEmployee().getId());
+            System.out.println("Mission : "+ mission.getId() + " Employee : "+ mission.getEmployee().getId());
             for (int i = 0; i < listEmployee.size(); i++){
 
                 if (mission.getEmployee().getId() == listEmployee.get(i).getId()){
@@ -232,24 +232,6 @@ public class LittleGenome {
         }
     }
 
-    private static void generateUniqueCombinationsRecursive(List<Integer> numbers, int mask, List<Integer> currentCombination, List<List<Integer>> combinations) {
-        if (currentCombination.size() == numbers.size()) {
-            combinations.add(new ArrayList<>(currentCombination));
-            return;
-        }
-
-        for (int i = 0; i < numbers.size(); i++) {
-            if ((mask & (1 << i)) != 0 || (i > 0 && numbers.get(i) == numbers.get(i - 1) && (mask & (1 << (i - 1))) == 0)) {
-                continue; // Skip duplicate values or values that have already been used
-            }
-
-            currentCombination.add(numbers.get(i));
-
-            generateUniqueCombinationsRecursive(numbers, mask | (1 << i), currentCombination, combinations);
-
-            currentCombination.remove(currentCombination.size() - 1);
-        }
-    }
 
     public static List<int[]>  generatePermutations(List<Integer> numbers){
 
@@ -321,8 +303,13 @@ public class LittleGenome {
 
         List<Integer> initialGenome = new ArrayList<>();
 
-        for (Mission mission : listMission){
+        System.out.println("Centre : "+ centre.getId());
+        System.out.println("Skill : " + skill.toString());
+        System.out.println("Day : "+ day);
 
+        for (Mission mission : listMission){
+            System.out.println("Mission : "+ mission.getId() + " Employee : "+ mission.getEmployee().getId());
+            
             for (int i = 0; i < listEmployee.size(); i++){
 
                 if (mission.getEmployee().getId() == listEmployee.get(i).getId()){
@@ -355,23 +342,26 @@ public class LittleGenome {
 
             int specialtyMatch = 0;
 
-            //Genome.clearInstance(listMission, listEmployee);
-            //genome.instantiateGenome(listMission, listEmployee);
+            Genome.clearInstance(listMission, listEmployee);
+            genome.instantiateGenome(listMission, listEmployee);
 
             for (Employee employee : listEmployee){
                 specialtyMatch += employee.nbrMissionWithGoodSpecialty();
             }
+            System.out.println("Specialty match = "+ specialtyMatch);
 
-            if (bestSpecialtyMatch < specialtyMatch){
+            if (specialtyMatch > bestSpecialtyMatch){
                 bestSpecialtyMatch = specialtyMatch;
-                bestGenome = genome;
+                bestGenome = new Genome(genome);
             }
 
             //System.out.println("Cost = "+ totalCost);
 
         }
+        System.out.println("Best specialty match = "+ bestSpecialtyMatch);
         this.bestSpecialtyMatch = bestSpecialtyMatch;
 
+        //bestGenome.displayGenome();
         return bestGenome;
     }
 

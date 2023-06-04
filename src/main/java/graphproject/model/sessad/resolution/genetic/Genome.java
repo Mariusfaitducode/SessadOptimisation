@@ -29,7 +29,7 @@ public class Genome{
         this.costFitness = genome.costFitness;
     }
 
-    public int getSpecialtyMatch(){return specialtyMatch;}
+    public int getSpecialtyMatch(){return this.specialtyMatch;}
     public int getFitness(){return fitness;}
 
     public double getCostFitness(){return costFitness;}

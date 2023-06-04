@@ -20,7 +20,7 @@ public class Configuration {
 
     public Configuration(Genome genome, List<Mission> listMission, List<Employee> listEmployee, List<Centre> listCentre){
 
-        this.genome = genome;
+        this.genome = new Genome(genome.getGenome().length);
         this.listLittleGenome = new ArrayList<>(0);
 
         // Creation des LittleGenome, il y en a : n centres X 2 skills X 5 days
@@ -45,12 +45,12 @@ public class Configuration {
 
         for (int i = 0; i < miniGenome.getGenome().length; i++){
 
-            //TODO : Erreur qui arrive parfois, à corriger
             Mission mission = littleGenome.getListMission().get(i);
             Employee employee = littleGenome.getListEmployee().get(miniGenome.getGene(i));
 
             this.genome.setGene(mission.getId()-1, employee.getId());
         }
+        this.genome.displayGenome();
     }
 
     private void initializeLittleGenome(List<Centre> listCentre){
@@ -149,7 +149,10 @@ public class Configuration {
         this.bestSpecialtyMatch = totalSpecialtyMatch;
     }
 
-    public void brutForceStep3() {
+    public void brutForceStep3(List<Mission> listMission, List<Employee> listEmployee) {
+
+        int totalSpecialtyMatch = 0;
+
         for (LittleGenome littleGenome : listLittleGenome) {
             System.out.println("----------------------");
             if (!littleGenome.getListMission().isEmpty() && !littleGenome.getListEmployee().isEmpty()) {
@@ -157,7 +160,10 @@ public class Configuration {
                 List<int[]> permutations = littleGenome.generateCombinationsStep3();
                 Genome bestGenome = littleGenome.evaluateAllCombinationsStep3(permutations);
 
+                totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
+
                 bestGenome.displayGenome();
+
                 for (int i = 0; i < littleGenome.getListEmployee().size(); i++) {
                     System.out.println("Employee " + i + " : " + littleGenome.getListEmployee().get(i).getId());
                 }
@@ -165,5 +171,11 @@ public class Configuration {
                 adaptGenome(bestGenome, littleGenome);
             }
         }
+        System.out.println("Total specialty match = " + totalSpecialtyMatch);
+        this.genome.displayGenome();
+
+        this.genome.determineSpecialtyMatch(listMission, listEmployee);
+
+        System.out.println("Total specialty match calculated = " + this.genome.getSpecialtyMatch());
     }
 }

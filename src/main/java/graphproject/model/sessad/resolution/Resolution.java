@@ -134,15 +134,15 @@ public class Resolution {
 
 
         Configuration configuration = new Configuration(secondGenome, listMission, listEmployee, listCentre);
-        configuration.brutForceStep3();
+        configuration.brutForceStep3(listMission, listEmployee);
         //bestCost = Math.min(bestCost, configuration.getBestCost());
 
         //System.out.println("Best cost from brut force algorithm after second algo : " + bestCost);
 
-
-
+        //Récupération du résultat
         Genome bestGenome = configuration.getGenome();
 
+        //Affichage des résultats
         bestGenome.evaluateCost(listMission, listEmployee, 0, 0);
         this.centreAffected = (int)bestGenome.getFitness();
         this.travelCost = bestGenome.getCostFitness();
@@ -150,6 +150,7 @@ public class Resolution {
         bestGenome.determineSpecialtyMatch(listMission, listEmployee);
         this.matchingSpecialty = bestGenome.getSpecialtyMatch();
 
+        //Instantiation de Sessad Gestion
         Genome.clearInstance(listMission, listEmployee);
         bestGenome.instantiateGenome(listMission, listEmployee);
 
