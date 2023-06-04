@@ -154,22 +154,7 @@ public class Configuration {
                 }
 
 
-
-                Genome temp = new Genome(genome.getSizeGenome());
-//                for (int i : temp.getGenome()) {
-//                    temp.setGene(i, 0);
-//                }
-                for (int i = 0; i < bestGenome.getGenome().length; i++){
-
-                    //TODO : Erreur qui arrive parfois, à corriger
-                    Mission mission = littleGenome.getListMission().get(i);
-                    Employee employee = littleGenome.getListEmployee().get(bestGenome.getGene(i));
-
-                    temp.setGene(mission.getId()-1, employee.getId());
-                }
-                temp.displayGenome();
-
-                totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
+                //totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
 
                 genome.displayGenome();
                 adaptGenome(bestGenome, littleGenome);

@@ -348,18 +348,29 @@ public class LittleGenome {
 
         for(int[] combination : combinations){
 
+            Genome.clearInstance(listMission, listEmployee);
+
             Genome genome = new Genome(listMission.size());
 
             for (int i = 0; i < combination.length; i++){
 
                 genome.setGene(i, combination[i]);
 
+                Mission mission = listMission.get(i);
+                Employee employee = listEmployee.get(combination[i]);
+
+                mission.setEmployee(employee);
+                employee.addMission(mission);
+
             }
 
-            Genome.clearInstance(listMission, listEmployee);
-            genome.instantiateGenome(listMission, listEmployee);
+            //Genome.clearInstance(listMission, listEmployee);
+            //genome.instantiateGenome(listMission, listEmployee);
 
             int specialtyMatch = 0;
+
+            System.out.println("---------- Little Genome ---------- ");
+            genome.displayGenome();
 
             for (Employee employee : listEmployee){
                 specialtyMatch += employee.nbrMissionWithGoodSpecialty();
