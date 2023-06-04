@@ -60,7 +60,7 @@ public class Genetic {
         //Evaluation de la population
         population.evaluatePopulation(listMission, listEmployee);
 
-        //Affichage de la meilleure solution
+        //Récupération de la meilleur solution de la population initiale
         Genome bestGenome = getBestGenome();
         int bestFitness = bestGenome.fitness;
 
@@ -69,7 +69,7 @@ public class Genetic {
                 System.out.println("-----------------------------");
                 System.out.println("Generation : " + iter);
                 System.out.println("Moyenne fitness : " + population.getMeanFitness());
-                System.out.println("Ecart type : " + population.getStandardDeviationFitness());
+                System.out.println("Ecart type fitness : " + population.getStandardDeviationFitness());
                 System.out.println("Best fitness : " + bestFitness);
                 System.out.println("Similitude : " + population.getSimilarityRate());
             }
@@ -148,7 +148,7 @@ public class Genetic {
 
     public Genome secondPartGeneticAlgo(int generationNbr, double crossOverRateInit, double mutationRateInit, double bestFitness) {
 
-        System.out.println("-------------------------------------------------------------------");
+        System.out.println("\n-------------------------------------------------------------------");
         System.out.println("Second part of genetic algo");
         System.out.println("-------------------------------------------------------------------");
 
@@ -175,14 +175,14 @@ public class Genetic {
                 System.out.println("-----------------------------");
                 System.out.println("Generation : " + iter);
                 System.out.println("Moyenne fitness : " + population.getMeanFitness());
-                System.out.println("Ecart type : " + population.getStandardDeviationFitness());
+                System.out.println("Ecart type fitness: " + population.getStandardDeviationFitness());
                 System.out.println("Best fitness : " + bestFitness);
                 System.out.println("Moyenne cost : " + population.getMeanCostFitness());
+                System.out.println("Ecart type cost : " + population.getStandardDeviationCostFitness());
                 System.out.println("Best cost : " + bestCost);
                 System.out.println("Similitude : " + population.getSimilarityRate());
 
                 System.out.println("Best genome found : "+ bestGenomeFound.costFitness);
-                System.out.println("-----------------------------");
             }
 
             //Selection
@@ -248,22 +248,33 @@ public class Genetic {
             }
         }
 
-        System.out.println("-----------------------------");
-        System.out.println("Last generation : ");
+//        listBestGenomeSecondAlgo = population.getFitnessPopulation(listEmployee);
+
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("--------------Result second genetic algorithm---------------");
+
         System.out.println("Moyenne fitness : " + population.getMeanFitness());
         System.out.println("Ecart type : " + population.getStandardDeviationFitness());
         System.out.println("Best fitness : " + bestFitness);
-        System.out.println("Moyenne cost : " + population.getMeanCostFitness());
-        System.out.println("Best cost : " + bestCost);
         System.out.println("Similitude : " + population.getSimilarityRate());
-        System.out.println("-----------------------------");
+        System.out.println("Moyenne cost : " + population.getMeanCostFitness());
+        System.out.println("Ecart type cost : " + population.getStandardDeviationCostFitness());
+        System.out.println("Best cost : " + bestCost);
+        System.out.println("Part of pop with different mission/centre associations : " + listBestGenomeFirstAlgo.size() + " / " + popSize);
 
-        Genome bestGenome = getBestGenome();
+        System.out.println("--------------Best genome---------------");
 
+        bestGenomeFound.displayGenome();
+        bestGenomeFound.deternimeFitnessWithoutChecking();
+        System.out.println("Fitness from algo: " + bestFitness);
         System.out.println("Fitness : " + bestGenomeFound.fitness);
-        System.out.println("Cost : " + bestGenomeFound.costFitness);
+        bestGenomeFound.determineCostFitness(listMission, listEmployee);
+        System.out.println("Cost fitness : " + bestGenomeFound.costFitness);
+        bestGenomeFound.determineSpecialtyMatch(listMission, listEmployee);
+        System.out.println("Match specialty : " + bestGenomeFound.specialtyMatch);
 
-
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------");
 
         return bestGenomeFound;
     }
