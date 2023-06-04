@@ -8,6 +8,7 @@ import graphproject.model.sessad.resolution.genetic.Genome;
 import graphproject.model.sessad.resolution.genetic.Population;
 import graphproject.model.sessad.resolution.step_2.Configuration;
 
+import java.time.Instant;
 import java.util.List;
 
 public class Resolution {
@@ -72,15 +73,15 @@ public class Resolution {
         Genome.clearInstance(listMission, listEmployee);
         firstGenome.instantiateGenome(listMission, listEmployee);
 
-//        List<Genome> listBestGenomes = genetic.getListBestGenomeFirstAlgo();
-//        double bestCost = Integer.MAX_VALUE;
-//        for (Genome genome : listBestGenomes) {
-//
-//            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
-//            configuration.brutForceStep2();
-//            bestCost = Math.min(bestCost, configuration.getBestCost());
-//        }
-//        System.out.println("Best cost from brut force algorithm after 1st algo : " + bestCost);
+        List<Genome> listBestGenomes = genetic.getListBestGenomeFirstAlgo();
+        double bestCost = Integer.MAX_VALUE;
+        for (Genome genome : listBestGenomes) {
+
+            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
+            configuration.brutForceStep2();
+            bestCost = Math.min(bestCost, configuration.getBestCost());
+        }
+        System.out.println("Best cost from brut force algorithm after 1st algo : " + bestCost);
 
     }
 
@@ -101,44 +102,50 @@ public class Resolution {
         Genome.clearInstance(listMission, listEmployee);
         secondGenome.instantiateGenome(listMission, listEmployee);
 
-//        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
+        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
 //        double bestCost = Integer.MAX_VALUE;
+//        System.out.println("All genomes studied : ");
 //        for (Genome genome : listBestGenomes) {
 //
 //            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
 //            configuration.brutForceStep2();
 //            bestCost = Math.min(bestCost, configuration.getBestCost());
+//            configuration.getGenome().displayGenome();
+//            configuration.getGenome().determineCostFitness(listMission, listEmployee);
+//            System.out.println("Cost fitness : " + configuration.getGenome().getCostFitness());
+//            configuration.getGenome().determineSpecialtyMatch(listMission, listEmployee);
+//            System.out.println("Match specialty : " + configuration.getGenome().getSpecialtyMatch());
+//
 //        }
-//        System.out.println("Best cost from brut force step 2 algorithm after second algo : " + bestCost);
-
-        /*List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
-        double bestCost = Integer.MAX_VALUE;
-        for (Genome genome : listBestGenomes) {
-
-            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
-            configuration.brutForceStep3();
-            bestCost = Math.min(bestCost, configuration.getBestCost());
+        boolean isSimilar = false;
+        for (Genome genomeInPopulation : listBestGenomes) {
+            if (genomeInPopulation.getSimilarity(secondGenome)) {
+                isSimilar = true;
+                break;
+            }
         }
-        System.out.println("Best cost from brut force algorithm after second algo : " + bestCost);*/
+        if (!isSimilar) {
+            System.out.println("Genome not found in population");
+        } else  {
+            System.out.println("Genome found in population");
+        }
+
+        Configuration configuration = new Configuration(secondGenome, listMission, listEmployee, listCentre);
+        configuration.brutForceStep2();
+        System.out.println("Best cost from brut force step 2 algorithm after second algooo : " + configuration.getBestCost());
+
     }
 
     public void brutForceStep3(){
-        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
-        double bestCost = Integer.MAX_VALUE;
-
 
         Configuration configuration = new Configuration(secondGenome, listMission, listEmployee, listCentre);
         configuration.brutForceStep3(listMission, listEmployee);
-        //bestCost = Math.min(bestCost, configuration.getBestCost());
-
-        //System.out.println("Best cost from brut force algorithm after second algo : " + bestCost);
 
         //Récupération du résultat
         Genome bestGenome = configuration.getGenome();
 
         bestGenome.displayGenome();
-
-//        bestGenome.evaluateCost(listMission, listEmployee, 0, 0);
+        
         bestGenome.deternimeFitnessWithoutChecking();
         this.centreAffected = bestGenome.getFitness();
         bestGenome.determineCostFitness(listMission, listEmployee);

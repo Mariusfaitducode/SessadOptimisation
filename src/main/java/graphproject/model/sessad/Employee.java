@@ -10,7 +10,7 @@ import static graphproject.model.sessad.SessadGestion.distMissionMission;
 
 public class Employee {
 
-    private final int MAX_HOURS = 780; //7h 480. Marche mieux avec 600
+    private final int MAX_HOURS = 480; //7h 480. Marche mieux avec 600
     private final int MAX_TIME_SLOTS = 780; //13h
 
     private final double SPEED = 0.83333333; //50km/h = 50 / 60 = 0.83333333 km/min
@@ -115,13 +115,9 @@ public class Employee {
 
     public int nbrMissionWithGoodSpecialty() {
 
-        System.out.println("Employee : " + id + " has a specialty : " + specialty);
         int nbrMission = 0;
         for (Mission mission : listMission) {
-            System.out.println("Mission id : " + mission.getId());
             if (mission.getSpecialty() == specialty) {
-                System.out.println("Employee : " + id + " has a mission with his specialty");
-                System.out.println("Mission id : " + mission.getId() + " Mission day : " + mission.getDay() + " Mission time : " + mission.getTime() + " Mission specialty : " + mission.getSpecialty());
                 nbrMission++;
             }
         }

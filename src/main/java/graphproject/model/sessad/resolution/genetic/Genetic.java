@@ -194,7 +194,6 @@ public class Genetic {
 
             for (int i = 0; i < 8; i++)
             {
-                //System.out.println("Mission " + i + " : " + parent1.getGene(i) + " - " + parent2.getGene(i));
 
                 //Croisement avec taux de crossOver
                 Genome child1 = new Genome(parent1.getSizeGenome());
@@ -220,9 +219,6 @@ public class Genetic {
                 maxCost = child1.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
                 maxCost = child2.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
 
-                //System.out.println("Cost child1 : " + child1.costFitness);
-                //System.out.println("Cost child2 : " + child2.costFitness);
-
                 //Remplacement
                 population.remplacementCostRoulette(child1, maxCost);
                 population.remplacementCostRoulette(child2, maxCost);
@@ -241,14 +237,13 @@ public class Genetic {
                     if (child2.fitness != 0) {
                         bestCost = child2.costFitness;
                         System.out.println("Better cost genome found : " + bestCost);
-                        //population.population[1] = child2;
+
                         bestGenomeFound = new Genome(child2);
                     }
                 }
             }
         }
-
-//        listBestGenomeSecondAlgo = population.getFitnessPopulation(listEmployee);
+        listBestGenomeSecondAlgo = population.getFitnessPopulation(listEmployee);
 
         System.out.println("-----------------------------------------------------------");
         System.out.println("--------------Result second genetic algorithm---------------");
@@ -298,9 +293,6 @@ public class Genetic {
 
         bestGenome.fitness = 0;
 
-        //newPopulation.population[0] = bestGenome;
-        //newPopulation.population[1] = bestGenome;
-
         int index = 0;
 
         while (index < popSize){
@@ -308,24 +300,12 @@ public class Genetic {
             //Selection
             Genome[] parents = population.selectParents();
 
-            /*System.out.println("Parent 1");
-            parents[0].displayGenome();
-            System.out.println("Parent 2");
-            parents[1].displayGenome();*/
-
             //Croisement
             Genome[] children = population.crossover(parents[0], parents[1]);
-
-            /*System.out.println("Children 1");
-            children[0].displayGenome();
-            System.out.println("Children 2");
-            children[1].displayGenome();*/
 
             //Mutation
             children[0].mutation(listMission, listEmployee);
             children[1].mutation(listMission, listEmployee);
-
-
 
             newPopulation.population[index] = children[0];
             index++;
