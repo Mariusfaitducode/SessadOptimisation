@@ -73,15 +73,15 @@ public class Resolution {
         Genome.clearInstance(listMission, listEmployee);
         firstGenome.instantiateGenome(listMission, listEmployee);
 
-        List<Genome> listBestGenomes = genetic.getListBestGenomeFirstAlgo();
-        double bestCost = Integer.MAX_VALUE;
-        for (Genome genome : listBestGenomes) {
-
-            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
-            configuration.brutForceStep2();
-            bestCost = Math.min(bestCost, configuration.getBestCost());
-        }
-        System.out.println("Best cost from brut force algorithm after 1st algo : " + bestCost);
+//        List<Genome> listBestGenomes = genetic.getListBestGenomeFirstAlgo();
+//        double bestCost = Integer.MAX_VALUE;
+//        for (Genome genome : listBestGenomes) {
+//
+//            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
+//            configuration.brutForceStep2();
+//            bestCost = Math.min(bestCost, configuration.getBestCost());
+//        }
+//        System.out.println("Best cost from brut force algorithm after 1st algo : " + bestCost);
 
     }
 
@@ -102,7 +102,7 @@ public class Resolution {
         Genome.clearInstance(listMission, listEmployee);
         secondGenome.instantiateGenome(listMission, listEmployee);
 
-        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
+//        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
 //        double bestCost = Integer.MAX_VALUE;
 //        System.out.println("All genomes studied : ");
 //        for (Genome genome : listBestGenomes) {
@@ -117,22 +117,22 @@ public class Resolution {
 //            System.out.println("Match specialty : " + configuration.getGenome().getSpecialtyMatch());
 //
 //        }
-        boolean isSimilar = false;
-        for (Genome genomeInPopulation : listBestGenomes) {
-            if (genomeInPopulation.getSimilarity(secondGenome)) {
-                isSimilar = true;
-                break;
-            }
-        }
-        if (!isSimilar) {
-            System.out.println("Genome not found in population");
-        } else  {
-            System.out.println("Genome found in population");
-        }
-
-        Configuration configuration = new Configuration(secondGenome, listMission, listEmployee, listCentre);
-        configuration.brutForceStep2();
-        System.out.println("Best cost from brut force step 2 algorithm after second algooo : " + configuration.getBestCost());
+//        boolean isSimilar = false;
+//        for (Genome genomeInPopulation : listBestGenomes) {
+//            if (genomeInPopulation.getSimilarity(secondGenome)) {
+//                isSimilar = true;
+//                break;
+//            }
+//        }
+//        if (!isSimilar) {
+//            System.out.println("Genome not found in population");
+//        } else  {
+//            System.out.println("Genome found in population");
+//        }
+//
+//        Configuration configuration = new Configuration(secondGenome, listMission, listEmployee, listCentre);
+//        configuration.brutForceStep2();
+//        System.out.println("Best cost from brut force step 2 algorithm after second algooo : " + configuration.getBestCost());
 
     }
 
@@ -147,10 +147,13 @@ public class Resolution {
         bestGenome.displayGenome();
         
         bestGenome.deternimeFitnessWithoutChecking();
+        System.out.println("Fitness : " + bestGenome.getFitness());
         this.centreAffected = bestGenome.getFitness();
         bestGenome.determineCostFitness(listMission, listEmployee);
+        System.out.println("Cost fitness : " + bestGenome.getCostFitness());
         this.travelCost = bestGenome.getCostFitness();
         bestGenome.determineSpecialtyMatch(listMission, listEmployee);
+        System.out.println("Match specialty : " + bestGenome.getSpecialtyMatch());
         this.matchingSpecialty = bestGenome.getSpecialtyMatch();
 
         //Instantiation de Sessad Gestion

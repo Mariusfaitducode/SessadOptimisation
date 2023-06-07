@@ -72,6 +72,14 @@ public class Genetic {
                 System.out.println("Ecart type fitness : " + population.getStandardDeviationFitness());
                 System.out.println("Best fitness : " + bestFitness);
                 System.out.println("Similitude : " + population.getSimilarityRate());
+                bestGenome = population.getBestGenome();
+                bestGenome.deternimeFitnessWithoutChecking();
+                System.out.println("Fitness from algo: " + bestFitness);
+                System.out.println("Fitness : " + bestGenome.fitness);
+                bestGenome.determineCostFitness(listMission, listEmployee);
+                System.out.println("Cost fitness : " + bestGenome.costFitness);
+                bestGenome.determineSpecialtyMatch(listMission, listEmployee);
+                System.out.println("Match specialty : " + bestGenome.specialtyMatch);
             }
 
         	//Selection
@@ -127,7 +135,6 @@ public class Genetic {
         System.out.println("Best fitness : " + bestFitness);
         System.out.println("Similitude : " + population.getSimilarityRate());
         System.out.println("Part of pop with different mission/centre associations : " + listBestGenomeFirstAlgo.size() + " / " + popSize);
-
         System.out.println("--------------Best genome---------------");
 
         bestGenome = population.getBestGenome();
