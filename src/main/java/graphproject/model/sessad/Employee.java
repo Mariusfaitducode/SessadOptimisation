@@ -115,13 +115,9 @@ public class Employee {
 
     public int nbrMissionWithGoodSpecialty() {
 
-        //System.out.println("Employee : " + id + " has a specialty : " + specialty);
         int nbrMission = 0;
         for (Mission mission : listMission) {
-            //System.out.println("Mission id : " + mission.getId());
             if (mission.getSpecialty() == specialty) {
-                //System.out.println("Employee : " + id + " has a mission with his specialty");
-                //System.out.println("Mission id : " + mission.getId() + " Mission day : " + mission.getDay() + " Mission time : " + mission.getTime() + " Mission specialty : " + mission.getSpecialty());
                 nbrMission++;
             }
         }

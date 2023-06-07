@@ -5,6 +5,7 @@ import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -476,13 +477,13 @@ public class Population {
                             canAdd = false;
                         }
                     }
-                    for (int i = 0; i < listGenome2.size(); i++){
-
-                        if (listGenome2.get(i).getSimilarity(genome2)){
-//                            System.out.println("same centres : Added by Victor");
-                            canAdd = false;
-                        }
-                    }
+//                    for (int i = 0; i < listGenome2.size(); i++){
+//
+//                        if (listGenome2.get(i).getSimilarity(genome2)){
+////                            System.out.println("same centres : Added by Victor");
+//                            canAdd = false;
+//                        }
+//                    }
 
                     if (canAdd){
                         listGenome.add(genome);
@@ -512,5 +513,14 @@ public class Population {
     public Genome getRandomGenome() {
         int randomIndex = (int)(Math.random() * (sizePopulation));
         return population[randomIndex];
+    }
+
+    public boolean isGenomeInPopulation(Genome genome) {
+        for (Genome genomeInPopulation : population) {
+            if (genomeInPopulation.getSimilarity(genome)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

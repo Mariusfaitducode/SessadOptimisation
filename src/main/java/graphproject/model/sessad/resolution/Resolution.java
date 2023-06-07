@@ -8,6 +8,7 @@ import graphproject.model.sessad.resolution.genetic.Genome;
 import graphproject.model.sessad.resolution.genetic.Population;
 import graphproject.model.sessad.resolution.step_2.BrutForce;
 
+import java.time.Instant;
 import java.util.List;
 
 public class Resolution {
@@ -97,9 +98,6 @@ public class Resolution {
     }
 
     public void brutForceStep3(){
-        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
-        double bestCost = Integer.MAX_VALUE;
-
 
         BrutForce brutForce = new BrutForce(secondGenome, listMission, listEmployee, listCentre);
         brutForce.brutForceStep3(listMission, listEmployee);

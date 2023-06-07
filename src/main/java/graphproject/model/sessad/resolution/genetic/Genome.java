@@ -136,7 +136,6 @@ public class Genome{
                 int val = (int)(Math.random() * lastIdEmployee);
                 genome[i] = val;
 
-                //TODO complexity improvement : validity by only checking new mutation
                 determineFitness(listMission, listEmployee);
 
                 if (fitness == 0){

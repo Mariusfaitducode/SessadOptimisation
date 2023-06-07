@@ -50,7 +50,6 @@ public class BrutForce {
 
             this.genome.setGene(mission.getId()-1, employee.getId());
         }
-        this.genome.displayGenome();
     }
 
     private void initializeLittleGenome(List<Centre> listCentre){
@@ -116,7 +115,15 @@ public class BrutForce {
                 List<List<Integer>> combinations = littleGenome.generateCombinations();
                 Genome bestGenome = littleGenome.evaluateAllCombinations(combinations);
 
-                adaptGenome(bestGenome, littleGenome);
+                for (int i = 0; i < bestGenome.getGenome().length; i++){
+
+                    Mission mission = littleGenome.getListMission().get(i);
+                    Employee employee = littleGenome.getListEmployee().get(bestGenome.getGene(i) - 1);
+
+                    this.genome.setGene(mission.getId() - 1, employee.getId());
+                }
+
+//                adaptGenome(bestGenome, littleGenome);
                 totalCost += littleGenome.getBestCost();
                 totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
 
@@ -130,29 +137,16 @@ public class BrutForce {
 
     public void brutForceStep3(List<Mission> listMission, List<Employee> listEmployee) {
 
-        int totalSpecialtyMatch = 0;
-
         for (LittleGenome littleGenome : listLittleGenome) {
 
             if (!littleGenome.getListMission().isEmpty() && !littleGenome.getListEmployee().isEmpty()) {
 
-                System.out.println("----------------------");
-                System.out.println("Centre : " + littleGenome.getCentre().getId() + ", Specialty : " + littleGenome.getSkill() + ", Day : " + littleGenome.getDay());
-
                 List<int[]> permutations = littleGenome.generateCombinationsStep3();
                 Genome bestGenome = littleGenome.evaluateAllCombinationsStep3(permutations);
-
-                totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
-
-
                 adaptGenome(bestGenome, littleGenome);
             }
         }
-        System.out.println("Total specialty match = " + totalSpecialtyMatch);
-        this.genome.displayGenome();
 
         this.genome.determineSpecialtyMatch(listMission, listEmployee);
-
-        System.out.println("Total specialty match calculated = " + this.genome.getSpecialtyMatch());
     }
 }
