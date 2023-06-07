@@ -9,7 +9,7 @@ import graphproject.model.sessad.skill.Skill;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Configuration {
+public class BrutForce {
 
     Genome genome;
     List<LittleGenome> listLittleGenome;
@@ -18,7 +18,7 @@ public class Configuration {
 
     int bestSpecialtyMatch;
 
-    public Configuration(Genome genome, List<Mission> listMission, List<Employee> listEmployee, List<Centre> listCentre){
+    public BrutForce(Genome genome, List<Mission> listMission, List<Employee> listEmployee, List<Centre> listCentre){
 
         this.genome = new Genome(genome.getGenome().length);
         this.listLittleGenome = new ArrayList<>(0);
