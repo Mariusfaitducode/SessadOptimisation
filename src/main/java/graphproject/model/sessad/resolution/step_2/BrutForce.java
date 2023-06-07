@@ -26,7 +26,7 @@ public class BrutForce {
         // Creation des LittleGenome, il y en a : n centres X 2 skills X 5 days
         initializeLittleGenome(listCentre);
 
-        Genome.clearInstance(listMission, listEmployee);
+        //Genome.clearInstance(listMission, listEmployee);
         genome.instantiateGenome(listMission, listEmployee);
 
         // On ajoute les employees aux LittleGenome
@@ -143,18 +143,6 @@ public class BrutForce {
                 Genome bestGenome = littleGenome.evaluateAllCombinationsStep3(permutations);
 
                 totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
-
-                //bestGenome.displayGenome();
-
-//                for (int i = 0; i < littleGenome.getListEmployee().size(); i++) {
-//                    System.out.println("Employee " + i + " : " + littleGenome.getListEmployee().get(i).getId());
-//                }
-//                for (int i = 0; i < littleGenome.getListMission().size(); i++) {
-//                    System.out.println("Mission " + i + " : " + littleGenome.getListMission().get(i).getId());
-//                }
-
-
-                //totalSpecialtyMatch += littleGenome.getBestSpecialtyMatch();
 
 
                 adaptGenome(bestGenome, littleGenome);

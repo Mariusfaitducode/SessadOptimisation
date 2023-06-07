@@ -183,6 +183,7 @@ public class Genetic {
                 //System.out.println("Max cost" + maxCost);
                 System.out.println("Similitude : " + population.getSimilarityRate());
 
+                bestGenomeFound.determineCostFitness(listMission, listEmployee);
                 System.out.println("Best genome found : "+ bestGenomeFound.costFitness);
             }
 
@@ -203,8 +204,8 @@ public class Genetic {
             if (Math.random() < crossOverRate) {
                 population.crossOver(parent1, parent2, child1, child2);
             } else {
-                child1 = parent1;
-                child2 = parent2;
+                child1 = new Genome(parent1);
+                child2 = new Genome(parent2);
             }
 
             //Mutation 1 avec taux de mutation
@@ -218,8 +219,8 @@ public class Genetic {
             }
 
             //Evaluation des 2 enfants
-            child1.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
-            child2.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
+            child1.evaluateCost(listMission, listEmployee, bestFitness);
+            child2.evaluateCost(listMission, listEmployee, bestFitness);
 
             //System.out.println("Cost child1 : " + child1.costFitness);
             //System.out.println("Cost child2 : " + child2.costFitness);

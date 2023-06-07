@@ -202,7 +202,7 @@ public class Genome{
 
     }
 
-    public void evaluateCost(List<Mission> listMission, List<Employee> listEmployee, double bestFitness, double maxCost){
+    public void evaluateCost(List<Mission> listMission, List<Employee> listEmployee, double bestFitness){
 
         clearInstance(listMission, listEmployee);
         determineFitness(listMission, listEmployee);
@@ -210,9 +210,7 @@ public class Genome{
         if (fitness < bestFitness){
             fitness = 0;
         }
-
         determineCostFitness(listMission, listEmployee);
-
     }
 
     public boolean getSimilarity(Genome genome2) {
