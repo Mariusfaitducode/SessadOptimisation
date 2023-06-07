@@ -61,33 +61,13 @@ public class Resolution {
         this.travelCost = firstGenome.getCostFitness();
         this.matchingSpecialty = firstGenome.getSpecialtyMatch();
 
-//        firstGenome.evaluateCost(listMission, listEmployee, 0, 0);
-//        this.centreAffected = (int)firstGenome.getFitness();
-//        this.travelCost = firstGenome.getCostFitness();
-//        firstGenome.determineSpecialtyMatch(listMission, listEmployee);
-//        this.matchingSpecialty = firstGenome.getSpecialtyMatch();
-
-        //calculateAttributeGenome(firstGenome, listMission, listEmployee);
-
         //Instantiation de Sessad Gestion
         Genome.clearInstance(listMission, listEmployee);
         firstGenome.instantiateGenome(listMission, listEmployee);
 
-        List<Genome> listBestGenomes = genetic.getListBestGenomeFirstAlgo();
-        double bestCost = Integer.MAX_VALUE;
-        for (Genome genome : listBestGenomes) {
-
-            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
-            configuration.brutForceStep2();
-            bestCost = Math.min(bestCost, configuration.getBestCost());
-        }
-        System.out.println("Best cost from brut force algorithm after 1st algo : " + bestCost);
-
     }
 
     public void secondPartGenetic(int generationNbr, double crossOverRate, double mutationRate){
-
-        //firstGenome.determineFitness(listMission, listEmployee);
 
         //Deuxième étape de l'algorithme génétique pour la minimisation des coûts de déplacement
         secondGenome = genetic.secondPartGeneticAlgo(generationNbr, crossOverRate, mutationRate, this.centreAffected);
@@ -102,38 +82,6 @@ public class Resolution {
         Genome.clearInstance(listMission, listEmployee);
         secondGenome.instantiateGenome(listMission, listEmployee);
 
-        List<Genome> listBestGenomes = genetic.getListBestGenomeSecondAlgo();
-//        double bestCost = Integer.MAX_VALUE;
-//        System.out.println("All genomes studied : ");
-//        for (Genome genome : listBestGenomes) {
-//
-//            Configuration configuration = new Configuration(genome, listMission, listEmployee, listCentre);
-//            configuration.brutForceStep2();
-//            bestCost = Math.min(bestCost, configuration.getBestCost());
-//            configuration.getGenome().displayGenome();
-//            configuration.getGenome().determineCostFitness(listMission, listEmployee);
-//            System.out.println("Cost fitness : " + configuration.getGenome().getCostFitness());
-//            configuration.getGenome().determineSpecialtyMatch(listMission, listEmployee);
-//            System.out.println("Match specialty : " + configuration.getGenome().getSpecialtyMatch());
-//
-//        }
-        boolean isSimilar = false;
-        for (Genome genomeInPopulation : listBestGenomes) {
-            if (genomeInPopulation.getSimilarity(secondGenome)) {
-                isSimilar = true;
-                break;
-            }
-        }
-        if (!isSimilar) {
-            System.out.println("Genome not found in population");
-        } else  {
-            System.out.println("Genome found in population");
-        }
-
-        Configuration configuration = new Configuration(secondGenome, listMission, listEmployee, listCentre);
-        configuration.brutForceStep2();
-        System.out.println("Best cost from brut force step 2 algorithm after second algooo : " + configuration.getBestCost());
-
     }
 
     public void brutForceStep3(){
@@ -143,14 +91,28 @@ public class Resolution {
 
         //Récupération du résultat
         Genome bestGenome = configuration.getGenome();
+        bestGenome.deternimeFitnessWithoutChecking();
+        bestGenome.determineCostFitness(listMission, listEmployee);
+        bestGenome.determineSpecialtyMatch(listMission, listEmployee);
+
+
+        System.out.println();
+        System.out.println("--------------Result Brut Force Step 3---------------");
+        System.out.println("Nombre de possibilités testées : " + configuration.getTotOperation());
+
+        System.out.println("--------------Best genome---------------");
 
         bestGenome.displayGenome();
-        
-        bestGenome.deternimeFitnessWithoutChecking();
+        System.out.println("Fitness : " + bestGenome.getFitness());
+        System.out.println("Cost fitness : " + bestGenome.getCostFitness());
+        System.out.println("Match specialty : " + bestGenome.getSpecialtyMatch());
+
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------");
+        System.out.println();
+
         this.centreAffected = bestGenome.getFitness();
-        bestGenome.determineCostFitness(listMission, listEmployee);
         this.travelCost = bestGenome.getCostFitness();
-        bestGenome.determineSpecialtyMatch(listMission, listEmployee);
         this.matchingSpecialty = bestGenome.getSpecialtyMatch();
 
         //Instantiation de Sessad Gestion
@@ -158,19 +120,6 @@ public class Resolution {
         bestGenome.instantiateGenome(listMission, listEmployee);
 
 
-    }
-
-
-
-    public void calculateAttributeGenome(Genome genome, List<Mission> listMission, List<Employee> listEmployee){
-        genome.evaluateCost(listMission, listEmployee, 0, 0);
-
-
-        travelCost = genome.getCostFitness();
-
-        genome.determineFitness(listMission, listEmployee);
-        System.out.println("Final Fitness : " + genome.getFitness() + " Cost : " + genome.getCostFitness());
-        centreAffected = genome.getFitness();
     }
 
     public int getCentreAffected() {

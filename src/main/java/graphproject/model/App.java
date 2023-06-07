@@ -49,7 +49,7 @@ public class App {
 
         toolsController.getTest().setOnMouseClicked(event->{
             if (!graphController.graphIsNull()) {
-                popupController.setParameters(200, 50000, 0.9, 0.9,200, 500000, 0.9, 0.9);
+                popupController.setParameters(200, 500000, 0.9, 0.9,200, 1500000, 1.0, 0.7);
                 popupController.setVisible(true);
             }
         });

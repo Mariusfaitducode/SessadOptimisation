@@ -17,11 +17,13 @@ public class Configuration {
     double bestCost;
 
     int bestSpecialtyMatch;
+    int totOperation;
 
     public Configuration(Genome genome, List<Mission> listMission, List<Employee> listEmployee, List<Centre> listCentre){
 
         this.genome = new Genome(genome.getGenome().length);
         this.listLittleGenome = new ArrayList<>(0);
+        this.totOperation = 0;
 
         // Creation des LittleGenome, il y en a : n centres X 2 skills X 5 days
         initializeLittleGenome(listCentre);
@@ -40,6 +42,10 @@ public class Configuration {
     public double getBestCost(){return bestCost;}
     public int getBestSpecialtyMatch(){return bestSpecialtyMatch;}
     public Genome getGenome(){return genome;}
+
+    public int getTotOperation(){
+        return this.totOperation;
+    }
 
     public void adaptGenome(Genome miniGenome, LittleGenome littleGenome){
 
@@ -136,7 +142,6 @@ public class Configuration {
     }
 
     public void brutForceStep3(List<Mission> listMission, List<Employee> listEmployee) {
-
         for (LittleGenome littleGenome : listLittleGenome) {
 
             if (!littleGenome.getListMission().isEmpty() && !littleGenome.getListEmployee().isEmpty()) {
@@ -144,6 +149,12 @@ public class Configuration {
                 List<int[]> permutations = littleGenome.generateCombinationsStep3();
                 Genome bestGenome = littleGenome.evaluateAllCombinationsStep3(permutations);
                 adaptGenome(bestGenome, littleGenome);
+                totOperation += littleGenome.getOperation();
+
+                System.out.println("-----------------------------");
+                System.out.println("Centre : " + littleGenome.getCentre().getId() + " Skill : " + littleGenome.getSkill() + " Day : " + littleGenome.getDay());
+                System.out.println("Final Specialty match : " + littleGenome.getBestSpecialtyMatch());
+
             }
         }
 

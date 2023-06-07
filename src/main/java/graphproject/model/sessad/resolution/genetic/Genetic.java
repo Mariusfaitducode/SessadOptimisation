@@ -174,13 +174,10 @@ public class Genetic {
             if (iter % (generationNbr/10) == 0) {
                 System.out.println("-----------------------------");
                 System.out.println("Generation : " + iter);
-                System.out.println("Moyenne fitness : " + population.getMeanFitness());
-                System.out.println("Ecart type fitness: " + population.getStandardDeviationFitness());
                 System.out.println("Best fitness : " + bestFitness);
                 System.out.println("Moyenne cost : " + population.getMeanCostFitness());
                 System.out.println("Ecart type cost : " + population.getStandardDeviationCostFitness());
                 System.out.println("Best cost : " + bestCost);
-                //System.out.println("Max cost" + maxCost);
                 System.out.println("Similitude : " + population.getSimilarityRate());
 
                 System.out.println("Best genome found : "+ bestGenomeFound.costFitness);
@@ -189,12 +186,6 @@ public class Genetic {
             //Selection
             Genome parent1 = population.selectionCostRoulette();
             Genome parent2 = population.selectionCostRoulette();
-
-            //System.out.println("Cost parent1 : " + parent1.costFitness);
-            //System.out.println("Cost parent2 : " + parent2.costFitness);
-
-
-            //System.out.println("Mission " + i + " : " + parent1.getGene(i) + " - " + parent2.getGene(i));
 
             //Croisement avec taux de crossOver
             Genome child1 = new Genome(parent1.getSizeGenome());
@@ -220,9 +211,6 @@ public class Genetic {
             //Evaluation des 2 enfants
             child1.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
             child2.evaluateCost(listMission, listEmployee, bestFitness, maxCost);
-
-            //System.out.println("Cost child1 : " + child1.costFitness);
-            //System.out.println("Cost child2 : " + child2.costFitness);
 
             //Remplacement
             if (child1.fitness >= bestFitness){
