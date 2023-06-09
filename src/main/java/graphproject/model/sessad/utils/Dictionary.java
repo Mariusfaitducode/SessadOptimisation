@@ -12,7 +12,8 @@ public class Dictionary {
         mapInstance.put(3, "94Missions-2centres");
         mapInstance.put(4, "94Missions-3centres");
         mapInstance.put(5, "100Missions-2centres");
-        mapInstance.put(6, "200Missions-2centres");
+        mapInstance.put(6, "150Missions-2centres");
+        mapInstance.put(7, "200Missions-2centres");
     }
 
 }

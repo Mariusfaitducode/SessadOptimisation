@@ -82,7 +82,7 @@ public class AppController implements Initializable {
 
     public void createInstances(){
 
-        for(int idInstance = 1; idInstance < 7; idInstance++) {
+        for(int idInstance = 1; idInstance < 8; idInstance++) {
             MenuItem menuItem = new MenuItem();
             menuItem.setText(mapInstance.get(idInstance));
 

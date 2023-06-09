@@ -350,7 +350,7 @@ public class Population {
                 return genome;
             }
         }
-        return null;
+        return population[0];
     }
 
 
