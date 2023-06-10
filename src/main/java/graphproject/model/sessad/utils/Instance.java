@@ -14,8 +14,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+// Cette classe permet de récupérer les informations des instances
 public class Instance {
 
+    // Il est donc caractérisé par les 4 fichiers d'une instance
     File centers;
     File distances;
     File employees;
@@ -28,6 +30,7 @@ public class Instance {
         this.missions = missions;
     }
 
+    // Permet de récupère les données de centre.csv et les ajoute à la liste de centre
     public void loadCentres(List<Centre> listCentre) {
 
         try ( java.util.Scanner scanner = new java.util.Scanner(centers) ) {
@@ -36,15 +39,11 @@ public class Instance {
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
 
-//                System.out.println("values[0] : "+values[0]);
-
                 String stringId = values[0].replaceAll("[^\\d.]", "");
 
                 int id = Integer.parseInt(stringId);
 
                 String name = values[1];
-
-//                System.out.println("Name : "+name);
 
                 Centre centre = new Centre(id, name);
 
@@ -55,6 +54,7 @@ public class Instance {
         }
     }
 
+    // Permet de récupère les données de employé.csv et les ajoute à la liste d'employé
     public void loadEmployees(List<Employee> listEmployee, List<Centre> listCentre){
 
         try ( java.util.Scanner scanner = new java.util.Scanner(employees) ) {
@@ -83,6 +83,7 @@ public class Instance {
         }
     }
 
+    // Permet de récupère les données de missions.csv et les ajoute à la liste des missions
     public void loadMissions(List<Mission> listMission){
 
             try ( java.util.Scanner scanner = new java.util.Scanner(missions) ) {
@@ -109,6 +110,7 @@ public class Instance {
             }
     }
 
+    // Permet de récupère toutes les distances pour l'affichage et la matrice des distances
     public double[][] loadDistances(List<Centre> listCentre, List<Mission> listMission, List<Node> listNodes){
 
         int size = listCentre.size() + listMission.size();
@@ -132,33 +134,13 @@ public class Instance {
             e.printStackTrace();
         }
 
-//        System.out.println("distancesMatrix : "+distancesMatrix.toString());
-//
-//        for (int l = 0; l < distancesMatrix.length; l++) {
-//            for (int c = 0; c < distancesMatrix[l].length; c++) {
-//                System.out.print(distancesMatrix[l][c]+" ");
-//            }
-//            System.out.println();
-//        }
-//
-//        System.out.println("listCentre.size() : "+listCentre.size());
-//        System.out.println("listMission.size() : "+listMission.size());
-//        System.out.println("distancesMatrix.length : "+distancesMatrix.length);
-
-
-
-        //cutMatrix(distancesMatrix, centreMatrix, centreMissionMatrix, missionMatrix, listCentre.size(), listMission.size());
-
-        double[] xCoordinate = new double[listMission.size()];
-        double[] yCoordinate = new double[listMission.size()];
-
         setPositionFromDistances(distancesMatrix, listCentre, listMission, listNodes);
 
         return distancesMatrix;
     }
 
-
-
+    // Est uniquement utiliser pour l'affichage
+    // Pour afficher tous les centres et missions sur l'interface graphique avec les bonnes distances
     public void setPositionFromDistances(double[][] distanceMatrix, List<Centre> listCentre, List<Mission> listMission, List<Node> listNodes){
 
         //convert matrix distance to matrix position
@@ -219,12 +201,6 @@ public class Instance {
 
                 listMission.get(i - listCentre.size()).setNode(node);
             }
-
-//            listMission.get(i).display();
-
-//            System.out.println("xCoordinate : "+xCoordinates[i]);
-//            System.out.println("yCoordinate : "+yCoordinates[i]);
-//            System.out.println("--------------------------------------------------");
         }
     }
 

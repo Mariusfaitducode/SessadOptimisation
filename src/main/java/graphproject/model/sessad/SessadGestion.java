@@ -56,6 +56,7 @@ public class SessadGestion {
 
     public Resolution getResolution() {return resolution;}
 
+    //Génère les informations de l'instance demandé par l'utilisateur
     private void generateInstance(int instanceNumber) {
         String directoryPath = "src\\main\\resources\\instances\\"+mapInstance.get(instanceNumber)+"\\";
 //        String directoryPath = ".\\instances\\"+mapInstance.get(instanceNumber)+"\\";
@@ -70,23 +71,6 @@ public class SessadGestion {
         instance = new Instance(files[0], files[1], files[2], files[3]);
     }
 
-    public void displayInformations(){
-        for(Centre centre : listCentre){
-            centre.display();
-        }
-        System.out.println("--------------------------------------------------");
-        for(Employee employee : listEmployee){
-            employee.display();
-        }
-        System.out.println("--------------------------------------------------");
-        for(Mission mission : listMission){
-            mission.display();
-        }
-        System.out.println("--------------------------------------------------");
-    }
-
-
-
     public static void main(String[] args) {
 
         // Launch the JavaFX application
@@ -94,16 +78,9 @@ public class SessadGestion {
         //sessadGestion.displayInformations();
     }
 
-    public List<Centre> getListCentre() {
-        return listCentre;
-    }
-
-    public List<Mission> getListMission() {
-        return listMission;
-    }
-
     public List<Employee> getListEmployee() {return listEmployee;}
 
+    // Découpe la matrice des distances et récupère les liste des nodes pour ensuite pouvoir les afficher
     public void generatePosition(List<Node> listNodes){
         distGlobal = instance.loadDistances(listCentre, listMission, listNodes);
 
@@ -114,8 +91,7 @@ public class SessadGestion {
         cutMatrix(distGlobal, distCentreCentre, distMissionCentre, distMissionMission, listCentre.size(), listMission.size());
     }
 
-
-
+    // Permet de découper la matrice des distances globales en centre-centre, centre-mission et mission-mission
     public void cutMatrix(double[][] distGlobal, double[][] distCentreCentre, double[][] distCentreMission, double[][] distMissionMission, int sizeCentre, int sizeMission){
 
         //Matrice centre centre

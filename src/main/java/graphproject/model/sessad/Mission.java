@@ -4,6 +4,7 @@ import graphproject.model.Node;
 import graphproject.model.sessad.skill.Skill;
 import graphproject.model.sessad.skill.Specialty;
 
+// Contient toutes les informations relatives à une mission
 public class Mission extends Place {
 
     Node node;
@@ -40,19 +41,12 @@ public class Mission extends Place {
     }
 
     public int getDay(){return day;}
-    public void setDay(int day){this.day = day;}
-
     public int getTime() {return day * 24 * 60 + startingPeriod;}
 
     public int getStart(){return startingPeriod;}
-    public void setStart(int startingPeriod){this.startingPeriod = startingPeriod;}
-
     public int getEnd(){return endingPeriod;}
-    public void setEnd(int endingPeriod){this.endingPeriod = endingPeriod;}
 
     public Skill getSkill(){return skill;}
-    public void setSkill(Skill skill){this.skill = skill;}
-
     public Specialty getSpecialty(){return specialty;}
     public void setSpecialty(Specialty specialty){this.specialty = specialty;}
 

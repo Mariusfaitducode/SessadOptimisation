@@ -10,9 +10,10 @@ import graphproject.model.sessad.resolution.step_2.Configuration;
 
 import java.util.List;
 
+// Cette class regroupe tous les algorithmes et résoudre le problème d'une seule traite
 public class Resolution {
 
-    //int bestFitness = 0;
+    // Il est donc finalement caractérisé par les 3 paramètres principaux
     int centreAffected = 0;
     double travelCost = 0;
     int matchingSpecialty = 0;
@@ -21,6 +22,7 @@ public class Resolution {
     private List<Employee> listEmployee;
     private Genetic genetic;
 
+    // Ce sont les génomes ressortissants des algorithmes génétiques 1 et 2.
     public Genome firstGenome;
     public Genome secondGenome;
 
@@ -33,7 +35,7 @@ public class Resolution {
         genetic = new Genetic(listMission, listCentre, listEmployee, 500);
     }
 
-    // Initialisation de notre population de solutions initiales
+    // Initialisation de notre population de solutions initiales et affiche les stats
     public void startInitiatingGeneticAlgo(int popSize) {
         Population population = new Population(popSize);
         population.initializePopulation(listMission, listCentre);

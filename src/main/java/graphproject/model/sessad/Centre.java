@@ -5,18 +5,12 @@ import graphproject.model.Node;
 import java.util.ArrayList;
 import java.util.List;
 
+// Hérite de la classe Place et ajoute les informations uniquement relative au centre tel que le nom
 public class Centre extends Place {
 
     Node node;
-
-    //private int id;
     private String name;
-    //private int x;
-    //private int y;
-
     List<Employee> listEmployee;
-
-    List<Mission> listMission;
 
     public Centre(int id, String name) {
 

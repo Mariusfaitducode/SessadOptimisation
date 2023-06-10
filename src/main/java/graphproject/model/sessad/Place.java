@@ -1,5 +1,6 @@
 package graphproject.model.sessad;
 
+// Evite de dupliquer certaines informations entre centre et missions car ils possèdent tous les 2 une position et un id
 public class Place {
 
     public enum Type{CENTRE, MISSION}

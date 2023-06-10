@@ -10,7 +10,7 @@ import static graphproject.model.sessad.SessadGestion.distMissionMission;
 
 public class Employee {
 
-
+    // Informations / contraintes de l'employé
     private final int MAX_HOURS = 420; //7h 480. Marche mieux avec 600
     private final int MAX_TIME_SLOTS = 780; //13h
 
@@ -48,7 +48,7 @@ public class Employee {
 
     public void setListMission(List<Mission> listMission){this.listMission = listMission;}
 
-
+    // Récupère la listes des missions de l'employé du seul jour
     public List<Mission> getListMission(int day){
 
         List<Mission> listMissionDay = new ArrayList<>(0);
@@ -70,6 +70,7 @@ public class Employee {
         return listMissionDay;
     }
 
+    // Ajoute une nouvelle mission à la liste des missions de l'employé
     public List<Mission> addMission(List<Mission> listMission, Mission mission){
 
         //place la mission au bon endroit dans la liste
@@ -89,6 +90,7 @@ public class Employee {
         return null;
     }
 
+    // Ajoute une nouvelle mission à la liste des missions de l'employé
     public void addMission(Mission mission){
 
         //place la mission au bon endroit dans la liste
@@ -114,6 +116,7 @@ public class Employee {
         System.out.println("Employee specialty : "+specialty);
     }
 
+    // Calcule le nombre de mission de l'employé qui ont la bonne spécialité
     public int nbrMissionWithGoodSpecialty() {
 
         int nbrMission = 0;
@@ -125,6 +128,7 @@ public class Employee {
         return nbrMission;
     }
 
+    // Récupère le coût d'un employé pour une semaine
     public double findCost(){
 
         //Récupère la liste de missions du jour car l'employé a été set dans le little génome qui est split entre les jours
@@ -155,6 +159,7 @@ public class Employee {
         return 0.2 * totalDayDistance;
     }
 
+    // Récupère le coût d'un employé pour une semaine
     public double findAllDayCost(){
 
         double totalDayDistance = 0;
@@ -187,6 +192,8 @@ public class Employee {
         return 0.2 * totalDayDistance;
     }
 
+    // C'est la fonction la plus importante
+    // Il permet de check si on peut ajouter une nouvelle mission à l'employé em respectant toutes contraines de l'énoncé
     public boolean canTakeMission(Mission mission){
 
         //Récupère la liste de missions du jour avec nouvelle mission
@@ -250,7 +257,7 @@ public class Employee {
         }
     }
 
-
+    // Est utilisé par canTakeMission pour ajouter temporairement la mission à la liste des mission de l'employé
     public List<Mission> insertMission(Mission mission){
 
         if (skill != mission.getSkill()){
