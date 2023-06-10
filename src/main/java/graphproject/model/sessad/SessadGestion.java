@@ -58,6 +58,7 @@ public class SessadGestion {
 
     private void generateInstance(int instanceNumber) {
         String directoryPath = "src\\main\\resources\\instances\\"+mapInstance.get(instanceNumber)+"\\";
+//        String directoryPath = ".\\instances\\"+mapInstance.get(instanceNumber)+"\\";
         System.out.println("Loading instance : " + mapInstance.get(instanceNumber));
 
         File directory = new File(directoryPath);
@@ -116,10 +117,6 @@ public class SessadGestion {
 
 
     public void cutMatrix(double[][] distGlobal, double[][] distCentreCentre, double[][] distCentreMission, double[][] distMissionMission, int sizeCentre, int sizeMission){
-
-//        System.out.println("listCentre.size() : "+sizeCentre);
-//        System.out.println("listMission.size() : "+sizeMission);
-//        System.out.println("distancesMatrix.length : "+distGlobal.length);
 
         //Matrice centre centre
         for (int l = 0; l < sizeCentre; l++) {
