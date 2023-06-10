@@ -8,7 +8,6 @@ import graphproject.model.sessad.resolution.genetic.Genome;
 import graphproject.model.sessad.resolution.genetic.Population;
 import graphproject.model.sessad.resolution.step_2.Configuration;
 
-import java.time.Instant;
 import java.util.List;
 
 public class Resolution {
@@ -34,6 +33,7 @@ public class Resolution {
         genetic = new Genetic(listMission, listCentre, listEmployee, 500);
     }
 
+    // Initialisation de notre population de solutions initiales
     public void startInitiatingGeneticAlgo(int popSize) {
         Population population = new Population(popSize);
         population.initializePopulation(listMission, listCentre);
@@ -51,6 +51,7 @@ public class Resolution {
         randomGenome.instantiateGenome(listMission, listEmployee);
     }
 
+    // Lancement de l'algorithme génétique pour l'affectation des missions
     public void startGeneticAlgo(int popSize, int generationNbr, double crossOverRate, double mutationRate) {
 
         //Première étape de l'algorithme génétique pour l'affectation des missions
@@ -67,6 +68,7 @@ public class Resolution {
 
     }
 
+    // Lancement de l'algorithme génétique pour la minimisation des coûts de déplacement
     public void secondPartGenetic(int generationNbr, double crossOverRate, double mutationRate){
 
         //Deuxième étape de l'algorithme génétique pour la minimisation des coûts de déplacement
@@ -84,6 +86,9 @@ public class Resolution {
 
     }
 
+    // Lancement de l'algorithme permettant de maximiser le nombre de spécialités respectées
+    // Nous prenons le meilleur génome trouvé en terme de coût de déplacement et de nombre de centres affectés
+    // et nous permuttons les itinéraires des employés pour maximiser le nombre de spécialités respectées
     public void brutForceStep3(){
 
         Configuration configuration = new Configuration(secondGenome, listMission, listEmployee, listCentre);

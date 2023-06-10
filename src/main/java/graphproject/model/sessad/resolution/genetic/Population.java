@@ -5,7 +5,6 @@ import graphproject.model.sessad.Employee;
 import graphproject.model.sessad.Mission;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,6 +22,7 @@ public class Population {
         population = new Genome[sizePopulation];
     }
 
+    // Fonction permettant d'initialiser la population en suivant le principe du plus proche voisin
     public void initializePopulation(List<Mission> listMission, List<Centre> listCentre){
         int sizeGenome = listMission.size();
 
@@ -73,28 +73,14 @@ public class Population {
                         centre = listCentre.get(l);
                     }
                 }
-                //Ajout d'un chromosome
+                //Ajout d'un chromosome avec le centre le plus proche
                 population[i].addChromosome(listMission.get(c), centre);
             }
         }
         System.out.println("Population initialized : " + sizePopulation);
     }
 
-    public void initializeLittlePopulation(List<List<Integer>> combinations, List<Mission> listMission, List<Centre> listEmployee){
-
-        int sizeGenome = listMission.size();
-
-        //Parcours de la population
-        for (int i = 0; i < sizePopulation; i++){
-            //On définit un génome de taille sizeGenome
-            population[i] = new Genome(sizeGenome);
-
-            for (int j = 0; j < sizeGenome; j++){
-                population[i].setGene(j, combinations.get(i).get(j));
-            }
-        }
-    }
-
+    //Permet d'évaluer toute la population
     public void evaluatePopulation(List<Mission> listMission, List<Employee> listEmployee){
         for (Genome genome : population){
 
@@ -106,6 +92,7 @@ public class Population {
         }
     }
 
+    //Permet d'évaluer le coût de toute la population
     public double evaluateCostPopulation(List<Mission> listMission, List<Employee> listEmployee, double bestFitness){
 
         double maxCost = 0;
@@ -128,16 +115,7 @@ public class Population {
         return maxCost;
     }
 
-
-
-    public int getTotalFitness(){
-        int totalFitness = 0;
-        for (Genome genome : population){
-            totalFitness += genome.fitness;
-        }
-        return totalFitness;
-    }
-
+    // Permet de faire la moyenne des fitness de la population
     public int getMeanFitness(){
         int totalFitness = 0;
         for (Genome genome : population){
@@ -146,6 +124,7 @@ public class Population {
         return totalFitness / population.length;
     }
 
+    // Permet de faire la moyenne des coûts de la population
     public double getMeanCostFitness(){
         double totalCostFitness = 0;
         for (Genome genome : population){
@@ -154,6 +133,7 @@ public class Population {
         return totalCostFitness / population.length;
     }
 
+    // Permet de déterminer l'écart type des fitness de la population
     public double getStandardDeviationFitness(){
         double meanFitness = getMeanFitness();
         double sum = 0;
@@ -163,6 +143,7 @@ public class Population {
         return Math.sqrt(sum / population.length);
     }
 
+    // Permet de déterminer l'écart type des coûts de la population
     public double getStandardDeviationCostFitness() {
         double meanCostFitness = getMeanCostFitness();
         double sum = 0;
@@ -172,6 +153,7 @@ public class Population {
         return Math.sqrt(sum / population.length);
     }
 
+    // Permet de d'avoir une idée du taux de similarité dans la population
     public double getSimilarityRate() {
         double similarityRate = 0;
         for (int i = 0; i < population.length - 1; i++) {
@@ -190,68 +172,7 @@ public class Population {
         }
     }
 
-    public Genome[] selectParents(){
-        double totalFitness = 0.0;
-        for (Genome genome : population) {
-            totalFitness += genome.fitness;
-        }
-
-        // Sélectionner un premier génome
-        double randomValue1 = Math.random() * totalFitness;
-        double cumulativeFitness = 0.0;
-        Genome selectedGenome1 = null;
-        for (Genome genome : population) {
-            cumulativeFitness += genome.fitness;
-            if (cumulativeFitness >= randomValue1) {
-                selectedGenome1 = new Genome(genome);
-                break;
-            }
-        }
-
-        // Sélectionner un deuxième génome (assure-toi de ne pas sélectionner le même génome qu'auparavant)
-        double randomValue2 = Math.random() * (totalFitness - selectedGenome1.fitness);
-        cumulativeFitness = 0.0;
-        Genome selectedGenome2 = null;
-        for (Genome genome : population) {
-            if (genome != selectedGenome1) {
-                cumulativeFitness += genome.fitness;
-                if (cumulativeFitness >= randomValue2) {
-                    selectedGenome2 = new Genome(genome);
-                    break;
-                }
-            }
-        }
-
-        Genome[] parents = new Genome[]{selectedGenome1, selectedGenome2};
-
-        return parents;
-    }
-
-    public Genome[] crossover(Genome parent1, Genome parent2){
-
-        int genomeLength = parent1.genome.length;
-
-        int crossoverPoint = (int) (Math.random() * genomeLength); // genomeLength est la longueur du génome
-
-        // Effectue le croisement
-        Genome offspring1 = new Genome(genomeLength);
-        Genome offspring2 = new Genome(genomeLength);
-
-        for (int i = 0; i < genomeLength; i++) {
-            if (i < crossoverPoint) {
-                offspring1.setGene(i, parent1.getGene(i));
-                offspring2.setGene(i, parent2.getGene(i));
-            } else {
-                offspring1.setGene(i, parent2.getGene(i));
-                offspring2.setGene(i, parent1.getGene(i));
-            }
-        }
-        Genome[] children = new Genome[]{offspring1, offspring2};
-
-        return children;
-
-    }
-
+    // Retourne le meilleur génome de la population en terme de coût et d'affectation
     public Genome getBestGenome(){
 
         int maxFitness = 0;
@@ -275,30 +196,8 @@ public class Population {
         return bestGenome;
     }
 
-    public Population selectBestElements() {
-
-        Population newPopulation = new Population(this.population.length / 2);
-
-        for (Genome genome : this.population) {
-
-            for (int i = 0; i < newPopulation.population.length; i++) {
-
-                if (newPopulation.population[i] == null) {
-                    newPopulation.population[i] = genome;
-                    break;
-                } else if (genome.fitness > newPopulation.population[i].fitness) {
-                    newPopulation.population[i] = genome;
-                    break;
-                }
-            }
-        }
-        for (Genome genome : newPopulation.population) {
-            genome.fitness = 0;
-        }
-        return newPopulation;
-    }
-    //------------------------------------------------------------------------------------------------------------------
-
+    // Permet de sélectionner un génome de manière aléatoire en prenant en compte le fitness de chaque génome
+    // Plus le fitness est élevé, plus le génome a de chance d'être sélectionné
     public Genome selectionRoulette() {
         // Calculer la somme des fitness de la population
         int totalFitness = 0;
@@ -319,6 +218,8 @@ public class Population {
         return null;
     }
 
+    // Permet de sélectionner un génome de manière aléatoire en prenant en compte le coût de chaque génome
+    // Plus le coût est élevé, plus le génome a de chance d'être sélectionné mais seulement si sa fitness est valide
     public Genome selectionCostRoulette() {
 
         List<Genome> listGenome = new ArrayList<Genome>();
@@ -353,8 +254,8 @@ public class Population {
         return population[0];
     }
 
-
-
+    // Permet de croiser deux génomes pour en créer deux nouveaux
+    // Le croisement se fait à un point aléatoire
     public void crossOver(Genome parent1, Genome parent2, Genome child1, Genome child2) {
 
         int genomeLength = parent1.genome.length;
@@ -371,18 +272,8 @@ public class Population {
             }
         }
     }
-    public void remplacementStrict(Genome child) {
-        int worstFitness = Integer.MAX_VALUE;
-        int worstFitnessIndex = 0;
-        for (int i = 0; i < population.length; i++) {
-            if (population[i].fitness < worstFitness) {
-                worstFitness = population[i].fitness;
-                worstFitnessIndex = i;
-            }
-        }
-        population[worstFitnessIndex] = child;
-    }
 
+    // Permet de choisir un des plus mauvais génome de la population et de le remplacer par un enfant
     public void remplacementRoulette(Genome child) {
         // Calculer la somme des fitness de la population
         int totalFitness = 0;
@@ -408,6 +299,8 @@ public class Population {
         }
     }
 
+    // Permet de choisir un des plus mauvais génome de la population et de le remplacer par un enfant en fonction du coût
+
     public void remplacementCostRoulette(Genome child) {
         // Calculer la somme des fitness de la population
         int totalFitness = 0;
@@ -431,6 +324,7 @@ public class Population {
         }
     }
 
+    // Permet de remplacer un génome de la population non valide par le meilleur génome de la population précédente
     public void replaceWithBestSolution(Genome bestChild){
 
         for (int i = 0; i < population.length; i++) {
@@ -473,17 +367,9 @@ public class Population {
                     for (int i = 0; i < listGenome.size(); i++){
 
                         if (listGenome.get(i).getSimilarity(genome)){
-//                            System.out.println("same employees : first version from Marius");
                             canAdd = false;
                         }
                     }
-//                    for (int i = 0; i < listGenome2.size(); i++){
-//
-//                        if (listGenome2.get(i).getSimilarity(genome2)){
-////                            System.out.println("same centres : Added by Victor");
-//                            canAdd = false;
-//                        }
-//                    }
 
                     if (canAdd){
                         listGenome.add(genome);
@@ -498,6 +384,7 @@ public class Population {
         return listGenome;
     }
 
+    // Détermine la meilleutre fitness de la population
     public int getBestFitness() {
         int bestFitness = 0;
         for (Genome genome : population) {
@@ -506,21 +393,9 @@ public class Population {
         return bestFitness;
     }
 
-    public void getListBestGenomes(List<Mission> listMission) {
-
-    }
 
     public Genome getRandomGenome() {
-        int randomIndex = (int)(Math.random() * (sizePopulation));
+        int randomIndex = (int) (Math.random() * (sizePopulation));
         return population[randomIndex];
-    }
-
-    public boolean isGenomeInPopulation(Genome genome) {
-        for (Genome genomeInPopulation : population) {
-            if (genomeInPopulation.getSimilarity(genome)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

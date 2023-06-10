@@ -19,6 +19,9 @@ public class Configuration {
     int bestSpecialtyMatch;
     int totOperation;
 
+    // Instancie la configuration du meilleur génome de la population
+    // On découpe le génome en plusieurs petits génomes contenant 1 centre, 1 skill et 1 jour
+    // Puis on ajoute les missions et les employés correspondants
     public Configuration(Genome genome, List<Mission> listMission, List<Employee> listEmployee, List<Centre> listCentre){
 
         this.genome = new Genome(genome.getGenome().length);
@@ -47,6 +50,7 @@ public class Configuration {
         return this.totOperation;
     }
 
+    // Recréer le génome à partir des LittleGenome
     public void adaptGenome(Genome miniGenome, LittleGenome littleGenome){
 
         for (int i = 0; i < miniGenome.getGenome().length; i++){
@@ -58,6 +62,7 @@ public class Configuration {
         }
     }
 
+    // Créer tous les différents LittleGenome
     private void initializeLittleGenome(List<Centre> listCentre){
 
         for (Centre centre : listCentre) {
@@ -74,6 +79,7 @@ public class Configuration {
         }
     }
 
+    // Ajoute les missions au bon LittleGenome
     private void splitGenomeIntoLittleGenome(Genome genome, List<Mission> listMission, List<Employee> listEmployee, List<Centre> listCentre){
         for (int i = 0; i < genome.getSizeGenome(); i++){
 
@@ -91,6 +97,7 @@ public class Configuration {
         }
     }
 
+    // Ajoute les employés au bon LittleGenome
     private void addEmployeeToLittleGenome(List<Employee> listEmployee){
         for (LittleGenome littleGenome : listLittleGenome){
             for (Employee employee : listEmployee) {
@@ -101,6 +108,7 @@ public class Configuration {
         }
     }
 
+    // Récupère le LittleGenome correspondant au centre, skill et jour
     public LittleGenome getLittleGenome(Centre centre, Skill skill, int day){
         for (LittleGenome littleGenome : listLittleGenome){
             if (littleGenome.getCentre().equals(centre) && littleGenome.getSkill().equals(skill) && littleGenome.getDay() == day){
@@ -110,6 +118,9 @@ public class Configuration {
         return null;
     }
 
+    // FOnction non utilisé qui permettait de chercher toutes combinaisons d'un génome
+    // pour minimiser le coût total
+    // On a abandonné cette méthode car elle était trop longue à executer pour des Little Génome de taille 12 ou plus
     public void brutForceStep2() {
         double totalCost = 0;
         int totalSpecialtyMatch = 0;
@@ -136,11 +147,12 @@ public class Configuration {
             }
         }
 
-//        System.out.println("Total cost = " + (float)totalCost);
         this.bestCost = totalCost;
         this.bestSpecialtyMatch = totalSpecialtyMatch;
     }
 
+    // Fonction qui cherche la meilleure combinaison pour chaque LittleGenome
+    // En termes de permutation d'itinéraires des employés
     public void brutForceStep3(List<Mission> listMission, List<Employee> listEmployee) {
         for (LittleGenome littleGenome : listLittleGenome) {
 

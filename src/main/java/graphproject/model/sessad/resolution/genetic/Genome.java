@@ -7,9 +7,6 @@ import graphproject.model.sessad.Mission;
 import java.util.ArrayList;
 import java.util.List;
 
-import static graphproject.model.sessad.resolution.genetic.Genetic.lastIdEmployee;
-import static graphproject.model.sessad.resolution.genetic.Genetic.mutationRate;
-
 public class Genome{
     int[] genome;
     int fitness;
@@ -97,6 +94,7 @@ public class Genome{
         }
     }
 
+    //Détermine le nombre de mission avec une bonne spécialité
     public void determineSpecialtyMatch(List<Mission> listMission, List<Employee> listEmployee){
         this.specialtyMatch = 0;
 
@@ -108,6 +106,7 @@ public class Genome{
         }
     }
 
+    // Détermine la fitness d'un génome sans vérifier si le génome est valide
     public void deternimeFitnessWithoutChecking() {
         this.fitness = 0;
         for (int j : genome) {
@@ -116,6 +115,8 @@ public class Genome{
             }
         }
     }
+
+    // Détermine le coût d'un génome
     public void determineCostFitness(List<Mission> listMission, List<Employee> listEmployee){
         this.costFitness = 0;
 
@@ -127,26 +128,7 @@ public class Genome{
         }
     }
 
-    public void mutation(List<Mission> listMission, List<Employee> listEmployee){
-        for (int i = 0; i < genome.length; i++) {
-            if (Math.random() < mutationRate) { // mutationRate est une valeur entre 0 et 1, représentant la probabilité de mutation
-                // Effectue la mutation sur le gène
-                //offspring1.mutateGene(i);
-
-                int lastVal = genome[i];
-
-                int val = (int)(Math.random() * lastIdEmployee);
-                genome[i] = val;
-
-                determineFitness(listMission, listEmployee);
-
-                if (fitness == 0){
-                    genome[i] = lastVal;
-                }
-            }
-        }
-    }
-
+    // Affiche le génome
     public void displayGenome(){
         System.out.println("Genome : ");
         for (int j : genome) {
@@ -155,7 +137,7 @@ public class Genome{
         System.out.println();
     }
 
-
+    //Permet d'instancier les missions et les employés en fonction du génome
     public void instantiateGenome(List<Mission> listMission, List<Employee> listEmployee){
 
         clearInstance(listMission, listEmployee);
@@ -174,6 +156,7 @@ public class Genome{
         }
     }
 
+    //Permet de réinitialiser les instances des missions et des employés
     public static void clearInstance(List<Mission> listMission, List<Employee> listEmployee){
         for (Mission mission : listMission){
             mission.setEmployee(null);
@@ -183,6 +166,8 @@ public class Genome{
         }
     }
 
+    //Fonction de mutation d'un génome
+    //On échange deux gènes aléatoirement
     public void mutation() {
         int index1 = (int)(Math.random() * genome.length);
         int index2 = (int)(Math.random() * genome.length);
@@ -196,6 +181,7 @@ public class Genome{
         genome[index2] = temp;
     }
 
+
     public void evaluate(List<Mission> listMission, List<Employee> listEmployee){
 
         clearInstance(listMission, listEmployee);
@@ -203,6 +189,7 @@ public class Genome{
 
     }
 
+    //Fonction d'évaluation du cout d'un génome en vérifiant que le génome a le maximum d'affectation possible
     public void evaluateCost(List<Mission> listMission, List<Employee> listEmployee, double bestFitness, double maxCost){
 
         clearInstance(listMission, listEmployee);
@@ -216,6 +203,7 @@ public class Genome{
 
     }
 
+    //Fonction permettant de dire si 2 génomes sont identiques
     public boolean getSimilarity(Genome genome2) {
         for (int i = 0; i < genome.length; i++) {
             if (genome[i] != genome2.getGene(i)) {
@@ -225,6 +213,7 @@ public class Genome{
         return true;
     }
 
+    // Permet de convertir le génome d'employés en un génome de centres
     public void convertEmployeeToCentre(List<Employee> listEmployee){
         for (int i = 0; i < genome.length; i++){
             if (genome[i] != 0){
@@ -239,6 +228,7 @@ public class Genome{
         }
     }
 
+    // Permet de cloner un génome
     public Genome clone() {
         Genome newGenome = new Genome(genome.length);
         for (int i = 0 ; i < genome.length ; i++) {
