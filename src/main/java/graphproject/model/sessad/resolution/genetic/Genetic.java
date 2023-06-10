@@ -36,18 +36,7 @@ public class Genetic {
 
     }
 
-    public Population getPopulation(){
-        return this.population;
-    }
-
-    public List<Genome> getListBestGenomeFirstAlgo() {
-        return listBestGenomeFirstAlgo;
-    }
-
-    public List<Genome> getListBestGenomeSecondAlgo() {
-        return listBestGenomeSecondAlgo;
-    }
-
+    // Algorithme génétique de la 1ère étape, il est donc spécialisé pour trouver nombre maximal d'affectation
     public Genome geneticAlgo(int popSize, int generationNbr, double crossOverRateInit, double mutationRateInit) {
 
         double crossOverRate = crossOverRateInit;
@@ -146,6 +135,7 @@ public class Genetic {
         return bestGenome;
     }
 
+    // Algorithme génétique de la 2nd étape, il est donc spécialisé pour réduire le coût total tout en gardant le nombre maximal d'affectation
     public Genome secondPartGeneticAlgo(int generationNbr, double crossOverRateInit, double mutationRateInit, double bestFitness) {
 
         System.out.println("\n-------------------------------------------------------------------");
@@ -160,10 +150,9 @@ public class Genetic {
         //Une fois que notre meilleure fitness en terme d'affectation on cherche à optimiser le coût
 
         //Evaluation de la population
+        // pour la population initiale, on récupère la population de l'algorithme précédent
         double maxCost = population.evaluateCostPopulation(listMission, listEmployee, bestFitness);
 
-        //Affichage de la meilleure solution
-        //Genome bestGenome = getBestGenome();
         double bestCost = 1000;
 
 
@@ -271,64 +260,6 @@ public class Genetic {
         System.out.println("-----------------------------------------------------------");
 
         return bestGenomeFound;
-    }
-
-    public void generatePopulation(){
-        this.population = new Population(popSize);
-        population.initializePopulation(listMission, listCentre);
-    }
-
-    public void fitness(){
-        //population.displayPopulation();
-        population.evaluatePopulation(listMission, listEmployee);
-    }
-
-
-    public void generateNewGeneration(){
-
-        Population newPopulation = new Population(popSize * 2);
-
-        Genome bestGenome = population.getBestGenome();
-
-        bestGenome.fitness = 0;
-
-        int index = 0;
-
-        while (index < popSize){
-
-            //Selection
-            Genome[] parents = population.selectParents();
-
-            //Croisement
-            Genome[] children = population.crossover(parents[0], parents[1]);
-
-            //Mutation
-            children[0].mutation(listMission, listEmployee);
-            children[1].mutation(listMission, listEmployee);
-
-            newPopulation.population[index] = children[0];
-            index++;
-
-            if (index < popSize){
-                newPopulation.population[index] = children[1];
-                index++;
-            }
-        }
-
-        System.arraycopy(population.population, 0, newPopulation.population, index, population.population.length);
-        this.population = newPopulation.selectBestElements();
-    }
-
-    public void displayBestGenome(){
-
-        Genome bestGenome = population.getBestGenome();
-
-        Genome.clearInstance(listMission, listEmployee);
-        bestGenome.instantiateGenome(listMission, listEmployee);
-
-        System.out.println("Best Genome :");
-        bestGenome.displayGenome();
-        System.out.println("Fitness = "+ bestGenome.fitness);
     }
 
     public Genome getBestGenome(){

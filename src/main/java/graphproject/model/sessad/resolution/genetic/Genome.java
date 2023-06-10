@@ -45,8 +45,10 @@ public class Genome{
         return this.genome.length;
     }
 
+    // Fonction utilisée dans l'initialisation de la population pour vérifier et donc tenter d'assigner la mission à un employé et indirectement à un centre
     public void addChromosome(Mission mission, Centre centre){
 
+        // Pour chaque employé du centre, on vérifie s'il peut prendre la mission avec canTakeMission et s'il peut, on lui assigne
         for (Employee employee : centre.getListEmployee()){
 
             if (employee.canTakeMission(mission)){
@@ -59,18 +61,18 @@ public class Genome{
                 break;
             }
             else{
-
+                //Si la mission ne peut pas être associer à aucun employé du centre, alors on ne l'affecte pas au centre, ce qui correspond à mettre 0
                 genome[mission.getId() - 1] = 0;
             }
 
         }
     }
 
+    // Détermine la fitness d'un génome
+    // C'est simplement le nombre total de mission affecté
+    // Cependant elle retourne 0 si le génome n'est pas valide
     public void determineFitness(List<Mission> listMission, List<Employee> listEmployee){
 
-        //displayGenome();
-
-        //System.out.println();
         this.fitness = 0;
         for (int i = 0; i < genome.length; i++){
 
